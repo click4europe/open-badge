@@ -1,0 +1,5 @@
+services:
+  edk_menu.twig_extension.twig_render_blocco:
+    class: Drupal\edk_menu\TwigExtension\TwigRenderBlocco
+    tags:
+      - { name: twig.extension }

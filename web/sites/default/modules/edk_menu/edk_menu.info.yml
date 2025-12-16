@@ -1,0 +1,5 @@
+name: 'EDK Menu'
+type: module
+description: 'Provides Twig helpers for rendering blocks and sliders.'
+package: 'Custom'
+core_version_requirement: '^9 || ^10'

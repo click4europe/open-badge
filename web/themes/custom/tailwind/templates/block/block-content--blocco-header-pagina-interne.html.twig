@@ -1,0 +1,119 @@
+  <header class="bg-white shadow-sm sticky top-0 z-30 relative">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-6">
+      <!-- Logo + Brand -->
+      <a href="#hero" class="flex items-center gap-3">
+        <img src="/themes/custom/tailwind/images/public/openbadge-newlogo-blugreen.svg" alt="Open Badge" class="h-10 w-auto" />
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-8 text-sm">
+        <a href="#cosa-puoi-fare" data-mega-toggle="caratteristiche" data-skip-scroll="true" class="text-slate-700 hover:text-slate-900 transition-colors flex items-center gap-1">
+          <span>Caratteristiche</span>
+          <span aria-hidden="true" class="text-[10px]">▾</span>
+        </a>
+        <a href="#faq" class="text-slate-700 hover:text-slate-900 transition-colors">Cos'è Open Badge</a>
+        <a href="#dashboard" class="text-slate-700 hover:text-slate-900 transition-colors">Servizi</a>
+        <a href="https://www.open-badge.eu/prezzi-e-abbonamenti" target="_blank" class="text-slate-700 hover:text-slate-900 transition-colors">Abbonamenti</a>
+        <a href="#contatti" class="text-slate-700 hover:text-slate-900 transition-colors">Contatti</a>
+      </nav>
+
+      <!-- Actions -->
+      <div class="hidden md:flex items-center gap-3 text-xs font-semibold">
+        <a href="https://app.open-badge.eu/login" class="px-4 py-1.5 rounded-full border border-emerald-500 text-emerald-600 hover:bg-emerald-50 transition-colors">
+          Login
+        </a>
+        <a href="#contatti" class="px-5 py-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 flex items-center gap-2 transition-colors">
+          Inizia Ora
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="md:hidden text-slate-800">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile nav -->
+    <div id="mobile-menu" class="md:hidden hidden border-t border-slate-200 bg-white">
+      <div class="max-w-6xl mx-auto px-4 py-3 space-y-2 text-sm">
+        <a href="#cosa-puoi-fare" class="block py-1 text-slate-700 hover:text-slate-900">Caratteristiche</a>
+        <a href="#faq" class="block py-1 text-slate-700 hover:text-slate-900">Cos'è Open Badge</a>
+        <a href="#dashboard" class="block py-1 text-slate-700 hover:text-slate-900">Servizi</a>
+        <a href="https://www.open-badge.eu/prezzi-e-abbonamenti" target="_blank" class="block py-1 text-slate-700 hover:text-slate-900">Abbonamenti</a>
+        <a href="#contatti" class="block py-1 text-slate-700 hover:text-slate-900">Contatti</a>
+        <div class="pt-2 flex items-center gap-3">
+          <a href="https://app.open-badge.eu/login" class="px-4 py-1.5 rounded-full border border-emerald-500 text-emerald-600 hover:bg-emerald-50 text-xs font-semibold">
+            Login
+          </a>
+          <a href="#contatti" class="flex-1 text-center px-4 py-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 text-xs font-semibold">
+            Inizia Ora 
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop mega dropdown for “Caratteristiche” -->
+    <div id="caratteristiche-mega" class="hidden md:absolute md:inset-x-0 md:top-full bg-[#f6f7ed] border-t border-slate-200 shadow-lg">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 lg:py-16 grid gap-12 lg:grid-cols-[1.1fr_1.1fr_1.3fr] min-h-[340px]">
+        <!-- Soluzioni per settore -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">Soluzioni per settore</h3>
+          <div class="space-y-4 text-sm">
+            <div>
+              <p class="font-semibold text-slate-900">Pubbliche amministrazioni</p>
+              <p class="text-xs text-slate-600">Creare e assegnare facilmente badge digitali.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-900">Scuole e centri di formazione</p>
+              <p class="text-xs text-slate-600">Certificare le competenze acquisite dagli studenti.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-900">Grandi imprese e startup</p>
+              <p class="text-xs text-slate-600">Riconoscere percorsi interni di formazione e upskilling.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Soluzioni per tipologia -->
+        <div class="space-y-4">
+          <h3 class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">Soluzioni per tipologia</h3>
+          <div class="space-y-4 text-sm">
+            <div>
+              <p class="font-semibold text-slate-900">Digital Credentialing</p>
+              <p class="text-xs text-slate-600">Il digital credentialing e il processo di emissione dei badge.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-900">Skill management</p>
+              <p class="text-xs text-slate-600">Gestire le competenze con badge strutturati e verificabili.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-900">Certificazione dei lavoratori</p>
+              <p class="text-xs text-slate-600">Open Badge per attestare ruoli, incarichi e risultati.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-900">Apprendimento continuo</p>
+              <p class="text-xs text-slate-600">Percorsi modulari con badge intermedi e certificato finale.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-900">Upskilling</p>
+              <p class="text-xs text-slate-600">Supportare piani di aggiornamento delle competenze.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visual preview -->
+        <div class="relative hidden lg:block">
+          <div class="absolute -inset-4 bg-[#eef3d9] rounded-3xl"></div>
+          <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200">
+            <div class="h-48 sm:h-64 bg-gradient-to-br from-sky-500 via-purple-500 to-emerald-400 flex items-center justify-center text-xs font-semibold text-white">
+              Preview interfaccia Open Badge
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>

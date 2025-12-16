@@ -1,0 +1,14 @@
+basic_page.accordion:
+  version: '8.x-1.0'
+  js:
+    js/basic_page.accordion.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - jquery_ui_accordion/accordion
+basic_page.table:
+  version: 1.0
+  css:
+    theme:
+      css/table.css: {}

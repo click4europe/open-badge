@@ -1,0 +1,24 @@
+basic_page.acces_denied:
+  path: '/access-denied'
+  defaults:
+     _controller: '\Drupal\basic_page\Controller\Storico::access_denied'
+  requirements:
+    _permission: 'access content'  
+basic_page.not_found:
+  path: '/not_found'
+  defaults:
+     _controller: '\Drupal\basic_page\Controller\Storico::not_found'
+  requirements:
+    _permission: 'access content'    
+basic_page.ceck_data:
+  path: '/ceck-data'
+  defaults:
+     _controller: '\Drupal\basic_page\Controller\Storico::ceck_data'
+  requirements:
+    _permission: 'access content'
+basic_page.seek:
+  path: '/seek'
+  defaults:
+     _controller: '\Drupal\basic_page\Controller\Storico::seek'
+  requirements:
+    _permission: 'access content'    

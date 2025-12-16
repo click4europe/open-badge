@@ -1,0 +1,231 @@
+{# home-page-render.html.twig #}
+<div class="home-page-render">
+     <!-- ========================================= -->
+    <!-- SECTION: COSA PUOI FARE (FEATURES GRID)   -->
+    <!-- ========================================= -->
+    <section id="cosa-puoi-fare" class="py-16 lg:py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+          <div class="max-w-3xl">
+            <h2 class="text-2xl sm:text-3xl font-bold text-obBlue mb-3">Cosa puoi fare con la nostra piattaforma</h2>
+            <p class="text-slate-600 text-sm sm:text-base">
+              Riconosci e valorizza il talento, aumenta la tua reputazione e differenziati con certificazioni digitali
+              verificabili e condivisibili ovunque.
+            </p>
+          </div>
+          <a href="#contatti" class="btn btn-primary text-xs sm:text-sm">Parla con il nostro team</a>
+        </div>
+
+        <!-- Steps / capabilities grid (reusable as numbered list component) -->
+        <div class="grid gap-6 md:grid-cols-3">
+          <div class="card flex flex-col gap-2">
+            <span class="text-xs font-semibold text-obLightBlue">01</span>
+            <h3 class="font-semibold text-sm">Inizia a certificare le competenze</h3>
+            <p class="text-xs text-slate-600">Crea rapidamente certificati digitali per corsi, eventi, workshop e attività.</p>
+          </div>
+          <div class="card flex flex-col gap-2">
+            <span class="text-xs font-semibold text-obLightBlue">02</span>
+            <h3 class="font-semibold text-sm">Crea template di badge</h3>
+            <p class="text-xs text-slate-600">Definisci badge di conoscenza, competenza o partecipazione riutilizzabili.</p>
+          </div>
+          <div class="card flex flex-col gap-2">
+            <span class="text-xs font-semibold text-obLightBlue">03</span>
+            <h3 class="font-semibold text-sm">Monitora il conseguimento</h3>
+            <p class="text-xs text-slate-600">Monitora lo stato dei badge e i progressi dei tuoi partecipanti.</p>
+          </div>
+          <div class="card flex flex-col gap-2">
+            <span class="text-xs font-semibold text-obLightBlue">04</span>
+            <h3 class="font-semibold text-sm">Pianifica scadenze e rinnovi</h3>
+            <p class="text-xs text-slate-600">Imposta validità, rinnovi automatici e reminder per i certificati.</p>
+          </div>
+          <div class="card flex flex-col gap-2">
+            <span class="text-xs font-semibold text-obLightBlue">05</span>
+            <h3 class="font-semibold text-sm">Crea percorsi multi-badge</h3>
+            <p class="text-xs text-slate-600">Costruisci percorsi di apprendimento strutturati con certificato finale.</p>
+          </div>
+          <div class="card flex flex-col gap-2">
+            <span class="text-xs font-semibold text-obLightBlue">06</span>
+            <h3 class="font-semibold text-sm">Pubblica i corsi nella tua e-page</h3>
+            <p class="text-xs text-slate-600">Rendi visibili i tuoi corsi e percorsi su una pagina pubblica dedicata.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- SECTION: INTEGRAZIONI / API (REUSABLE)    -->
+    <!-- ========================================= -->
+    <section id="integrazioni" class="py-16 lg:py-20 bg-obBg">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 grid gap-10 lg:grid-cols-[1.2fr,1fr] items-start">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-obBlue mb-3">Vuoi integrare gli Open Badge con le tue piattaforme?</h2>
+          <p class="text-slate-600 text-sm sm:text-base mb-4">
+            La piattaforma Open Badge è completamente API-based e si integra facilmente con LMS, CRM, gestionali o piattaforme
+            eventi. Automatizza la generazione dei badge in base ai trigger definiti nei tuoi sistemi.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc list-inside mb-6">
+            <li>Assegna badge al completamento di corsi, quiz o moduli.</li>
+            <li>Rilascia certificati per la partecipazione a congresso, seminari o workshop.</li>
+            <li>Sincronizza automaticamente i dati tra piattaforme senza interventi manuali.</li>
+          </ul>
+          <div class="flex flex-wrap gap-3 text-xs sm:text-sm">
+            <a href="https://api-docs.open-badge.eu/" target="_blank" class="btn btn-secondary">Documentazione API</a>
+            <a href="https://meetings.hubspot.com/dbrothers/openbadge" target="_blank" class="btn btn-primary">Prenota una call</a>
+          </div>
+        </div>
+
+        <aside class="card bg-white/80">
+          <h3 class="text-sm font-semibold mb-2">Esempio di flusso di integrazione</h3>
+          <ol class="space-y-2 text-xs text-slate-700 list-decimal list-inside mb-4">
+            <li>L'utente completa un corso nel tuo LMS.</li>
+            <li>Il tuo LMS chiama le API di Open Badge.</li>
+            <li>Il badge viene generato e associato al profilo dell'utente.</li>
+            <li>L'utente riceve un'email con link al certificato digitale condivisibile.</li>
+          </ol>
+          <p class="text-[11px] text-slate-500">
+            I nostri esperti ti accompagnano passo passo nell'uso delle API, dalla configurazione alla messa in produzione.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- SECTION: DASHBOARD STUDENTI / FORMATORI   -->
+    <!-- ========================================= -->
+    <section id="dashboard" class="py-16 lg:py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 grid gap-10 lg:grid-cols-2 items-start">
+        <!-- Studenti -->
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-obBlue">La piattaforma open-badge.eu per studenti e formatori</h2>
+          <p class="text-slate-600 text-sm sm:text-base">
+            L'utente finale può visualizzare, gestire e condividere tutti i propri badge digitali in un'unica dashboard.
+            Ogni certificato è verificabile e pronto per essere pubblicato sui canali social o condiviso con datori di lavoro.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc list-inside">
+            <li>Panoramica chiara delle competenze acquisite.</li>
+            <li>Condivisione semplificata verso LinkedIn ed e-Portfolio.</li>
+            <li>Identificativo verificabile per ogni certificato.</li>
+          </ul>
+        </div>
+
+        <!-- Formatori / OBV -->
+        <div class="space-y-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-obBlue">La piattaforma OBV per formatori e organizzazioni</h2>
+          <p class="text-slate-600 text-sm sm:text-base">
+            I formatori possono creare percorsi di apprendimento strutturati, impostare un certificato finale e gestire rubriche
+            di destinatari pronte a ricevere nuovi badge nel tempo.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-700 list-disc list-inside">
+            <li>Creazione di percorsi multi-badge con certificato di percorso automatico.</li>
+            <li>Gestione di gruppi, classi e coorti di destinatari.</li>
+            <li>Rilascio automatico dei certificati al raggiungimento dei traguardi formativi.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- SECTION: SUCCESS STORIES / CASI STUDIO    -->
+    <!-- ========================================= -->
+    <section id="success-stories" class="py-16 lg:py-20 bg-obBg">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-obBlue mb-2">Scopri le storie di successo Open Badge</h2>
+            <p class="text-slate-600 text-sm sm:text-base">
+              Organizzazioni europee utilizzano la piattaforma per certificare competenze e percorsi formativi.
+            </p>
+          </div>
+          <a href="https://www.open-badge.eu/casi-studio" target="_blank" class="btn btn-secondary text-xs sm:text-sm">
+            Vedi tutti i casi studio
+          </a>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-3">
+          <!-- Euroguidance -->
+          <article class="card">
+            <h3 class="font-semibold text-sm mb-1">Euroguidance</h3>
+            <p class="text-xs text-slate-600">
+              Open Badge per certificare le competenze acquisite nei corsi sulla mobilità per l'apprendimento e il lavoro in Europa.
+            </p>
+          </article>
+
+          <!-- DiscoverEU -->
+          <article class="card">
+            <h3 class="font-semibold text-sm mb-1">DiscoverEU</h3>
+            <p class="text-xs text-slate-600">
+              Badge digitali per riconoscere la partecipazione all'iniziativa UE che permette ai giovani di scoprire l'Europa.
+            </p>
+          </article>
+
+          <!-- Eurodesk Mobility Advisor -->
+          <article class="card">
+            <h3 class="font-semibold text-sm mb-1">Eurodesk Mobility Advisor</h3>
+            <p class="text-xs text-slate-600">
+              Certificazione delle competenze acquisite nei percorsi formativi e nei progetti Eurodesk.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- SECTION: FAQ / LINKS (MINI SECTION)       -->
+    <!-- ========================================= -->
+    <section id="faq" class="py-12 bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 grid gap-6 md:grid-cols-2 items-center">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-bold text-obBlue mb-3">Scopri di più sugli Open Badges</h2>
+          <p class="text-slate-600 text-sm sm:text-base mb-4">
+            Approfondisci cosa sono gli open badges e trova le risposte alle domande più frequenti nella sezione dedicata.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3 text-xs sm:text-sm">
+          <a href="https://www.open-badge.eu/i-nostri-badge" target="_blank" class="btn btn-secondary">Cosa sono gli Open Badges?</a>
+          <a href="https://www.open-badge.eu/faq" target="_blank" class="btn btn-secondary">FAQ</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- SECTION: CONTATTI / CALL TO ACTION        -->
+    <!-- ========================================= -->
+    <section id="contatti" class="py-16 lg:py-20 bg-slate-900 text-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 grid gap-10 md:grid-cols-[1.1fr,1fr] items-start">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold mb-3">Parliamo dei tuoi percorsi formativi</h2>
+          <p class="text-slate-300 text-sm sm:text-base mb-6">
+            Vuoi capire come integrare Open Badge nei tuoi corsi, eventi o sistemi esistenti? Scrivici e il nostro team ti
+            risponderà con una proposta su misura.
+          </p>
+          <div class="text-xs text-slate-400 space-y-1">
+            <p>Puoi anche visitare la pagina ufficiale:</p>
+            <p>
+              <a href="https://www.open-badge.eu/contatti" target="_blank" class="underline hover:text-white">
+                https://www.open-badge.eu/contatti
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Simple contact form (reuses scripts.js behavior if adapted) -->
+        <div class="bg-slate-800 rounded-2xl p-6 shadow-lg">
+          <form class="space-y-4" onsubmit="return false;">
+            <div>
+              <label for="ob-name" class="block text-xs mb-1">Nome e cognome</label>
+              <input id="ob-name" type="text" class="w-full px-3 py-2 text-sm rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-obLightBlue" />
+            </div>
+            <div>
+              <label for="ob-email" class="block text-xs mb-1">Email</label>
+              <input id="ob-email" type="email" class="w-full px-3 py-2 text-sm rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-obLightBlue" />
+            </div>
+            <div>
+              <label for="ob-message" class="block text-xs mb-1">Come possiamo aiutarti?</label>
+              <textarea id="ob-message" rows="4" class="w-full px-3 py-2 text-sm rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-obLightBlue"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-full text-sm">Invia richiesta</button>
+          </form>
+        </div>
+      </div>
+    </section>
+</div>

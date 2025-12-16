@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@plugin "daisyui";
+/* Open Badge Template Styles */
+
+@theme {
+  --color-ob-blue: #0f172a;
+  --color-ob-light-blue: #1d4ed8;
+  --color-ob-yellow: #facc15;
+  --color-ob-bg: #f9fafb;
+  --font-ob-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+@layer components {
+  /* Generic button for Open Badge UI */
+  .btn {
+    @apply px-4 py-2 rounded font-semibold transition-colors duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-[color:var(--color-ob-light-blue)] text-white hover:bg-[color:var(--color-ob-blue)];
+  }
+
+  .btn-secondary {
+    @apply bg-slate-200 text-slate-800 hover:bg-slate-300;
+  }
+
+  /* Generic card container */
+  .card {
+    @apply bg-white rounded-lg shadow-md;
+  }
+}

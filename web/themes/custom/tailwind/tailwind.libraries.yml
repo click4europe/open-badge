@@ -1,0 +1,12 @@
+tailwind:
+  version: VERSION
+  css:
+    theme:
+      css/style.css: {}
+  js:
+    js/main.js: {}
+  dependencies:
+    - core/jquery  
+    - core/drupal
+    - core/once
+    - core/drupalSettings

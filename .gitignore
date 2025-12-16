@@ -1,0 +1,91 @@
+# ===================
+# Drupal .gitignore
+# ===================
+
+# Drupal core (installed via Composer)
+/web/core/
+
+# Contrib modules/themes/profiles (installed via Composer)
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+
+# Vendor directory (Composer dependencies)
+/vendor/
+
+# Drupal files directory (user uploads, generated files)
+/web/sites/*/files/
+/web/sites/*/private/
+
+# Drupal settings (contains DB credentials - SENSITIVE)
+/web/sites/*/settings.php
+/web/sites/*/settings.local.php
+/web/sites/*/services.yml
+
+# Simpletest
+/web/sites/simpletest/
+
+# ===================
+# Node.js
+# ===================
+/web/themes/custom/tailwind/node_modules/
+node_modules/
+
+# ===================
+# OS Generated Files
+# ===================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ===================
+# IDE / Editor
+# ===================
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+nbproject/
+
+# ===================
+# Logs & Cache
+# ===================
+*.log
+*.cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===================
+# Environment
+# ===================
+.env
+.env.local
+.env.*.local
+
+# ===================
+# Drush
+# ===================
+/drush/Commands/contrib/
+
+# ===================
+# Database
+# ===================
+*.sql
+*.sqlite
+*.sqlite3
+
+# ===================
+# Backup files
+# ===================
+*~
+*.bak
+*.orig

@@ -1,0 +1,72 @@
+{# Custom block type "Hero" (bundle: hero) - reusable block instance.
+   Template: block--block-content--type--hero.html.twig
+   Used for Hero blocks created in the Custom block library and placed in layouts/regions.
+#}
+
+{% set eyebrow = content.field_eybrow ?? null %}
+{% set title = content.field_title ?? null %}
+{% set subtitle = content.field_subtitle ?? null %}
+{% set illustration = content.field_illustration ?? null %}
+
+{% embed '@tailwind/components/component--section.html.twig' with {
+  id: attributes.id|default(''),
+  background: 'hero',
+} %}
+  {% block section_inner %}
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-center">
+      <div class="max-w-2xl space-y-6">
+        {% if hero_edit_url %}
+          <div class="mb-2 text-xs text-slate-200/80">
+            <a href="{{ hero_edit_url }}" class="underline underline-offset-2 hover:text-white">
+              Edit hero content
+            </a>
+          </div>
+        {% endif %}
+        {% if eyebrow %}
+          <div class="text-sm font-semibold tracking-wide text-sky-300 uppercase">
+            {{ eyebrow }}
+          </div>
+        {% endif %}
+
+        {% if title %}
+          <div class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+            {{ title }} 
+          </div>
+        {% endif %}
+
+        {% if subtitle %}
+          <div class="text-base sm:text-lg text-slate-100/90 max-w-xl">
+            {{ subtitle }}
+          </div>
+        {% endif %}
+
+        {% if hero_primary_cta or hero_secondary_cta %}
+          <div class="mt-4 flex flex-wrap items-center gap-4">
+            {% if hero_primary_cta %}
+              {% include '@tailwind/components/component--button.html.twig' with {
+                label: hero_primary_cta.label,
+                url: hero_primary_cta.url,
+                variant: 'primary',
+                size: 'lg',
+              } %}
+            {% endif %}
+            {% if hero_secondary_cta %}
+              {% include '@tailwind/components/component--button.html.twig' with {
+                label: hero_secondary_cta.label,
+                url: hero_secondary_cta.url,
+                variant: 'ghost',
+                size: 'lg',
+              } %}
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+
+      {% if illustration %}
+        <div class="w-full max-w-md mx-auto lg:ml-auto">
+          {{ illustration }}
+        </div>
+      {% endif %}
+    </div>
+  {% endblock %}
+{% endembed %}

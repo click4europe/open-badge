@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Contains basic_page.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function basic_page_help($route_name, RouteMatchInterface $route_match)
+{
+  switch ($route_name) {
+    // Main module help for the basic_page module.
+    case 'help.page.basic_page':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Basic Page render') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function basic_page_theme() {
+  return [
+    // Custom block template for basic_page blocks.
+    'block__basic_page' => [
+      'render element' => 'elements',
+      'template' => 'block--basic-page',
+      'base hook' => 'block',
+    ],
+
+    // Home page layout rendered by the HomePage block.
+    'home_page_render' => [
+      'variables' => [
+        'data' => NULL,
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'home-page-render',
+    ],
+
+    // Node basic page render block (kept for future use, as in EYCA).
+    'basic_page_render' => [
+      'variables' => [
+        'data' => NULL,
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'basic-page-render',
+    ],
+  ];
+}

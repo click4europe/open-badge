@@ -1,0 +1,34 @@
+{
+  "name": "tailwind",
+  "version": "1.0.0",
+  "description": "tailwind theme, generated from starterkit_theme. Additional information on generating themes can be found in the [Starterkit documentation](https://www.drupal.org/docs/core-modules-and-themes/core-themes/starterkit-theme).",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "npx mix watch",
+    "build": "npx mix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.13",
+    "@tailwindcss/postcss": "^4.1.14",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "postcss-partial-import": "^4.1.0",
+    "tailwindcss": "^4.1.14"
+  },
+  "devDependencies": {
+    "daisyui": "^5.1.14",
+    "laravel-mix": "^6.0.49",
+    "postcss-at-rules-variables": "^0.3.0",
+    "postcss-custom-media": "^11.0.6",
+    "postcss-each": "^1.1.0",
+    "postcss-each-variables": "^0.3.0",
+    "postcss-for": "^2.1.1",
+    "postcss-import": "^16.1.1",
+    "postcss-nested": "^7.0.2"
+  }
+}

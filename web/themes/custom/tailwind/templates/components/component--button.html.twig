@@ -1,0 +1,55 @@
+{# Reusable button / link component.
+   Props:
+   - label: required button text
+   - url: href when rendered as <a>
+   - as: 'a' | 'button' (default 'a')
+   - type: button type when as == 'button' (button|submit)
+   - variant: 'primary' | 'secondary' | 'ghost'
+   - size: 'sm' | 'md' | 'lg'
+   - class: extra classes
+   - icon_left, icon_right: optional inline icon markup
+#}
+
+{% set as = as|default('a') %}
+{% set variant = variant|default('primary') %}
+{% set size = size|default('md') %}
+
+{% set variant_classes_map = {
+  'primary': 'bg-sky-600 text-white hover:bg-sky-700 focus-visible:outline-sky-600',
+  'secondary': 'bg-slate-100 text-slate-900 hover:bg-slate-200 focus-visible:outline-slate-500',
+  'ghost': 'text-sky-700 hover:bg-sky-50 focus-visible:outline-sky-600',
+} %}
+
+{% set size_classes_map = {
+  'sm': 'px-3 py-1.5 text-sm',
+  'md': 'px-4 py-2.5 text-sm',
+  'lg': 'px-6 py-3 text-base',
+} %}
+
+{% set variant_classes = variant_classes_map[variant]|default(variant_classes_map['primary']) %}
+{% set size_classes = size_classes_map[size]|default(size_classes_map['md']) %}
+
+{% set base_classes = 'inline-flex items-center justify-center gap-x-2 rounded-md font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2' %}
+{% set classes = base_classes ~ ' ' ~ variant_classes ~ ' ' ~ size_classes ~ ' ' ~ (class|default('')) %}
+
+{% if as == 'button' %}
+  <button type="{{ type|default('button') }}" class="{{ classes }}">
+    {% if icon_left %}
+      <span class="button__icon button__icon--left">{{ icon_left }}</span>
+    {% endif %}
+    <span>{{ label }}</span>
+    {% if icon_right %}
+      <span class="button__icon button__icon--right">{{ icon_right }}</span>
+    {% endif %}
+  </button>
+{% else %}
+  <a href="{{ url }}" class="{{ classes }}">
+    {% if icon_left %}
+      <span class="button__icon button__icon--left">{{ icon_left }}</span>
+    {% endif %}
+    <span>{{ label }}</span>
+    {% if icon_right %}
+      <span class="button__icon button__icon--right">{{ icon_right }}</span>
+    {% endif %}
+  </a>
+{% endif %}
