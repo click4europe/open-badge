@@ -1,0 +1,5 @@
+services:
+  edk_twig.extension:
+    class: Drupal\edk_twig\TwigExtension\EdkTwigExtension
+    tags:
+      - { name: twig.extension }

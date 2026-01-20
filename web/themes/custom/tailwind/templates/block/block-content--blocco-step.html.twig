@@ -1,0 +1,31 @@
+{#
+  block-content--blocco-step.html.twig
+  
+  Renders a SINGLE blocco_step block content.
+  This template outputs the video field for the step.
+  
+  Fields:
+  - field_step_number: Step number (e.g. "01", "02")
+  - field_step_title: Step title text
+  - body: Step description text
+  - field_video: Video file (File field)
+#}
+
+{# Extract video URL from file field #}
+{% set video_url = null %}
+{% if content.field_video['#items'] is not empty %}
+  {% set file_entity = content.field_video['#items'].0.entity %}
+  {% if file_entity %}
+    {% set video_url = file_url(file_entity.uri.value) %}
+  {% endif %}
+{% endif %}
+
+{# Render video with proper HTML5 video tag and source #}
+{% if video_url %}
+  <video class="w-full h-auto" autoplay loop muted playsinline>
+    <source src="{{ video_url }}" type="video/mp4">
+  </video>
+{% endif %}
+
+{# Edit link for admin users #}
+{{ title_suffix.contextual_links }}

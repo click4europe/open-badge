@@ -1,0 +1,47 @@
+{# component--page-hero.html.twig
+   Reusable hero section for internal pages.
+   
+   Parameters:
+   - title: Page title (required)
+   - description: Page description text
+   - image: Image URL or path
+   - image_alt: Alt text for image (defaults to title)
+   - eyebrow: Optional small text above title
+   
+   Usage:
+   {% include '@tailwind/components/component--page-hero.html.twig' with {
+     title: 'title',
+     description: 'description',
+     image: '/themes/custom/tailwind/images/public/hero-competenze.jpg'
+   } %}
+#}
+
+<section class="bg-[#050322]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 lg:py-24 grid gap-12 lg:grid-cols-2 items-center">
+    <!-- Text -->
+    <div class="space-y-6 text-white">
+      {% if eyebrow %}
+        <p class="text-xs font-semibold tracking-[0.25em] uppercase text-obYellow">{{ eyebrow }}</p>
+      {% endif %}
+      {% if title %}
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
+          {{ title }}
+        </h1>
+      {% endif %}
+      {% if description %}
+        <div class="text-sm sm:text-base text-slate-200 max-w-xl">
+          {{ description|raw }}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Image -->
+    {% if image %}
+      <div class="relative">
+        <div class="rounded-3xl overflow-hidden shadow-2xl">
+          <img src="{{ image }}" alt="{{ image_alt|default(title) }}" class="w-full h-auto" />
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>

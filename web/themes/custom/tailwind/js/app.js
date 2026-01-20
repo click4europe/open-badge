@@ -268,6 +268,119 @@
           }
         });
 
+        // Partner Carousel
+        const carousel = document.getElementById('partner-carousel');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+
+        if (carousel && prevBtn && nextBtn) {
+          let currentIndex = 0;
+          const items = carousel.children;
+          const totalItems = items.length;
+          let autoSlideInterval;
+          let isTransitioning = false;
+
+          function getItemsPerView() {
+            if (window.innerWidth >= 640) return 4;
+            return 2;
+          }
+
+          function updateCarousel(smooth = true) {
+            if (isTransitioning) return;
+            
+            const itemsPerView = getItemsPerView();
+            const maxIndex = Math.max(0, totalItems - itemsPerView);
+            currentIndex = Math.min(currentIndex, maxIndex);
+
+            const itemWidth = items[0].offsetWidth;
+            const gap = 12;
+            const offset = -(currentIndex * (itemWidth + gap));
+            
+            if (smooth) {
+              isTransitioning = true;
+              carousel.style.transition = 'transform 0.5s ease-in-out';
+              setTimeout(() => {
+                isTransitioning = false;
+              }, 500);
+            } else {
+              carousel.style.transition = 'none';
+            }
+            
+            carousel.style.transform = `translateX(${offset}px)`;
+
+            if (currentIndex === 0) {
+              prevBtn.classList.add('opacity-50', 'pointer-events-none');
+            } else {
+              prevBtn.classList.remove('opacity-50', 'pointer-events-none');
+            }
+
+            if (currentIndex >= maxIndex) {
+              nextBtn.classList.add('opacity-50', 'pointer-events-none');
+            } else {
+              nextBtn.classList.remove('opacity-50', 'pointer-events-none');
+            }
+          }
+
+          function nextSlide() {
+            const itemsPerView = getItemsPerView();
+            const maxIndex = Math.max(0, totalItems - itemsPerView);
+            if (currentIndex < maxIndex) {
+              currentIndex++;
+            } else {
+              currentIndex = 0;
+            }
+            updateCarousel();
+          }
+
+          function prevSlide() {
+            if (currentIndex > 0) {
+              currentIndex--;
+            } else {
+              const itemsPerView = getItemsPerView();
+              const maxIndex = Math.max(0, totalItems - itemsPerView);
+              currentIndex = maxIndex;
+            }
+            updateCarousel();
+          }
+
+          function resetAutoSlide() {
+            stopAutoSlide();
+            startAutoSlide();
+          }
+
+          function startAutoSlide() {
+            stopAutoSlide();
+            autoSlideInterval = setInterval(nextSlide, 4000);
+          }
+
+          function stopAutoSlide() {
+            if (autoSlideInterval) {
+              clearInterval(autoSlideInterval);
+              autoSlideInterval = null;
+            }
+          }
+
+          prevBtn.addEventListener('click', function() {
+            prevSlide();
+            resetAutoSlide();
+          });
+
+          nextBtn.addEventListener('click', function() {
+            nextSlide();
+            resetAutoSlide();
+          });
+
+          carousel.addEventListener('mouseenter', stopAutoSlide);
+          carousel.addEventListener('mouseleave', startAutoSlide);
+
+          window.addEventListener('resize', function() {
+            updateCarousel(false);
+          });
+
+          updateCarousel(false);
+          startAutoSlide();
+        }
+
       });
     }
   };

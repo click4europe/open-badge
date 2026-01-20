@@ -1,0 +1,101 @@
+{#
+  steps-section.html.twig
+  
+  Reusable steps section component.
+  Renders the full "Cosa puoi fare" section with steps from CMS.
+  
+  Variables:
+  - steps: Array of step objects from Blocchi::make_query_blocchi()
+  - steps_edit: Optional admin edit link
+#}
+
+<section id="cosa-puoi-fare" class="py-16 lg:py-24 bg-[#f6f7ed]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <!-- Centered header -->
+    <div class="text-center mb-16">
+      <p class="text-[11px] sm:text-xs font-semibold tracking-[0.25em] uppercase text-slate-500 mb-4">Partecipazione, formazione e qualificazione</p>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">Cosa puoi fare con la nostra piattaforma</h2>
+    </div>
+
+    {% if steps_edit %}
+      <div class="mb-4 text-center text-slate-900">{{ steps_edit }}</div>
+    {% endif %}
+
+    <div data-ob-steps class="grid gap-12 lg:grid-cols-2 items-start">
+      <!-- Left: numbered steps list -->
+      <div class="space-y-0">
+        {% if steps is not empty %}
+          {% for step in steps %}
+            {% set step_num = step.step_number|default(('0' ~ loop.index)|slice(-2)) %}
+            <button type="button" data-ob-step="{{ step_num }}" class="ob-step-item w-full text-left py-5 border-t {{ loop.last ? 'border-b' : '' }} border-slate-300 flex items-start gap-4 group">
+              <span class="text-sm text-slate-400 font-medium pt-0.5">{{ step_num }}</span>
+              <span class="text-base sm:text-lg text-slate-800 group-hover:text-[#1d4ed8] transition-colors">{{ step.field_step_title|default('Step ' ~ loop.index) }}</span>
+            </button>
+          {% endfor %}
+        {% else %}
+          {# Fallback static steps #}
+          {% set fallback_steps = [
+            {num: '01', title: 'Inizia a certificare le competenze'},
+            {num: '02', title: 'Crea badge template di conoscenza, competenza o partecipazione'},
+            {num: '03', title: 'Monitora il conseguimento dei certificati'},
+            {num: '04', title: 'Pianifica le scadenze ed i rinnovi dei certificati'},
+            {num: '05', title: 'Crea percorsi di apprendimento multi-badge'},
+            {num: '06', title: 'Pubblica i corsi disponibili nella tua e-page'}
+          ] %}
+          {% for item in fallback_steps %}
+            <button type="button" data-ob-step="{{ item.num }}" class="ob-step-item w-full text-left py-5 border-t {{ loop.last ? 'border-b' : '' }} border-slate-300 flex items-start gap-4 group">
+              <span class="text-sm text-slate-400 font-medium pt-0.5">{{ item.num }}</span>
+              <span class="text-base sm:text-lg text-slate-800 group-hover:text-[#1d4ed8] transition-colors">{{ item.title }}</span>
+            </button>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      <!-- Right: description text + video -->
+      <div class="space-y-8">
+        <!-- Description panels -->
+        <div class="text-slate-600 text-base sm:text-lg leading-relaxed">
+          {% if steps is not empty %}
+            {% for step in steps %}
+              {% set step_num = step.step_number|default(('0' ~ loop.index)|slice(-2)) %}
+              <div data-ob-step-panel="{{ step_num }}" class="ob-step-panel {{ loop.first ? '' : 'hidden' }}">
+                <p>{{ step.body|striptags|default('') }}</p>
+              </div>
+            {% endfor %}
+          {% else %}
+            {# Fallback static descriptions #}
+            {% set fallback_desc = [
+              {num: '01', text: 'Distingui la tua organizzazione con certificazioni su misura, valorizza ogni traguardo e rendi immediata la condivisione delle competenze acquisite.'},
+              {num: '02', text: 'Definisci template di badge di conoscenza, competenza o partecipazione che puoi riutilizzare in più corsi e progetti.'},
+              {num: '03', text: 'Tieni sotto controllo lo stato dei badge, le assegnazioni e le scadenze, così da avere sempre una fotografia aggiornata dei risultati.'},
+              {num: '04', text: 'Imposta validità, reminder e processi di rinnovo automatico per mantenere aggiornate le certificazioni nel tempo.'},
+              {num: '05', text: 'Costruisci percorsi composti da più badge intermedi e un certificato finale che racconta l\'intero percorso formativo.'},
+              {num: '06', text: 'Rendi visibili i tuoi corsi e percorsi su una pagina pubblica dedicata, così da promuovere facilmente la tua offerta formativa.'}
+            ] %}
+            {% for item in fallback_desc %}
+              <div data-ob-step-panel="{{ item.num }}" class="ob-step-panel {{ loop.first ? '' : 'hidden' }}">
+                <p>{{ item.text }}</p>
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        <!-- Video panels -->
+        <div class="relative mt-8">
+          {% if steps is not empty %}
+            {% for step in steps %}
+              {% set step_num = step.step_number|default(('0' ~ loop.index)|slice(-2)) %}
+              <div data-ob-step-video="{{ step_num }}" class="ob-step-video {{ loop.first ? '' : 'hidden' }} rounded-2xl overflow-hidden shadow-xl relative">
+                {{ drupal_entity('block_content', step.id) }}
+                {# Edit link for this specific step block #}
+                {% if steps_edit %}
+                  <a href="/admin/content/block/{{ step.id }}" class="absolute top-2 right-2 bg-white/90 text-xs px-2 py-1 rounded shadow text-slate-900" target="_blank">Edit Step {{ step_num }}</a>
+                {% endif %}
+              </div>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

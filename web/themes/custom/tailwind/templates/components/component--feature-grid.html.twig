@@ -1,0 +1,34 @@
+{# Reusable feature grid component with numbered cards.
+   Props:
+   - items: array of feature items, each with: number, title, description
+   - columns: 2 | 3 | 4 (default 3)
+   - class: extra classes for the grid container
+   Usage:
+   {% include '@tailwind/components/component--feature-grid.html.twig' with {
+     columns: 3,
+     items: [
+       { number: '01', title: 'Feature 1', description: 'Description 1' },
+       { number: '02', title: 'Feature 2', description: 'Description 2' },
+     ]
+   } %}
+#}
+
+{% set columns = columns|default(3) %}
+
+{% set column_classes = {
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-3',
+  4: 'md:grid-cols-2 lg:grid-cols-4',
+}[columns]|default('md:grid-cols-3') %}
+
+<div class="grid gap-6 {{ column_classes }} {{ class|default('') }}">
+  {% for item in items %}
+    {% include '@tailwind/components/component--card.html.twig' with {
+      number: item.number|default(loop.index|number_format(0, '', '')|length < 2 ? '0' ~ loop.index : loop.index),
+      title: item.title,
+      description: item.description,
+      link: item.link|default(null),
+      variant: item.variant|default('default'),
+    } %}
+  {% endfor %}
+</div>

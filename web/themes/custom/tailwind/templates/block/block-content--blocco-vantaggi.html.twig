@@ -1,120 +1,73 @@
- <section id="come-funziona-open-badge" class="bg-white py-16 lg:py-20">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6">
-        <div class="max-w-3xl mb-8">
-          <p class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500 mb-3">Partecipazione, formazione e qualificazione</p>
-          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-obBlue">I Vantaggi dei certificati digitali Open Badge</h2>
+ {#
+  block-content--blocco-vantaggi.html.twig
+  
+  Renders a SINGLE blocco_vantaggi tab panel content.
+  Matches the exact static HTML structure with same Tailwind classes.
+  
+  Fields:
+  - body: Tab button label (e.g. "Per le scuole...")
+  - field_titolo: First section title
+  - field_first_body: First section body (HTML with <ul> list)
+  - field_first_image: First section image
+  - field_link_primo: First section link
+  - field_titolo_secondo: Second section title
+  - field_secondo_body: Second section body (HTML with <ul> list)
+  - field_secondo_image: Second section image
+  - field_secondo_link: Second section link
+#}
+
+<div class="space-y-16">
+  {# First row: text left, image right #}
+  <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+    <div class="space-y-4 text-sm sm:text-base text-slate-700">
+      {% if content.field_titolo[0] %}
+        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-obBlue">{{ content.field_titolo[0]['#context'].value|default(content.field_titolo[0]) }}</h3>
+      {% endif %}
+      {% if content.field_first_body[0] %}
+        <div class="prose prose-slate max-w-none">{{ content.field_first_body[0]['#text']|default(content.field_first_body[0])|raw }}</div>
+      {% endif %}
+      {% if content.field_link_primo[0] %}
+        <div class="pt-2">
+          <a href="{{ content.field_link_primo[0]['#url']|default('#') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors">
+            {{ content.field_link_primo[0]['#title']|default('Watch Product Tour') }}
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
-
-        <div data-ob-tabs class="space-y-8">
-          <div class="border-b border-slate-200 text-[11px] sm:text-xs font-medium text-slate-600 flex flex-wrap gap-0">
-            <button type="button" class="ob-tab px-4 sm:px-6 py-3 tracking-[0.16em] uppercase whitespace-normal text-left bg-[#fdece2] text-slate-900 border-t border-l border-r border-slate-200 -mb-px" data-ob-tab="design">
-              Per le scuole ed i centri di formazione
-            </button>
-            <button type="button" class="ob-tab px-4 sm:px-6 py-3 tracking-[0.16em] uppercase whitespace-normal text-left bg-transparent text-slate-600 border-b border-transparent hover:bg-slate-50" data-ob-tab="publish">
-              Per le pubbliche amministrazioni
-            </button>
-            <button type="button" class="ob-tab px-4 sm:px-6 py-3 tracking-[0.16em] uppercase whitespace-normal text-left bg-transparent text-slate-600 border-b border-transparent hover:bg-slate-50" data-ob-tab="track">
-              Per le grandi aziende e le startup
-            </button>
-          </div>
-
-          <div class="space-y-12">
-            <div data-ob-panel="design" class="ob-tab-panel space-y-10">
-              <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div class="space-y-3 text-sm sm:text-base text-slate-700">
-                  <h3 class="text-lg sm:text-xl font-semibold text-obBlue">Disegna certificati su misura</h3>
-                  <p>Crea badge digitali personalizzati con criteri chiari, evidenze richieste e metadati completi. Ogni certificato racconta le competenze acquisite in modo semplice e verificabile.</p>
-                  <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
-                    <li>Definisci obiettivi, competenze e criteri di valutazione.</li>
-                    <li>Collega badge a percorsi e attività formative.</li>
-                    <li>Rendi i certificati facilmente condivisibili online.</li>
-                  </ul>
-                </div>
-                <div class="relative h-64 sm:h-72 lg:h-80">
-                  <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80" alt="Docente che presenta un corso" class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl" loading="lazy" />
-                </div>
-              </div>
-
-              <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div class="relative h-64 sm:h-72 lg:h-80">
-                  <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80" alt="Studenti al lavoro in gruppo" class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl" loading="lazy" />
-                </div>
-                <div class="space-y-3 text-sm sm:text-base text-slate-700">
-                  <h3 class="text-lg sm:text-xl font-semibold text-obBlue">Coinvolgi studenti e partecipanti</h3>
-                  <p>Offri una panoramica chiara dei risultati ottenuti e dei prossimi passi all'interno dei tuoi percorsi formativi.</p>
-                  <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
-                    <li>Raccogli in un unico spazio tutti i badge dei tuoi corsi.</li>
-                    <li>Motiva i partecipanti con traguardi intermedi ben visibili.</li>
-                    <li>Racconta il valore del tuo catalogo formativo con esempi concreti.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div data-ob-panel="publish" class="ob-tab-panel hidden space-y-10">
-              <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div class="space-y-3 text-sm sm:text-base text-slate-700">
-                  <h3 class="text-lg sm:text-xl font-semibold text-obBlue">Pubblica percorsi strutturati</h3>
-                  <p>Organizza corsi, moduli e micro-attività in percorsi chiari, con badge intermedi e certificato finale. Ogni partecipante sa sempre qual è il prossimo passo.</p>
-                  <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
-                    <li>Crea percorsi multi-badge con traguardi progressivi.</li>
-                    <li>Imposta prerequisiti e condizioni di completamento.</li>
-                    <li>Offri una vista chiara dei risultati raggiunti.</li>
-                  </ul>
-                </div>
-                <div class="relative h-64 sm:h-72 lg:h-80">
-                  <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=900&q=80" alt="Riunione in ufficio" class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl" loading="lazy" />
-                </div>
-              </div>
-
-              <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div class="relative h-64 sm:h-72 lg:h-80">
-                  <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=900&q=80" alt="Dashboard digitale su schermo" class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl" loading="lazy" />
-                </div>
-                <div class="space-y-3 text-sm sm:text-base text-slate-700">
-                  <h3 class="text-lg sm:text-xl font-semibold text-obBlue">Rendi visibili i servizi del tuo ente</h3>
-                  <p>Pubblica cataloghi di percorsi e certificazioni in una pagina dedicata, facilmente consultabile da cittadini e organizzazioni.</p>
-                  <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
-                    <li>Raccolta centralizzata dei percorsi attivi.</li>
-                    <li>Maggiore trasparenza sugli obiettivi formativi.</li>
-                    <li>Accesso facilitato per tutti i destinatari.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div data-ob-panel="track" class="ob-tab-panel hidden space-y-10">
-              <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div class="space-y-3 text-sm sm:text-base text-slate-700">
-                  <h3 class="text-lg sm:text-xl font-semibold text-obBlue">Certifica i traguardi della tua forza lavoro</h3>
-                  <p>Ottimizza la gestione delle competenze e certifica ogni traguardo con badge digitali verificabili. Automatizza l'assegnazione delle certificazioni e rendi misurabile la crescita professionale.</p>
-                  <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
-                    <li>Badge conformi agli standard internazionali.</li>
-                    <li>Processi automatici di rilascio e rinnovo.</li>
-                    <li>Certificati pronti per essere condivisi su tutte le piattaforme digitali.</li>
-                  </ul>
-                </div>
-                <div class="relative h-64 sm:h-72 lg:h-80">
-                  <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80" alt="Sede aziendale moderna" class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl" loading="lazy" />
-                </div>
-              </div>
-
-              <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
-                <div class="relative h-64 sm:h-72 lg:h-80">
-                  <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80" alt="Team che lavora insieme" class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl" loading="lazy" />
-                </div>
-                <div class="space-y-3 text-sm sm:text-base text-slate-700">
-                  <h3 class="text-lg sm:text-xl font-semibold text-obBlue">Valorizza e condividi le competenze tra i tuoi team</h3>
-                  <p>Rendi più semplice per i tuoi team raccontare e condividere le competenze acquisite, favorendo collaborazione e crescita interna.</p>
-                  <ul class="list-disc list-inside text-sm text-slate-700 space-y-1">
-                    <li>Report chiari sui risultati della formazione continua.</li>
-                    <li>Maggiore visibilità dei talenti presenti in azienda.</li>
-                    <li>Strumenti per supportare decisioni su carriera e sviluppo.</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
+      {% endif %}
+    </div>
+    {% if content.field_first_image[0] %}
+      <div class="flex justify-center">
+        <div class="rounded-3xl overflow-hidden shadow-lg max-w-md field-no-label">
+          {{ content.field_first_image[0] }}
         </div>
       </div>
-    </section>
+    {% endif %}
+  </div>
+
+  {# Second row: image left, text right #}
+  <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+    {% if content.field_secondo_image[0] %}
+      <div class="flex justify-center">
+        <div class="rounded-3xl overflow-hidden shadow-lg max-w-md field-no-label">
+          {{ content.field_secondo_image[0] }}
+        </div>
+      </div>
+    {% endif %}
+    <div class="space-y-4 text-sm sm:text-base text-slate-700">
+      {% if content.field_titolo_secondo[0] %}
+        <h3 class="text-xl sm:text-2xl lg:text-3xl font-bold text-obBlue">{{ content.field_titolo_secondo[0]['#context'].value|default(content.field_titolo_secondo[0]) }}</h3>
+      {% endif %}
+      {% if content.field_secondo_body[0] %}
+        <div class="prose prose-slate max-w-none">{{ content.field_secondo_body[0]['#text']|default(content.field_secondo_body[0])|raw }}</div>
+      {% endif %}
+      {% if content.field_secondo_link[0] %}
+        <div class="pt-2">
+          <a href="{{ content.field_secondo_link[0]['#url']|default('#') }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-300 text-sm font-medium text-slate-700 hover:bg-slate-100 transition-colors">
+            {{ content.field_secondo_link[0]['#title']|default('Watch Product Tour') }}
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -3,3 +3,6 @@ type: module
 description: 'Basic Page render custom'
 core_version_requirement: ^10 || ^11
 package: 'Custom'
+dependencies:
+  - blocchi:blocchi
+  - edk_twig:edk_twig

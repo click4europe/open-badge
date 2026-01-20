@@ -1,0 +1,54 @@
+{# Reusable contact form component.
+   Props:
+   - action: form action URL (default: none, uses onsubmit="return false;")
+   - method: form method (default: 'post')
+   - submit_label: submit button text (default: 'Invia richiesta')
+   - variant: 'dark' | 'light' (default: 'dark')
+   - class: extra classes
+   Usage:
+   {% include '@tailwind/components/component--contact-form.html.twig' with {
+     action: '/contact',
+     submit_label: 'Send Message',
+     variant: 'dark',
+   } %}
+#}
+
+{% set variant = variant|default('dark') %}
+{% set submit_label = submit_label|default('Invia richiesta') %}
+
+{% set variant_classes = {
+  'dark': {
+    'wrapper': 'bg-slate-800 rounded-2xl p-6 shadow-lg',
+    'label': 'block text-xs mb-1',
+    'input': 'w-full px-3 py-2 text-sm rounded-lg bg-slate-900 border border-slate-700 text-white focus:outline-none focus:ring-2 focus:ring-obLightBlue',
+  },
+  'light': {
+    'wrapper': 'bg-white rounded-2xl p-6 shadow-lg',
+    'label': 'block text-xs mb-1 text-slate-700',
+    'input': 'w-full px-3 py-2 text-sm rounded-lg bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-obLightBlue',
+  },
+}[variant] %}
+
+<div class="{{ variant_classes.wrapper }} {{ class|default('') }}">
+  <form class="space-y-4" {% if action %}action="{{ action }}" method="{{ method|default('post') }}"{% else %}onsubmit="return false;"{% endif %}>
+    <div>
+      <label for="ob-name" class="{{ variant_classes.label }}">Nome e cognome</label>
+      <input id="ob-name" name="name" type="text" class="{{ variant_classes.input }}" />
+    </div>
+    <div>
+      <label for="ob-email" class="{{ variant_classes.label }}">Email</label>
+      <input id="ob-email" name="email" type="email" class="{{ variant_classes.input }}" />
+    </div>
+    <div>
+      <label for="ob-message" class="{{ variant_classes.label }}">Come possiamo aiutarti?</label>
+      <textarea id="ob-message" name="message" rows="4" class="{{ variant_classes.input }}"></textarea>
+    </div>
+    {% include '@tailwind/components/component--button.html.twig' with {
+      label: submit_label,
+      as: 'button',
+      type: 'submit',
+      variant: 'primary',
+      class: 'w-full text-sm',
+    } %}
+  </form>
+</div>

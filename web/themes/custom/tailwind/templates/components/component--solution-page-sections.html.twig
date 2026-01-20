@@ -1,0 +1,248 @@
+{#
+/**
+ * Reusable Solution Page Sections Component
+ * 
+ * This component contains all the repeated sections for solution pages:
+ * 1. Main content section (image + text)
+ * 2. Steps section
+ * 3. Come funziona section
+ * 4. Case studies section
+ * 5. Cosa puoi fare con Obv section
+ * 6. Inizia oggi CTA section
+ * 7. Contact form section
+ * 
+ * Usage:
+ * {% include '@tailwind/components/component--solution-page-sections.html.twig' with {
+ *   page_title: 'Skills Management',
+ *   gradient_colors: 'from-teal-50 to-cyan-50',
+ *   main_image: '/themes/custom/tailwind/images/public/img_2.png',
+ *   paragraphs: [
+ *     'First paragraph text...',
+ *     'Second paragraph text...',
+ *     'Third paragraph text...'
+ *   ],
+ *   how_it_works_steps: [
+ *     { title: 'Creazione', description: '...' },
+ *     { title: 'Assegnazione', description: '...' },
+ *   ],
+ *   obv_description_org: 'Description for organizations...',
+ *   obv_description_user: 'Description for end users...',
+ *   cta_subtitle: 'Scopri come lo skill management può trasformare...',
+ *   cta_button_text: 'Abbonamenti Skills',
+ *   steps: data.steps,
+ *   steps_edit: data.steps_edit
+ * } %}
+ */
+#}
+
+{# Main Content Section #}
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid gap-12 lg:grid-cols-2 items-start">
+      {# Left: Image #}
+      <div class="order-2 lg:order-1">
+        <div class="bg-gradient-to-br {{ gradient_colors|default('from-blue-50 to-indigo-50') }} rounded-3xl p-8 lg:p-12">
+          <img src="{{ main_image|default('/themes/custom/tailwind/images/public/img_2.png') }}" 
+               alt="{{ page_title }}" 
+               class="w-full h-auto rounded-2xl shadow-lg" />
+        </div>
+      </div>
+
+      {# Right: Content #}
+      <div class="order-1 lg:order-2 space-y-8">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">{{ page_title }}</h2>
+          {% for paragraph in paragraphs %}
+            <p class="text-base text-slate-700 leading-relaxed {{ loop.last ? '' : 'mb-6' }}">
+              {{ paragraph }}
+            </p>
+          {% endfor %}
+        </div>
+
+        <div class="pt-4">
+          <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 transition-colors">
+            Inizia ora
+            <span aria-hidden="true" class="ml-2">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Steps Section #}
+{% if steps is defined %}
+  {% include '@tailwind/components/steps-section.html.twig' with {
+    steps: steps,
+    steps_edit: steps_edit
+  } %}
+{% endif %}
+
+{# Come funziona Section #}
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid gap-12 lg:grid-cols-2 items-center">
+      {# Left: Image #}
+      <div>
+        <div class="relative">
+          <img src="{{ how_it_works_image|default('/themes/custom/tailwind/images/public/open-badge.eu-img3.png') }}" 
+               alt="Come funziona" 
+               class="w-full h-auto rounded-2xl shadow-lg" />
+        </div>
+      </div>
+
+      {# Right: Content #}
+      <div class="space-y-6">
+        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">Come funziona</h2>
+        
+        <div class="space-y-4">
+          {% set default_steps = [
+            { title: 'Creazione', description: "L'ente o l'organizzazione crea un badge digitale inserendo i metadati rilevanti (competenze, corso, ente, data)." },
+            { title: 'Assegnazione', description: 'Il badge viene assegnato agli utenti che hanno completato un corso, una formazione o un evento.' },
+            { title: 'Condivisione', description: 'Gli utenti possono salvare i badge in un portafoglio digitale e condividerli su social network o piattaforme professionali come LinkedIn.' },
+            { title: 'Verifica', description: 'Chiunque può cliccare sul badge per verificarne la validità, visualizzare le informazioni e accertarsi dell\'autenticità, grazie al collegamento con lo standard 1EDTECH.' }
+          ] %}
+          
+          {% for step in how_it_works_steps|default(default_steps) %}
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-1">{{ step.title }}:</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                {{ step.description }}
+              </p>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="pt-4">
+          <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 transition-colors">
+            Inizia ora
+            <span aria-hidden="true" class="ml-2">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Scopri le storie di successo Section #}
+<section class="py-16 lg:py-20 bg-slate-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">Scopri le storie di successo open badge</h2>
+      <p class="text-base text-blue-600 mb-6">esplora alcuni ambiti di applicazione degli open badge</p>
+      <a href="/case-studies" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 transition-colors">
+        Vedi tutti i casi studio
+        <span aria-hidden="true" class="ml-2">→</span>
+      </a>
+    </div>
+
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-12">
+      {# Case Study 1 #}
+      <article class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200">
+        <div class="space-y-3">
+          <span class="text-xs font-semibold tracking-widest uppercase text-slate-400">CASE STUDY</span>
+          <h3 class="text-lg font-bold text-slate-900 leading-tight min-h-[3rem]">Skillon e open badge</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">Skillon e open badge</p>
+          <div class="pt-2">
+            <a href="#" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+              Approfondisci
+              <span aria-hidden="true" class="ml-1">→</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      {# Case Study 2 #}
+      <article class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200">
+        <div class="space-y-3">
+          <span class="text-xs font-semibold tracking-widest uppercase text-slate-400">CASE STUDY</span>
+          <h3 class="text-lg font-bold text-slate-900 leading-tight min-h-[3rem]">Edumoby utilizza gli Open Badge</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">Edumoby utilizza gli Open Badge!</p>
+          <div class="pt-2">
+            <a href="#" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+              Approfondisci
+              <span aria-hidden="true" class="ml-1">→</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      {# Case Study 3 #}
+      <article class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200">
+        <div class="space-y-3">
+          <span class="text-xs font-semibold tracking-widest uppercase text-slate-400">CASE STUDY</span>
+          <h3 class="text-lg font-bold text-slate-900 leading-tight min-h-[3rem]">Eurodesk Italy, i benefici nell'utilizzo degli Open Badge.</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">Valorizzazione delle competenze tramite gli Open Badge</p>
+          <div class="pt-2">
+            <a href="#" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+              Approfondisci
+              <span aria-hidden="true" class="ml-1">→</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{# Cosa puoi fare con Obv Section #}
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid gap-12 lg:grid-cols-2 items-center">
+      {# Left: Content #}
+      <div class="space-y-8">
+        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">Cosa puoi fare con Obv</h2>
+        
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Per Aziende e Pubbliche Amministrazioni</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              {{ obv_description_org|default('Con OBV puoi creare e gestire badge digitali per certificare le competenze e le partecipazioni dei tuoi dipendenti o utenti. Automatizza l\'assegnazione dei certificati al completamento di corsi, congressi o attività formative, e utilizza l\'integrazione API per collegare i tuoi sistemi esistenti. Personalizza i percorsi di apprendimento e monitora i progressi con una gestione centralizzata e semplice, migliorando la valorizzazione e la condivisione delle competenze.') }}
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Per l'Utente Finale</h3>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              {{ obv_description_user|default('Con OBV puoi collezionare e gestire i tuoi badge digitali in modo semplice. Ogni certificato è verificabile e condivisibile su social network, come LinkedIn, o nelle candidature di lavoro. Traccia i tuoi progressi formativi, mostra le tue competenze e condividi i risultati dei tuoi percorsi di apprendimento, tutto dalla tua dashboard personale.') }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {# Right: Image #}
+      <div>
+        <div class="relative">
+          <img src="{{ obv_image|default('/themes/custom/tailwind/images/public/open-badge.eu-img2.png') }}" 
+               alt="Cosa puoi fare con Obv" 
+               class="w-full h-auto rounded-2xl shadow-lg" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Inizia oggi Section #}
+<section class="py-20 lg:py-28 bg-[#050322]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <div class="space-y-6">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+        Inizia oggi
+      </h2>
+      <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+        {{ cta_subtitle|default('Scopri come gli Open Badge possono trasformare la tua organizzazione') }}
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+        <a href="/abbonamenti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#050322] transition-colors">
+          {{ cta_button_text|default('Abbonamenti') }}
+          <span aria-hidden="true" class="ml-2">→</span>
+        </a>
+        <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white/80 text-sm font-semibold hover:bg-white/10 transition-colors">
+          Contattaci
+          <span aria-hidden="true" class="ml-2">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+

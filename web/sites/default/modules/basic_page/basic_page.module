@@ -25,6 +25,21 @@ function basic_page_help($route_name, RouteMatchInterface $route_match)
 }
 
 /**
+ * Implements hook_user_login().
+ * Redirect users to home page after login.
+ */
+function basic_page_user_login($account) {
+  // Get the current request
+  $current_request = \Drupal::request();
+  
+  // Check if there's a destination parameter (preserve it if exists)
+  if (!$current_request->query->has('destination')) {
+    // Set the redirect destination to home page
+    $current_request->query->set('destination', '/');
+  }
+}
+
+/**
  * Implements hook_theme().
  */
 function basic_page_theme() {
@@ -44,9 +59,10 @@ function basic_page_theme() {
         'content' => NULL,
       ],
       'template' => 'home-page-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
 
-    // Node basic page render block (kept for future use, as in EYCA).
+    // Node basic page render block .
     'basic_page_render' => [
       'variables' => [
         'data' => NULL,
@@ -54,6 +70,87 @@ function basic_page_theme() {
         'content' => NULL,
       ],
       'template' => 'basic-page-render',
+    ],
+
+    // Pubbliche Amministrazioni page render.
+    'pubbliche_amministrazioni_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'pubbliche-amministrazioni-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Prezzi e Abbonamenti page render.
+    'prezzi_e_abbonamenti_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'prezzi-e-abbonamenti-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Scuole e Centri di Formazione page render.
+    'scuole_e_centri_di_formazione_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'scuole-e-centri-di-formazione-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Imprese e Startup page render.
+    'imprese_e_startup_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'imprese-e-startup-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Digital Credentialing page render.
+    'digital_credentialing_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'digital-credentialing-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Skills Management page render.
+    'skills_management_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'skills-management-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Certificazione Lavoratori page render.
+    'certificazione_lavoratori_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'certificazione-lavoratori-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Apprendimento Continuo page render.
+    'apprendimento_continuo_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'apprendimento-continuo-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Upskilling page render.
+    'upskilling_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'upskilling-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
   ];
 }

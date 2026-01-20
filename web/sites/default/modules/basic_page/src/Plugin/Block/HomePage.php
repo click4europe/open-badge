@@ -1,18 +1,13 @@
 <?php
 
 namespace Drupal\basic_page\Plugin\Block;
-
-use Drupal\basic_page\Utils\Notizie;
-use Drupal\blocchi\Utils\Blocchi;
-use Drupal\blocchi\Utils\ScontiData;
-use Drupal\blocchi\Utils\Utils;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Theme\ThemeManager;
 use Drupal\Core\Url;
-use Drupal\node\Entity\Node;
-use Drupal\rest_hub_client\Utils\DrupalRest;
+use Drupal\blocchi\Utils\Blocchi;
+use Drupal\basic_page\Traits\StepDataTrait;
+
 
 
 
@@ -26,25 +21,72 @@ use Drupal\rest_hub_client\Utils\DrupalRest;
  */
 class HomePage extends BlockBase
 {
-
+    use StepDataTrait;
 
     /**
      * {@inheritdoc}
      */
     public function build()
     {
-        
         $data = [];
         $title = '';
+        $account = \Drupal::currentUser();
+        $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
-        // In the new project we only need to render the static home-page layout
-        // defined in home-page-render.html.twig. We avoid any dependencies on
-        // EYCA-specific helper modules so this block always renders safely.
+        // fetch first 3 blocchi box home (blocco_vantaggi)
+        $data['vantaggi'] = Blocchi::make_query_blocchi('blocco_vantaggi', $lang, TRUE, 'ASC', 0, 3);
+        // Add edit link for admin (user ID 1)
+        if ($account->id() == 1) {
+            $options = ['absolute' => TRUE, 'query' => ['type' => 'blocco_vantaggi'], 'attributes' => ['class' => ['button text-slate-900 underline']]];
+            $url = Url::fromUri('internal:/admin/content/block', $options);
+            $data['boxs_edit'] = Link::fromTextAndUrl('Configura Blocchi Vantaggi', $url);
+        }
+
+        // Fetch step data using trait
+        $stepData = $this->getStepData($lang, 6);
+        $data = array_merge($data, $stepData);
+
+        // Render the home-page layout defined in home-page-render.html.twig
         $build = [];
         $build['#theme'] = 'home_page_render';
         $build['#data'] = $data;
         $build['#title'] = $title;
         return $build;
+    }
+
+    /**
+     * Get blocks by type - returns array of objects with 'id' property.
+     * This mimics EYCA's Blocchi::make_query_blocchi() behavior.
+     * 
+     * The template uses drupal_entity('block_content', item.id) to render each block,
+     * which then uses the block-content--blocco-vantaggi.html.twig template.
+     */
+    protected function getBlocksByType($block_type, $limit = 3)
+    {
+        $results = [];
+        
+        $query = \Drupal::entityQuery('block_content')
+            ->condition('type', $block_type)
+            ->condition('status', 1)
+            ->sort('changed', 'DESC')
+            ->range(0, $limit)
+            ->accessCheck(TRUE);
+
+        $ids = $query->execute();
+
+        if (empty($ids)) {
+            return $results;
+        }
+
+        // Return objects with 'id' property like EYCA does
+        // Template will use: {% for item in data.boxs %}{{ drupal_entity('block_content', item.id) }}{% endfor %}
+        foreach ($ids as $id) {
+            $obj = new \stdClass();
+            $obj->id = $id;
+            $results[] = $obj;
+        }
+
+        return $results;
     }
 
 

@@ -1,0 +1,45 @@
+{# Reusable two-column layout component.
+   Props:
+   - ratio: '1:1' | '1.2:1' | '1:1.2' (default '1:1')
+   - gap: gap size (default 'gap-10')
+   - align: 'start' | 'center' | 'end' (default 'start')
+   - reverse_mobile: boolean, reverse order on mobile
+   - class: extra classes
+   Usage:
+   {% embed '@tailwind/components/component--two-column.html.twig' with {
+     ratio: '1.2:1',
+     align: 'center',
+   } %}
+     {% block left %}
+       ... left column content ...
+     {% endblock %}
+     {% block right %}
+       ... right column content ...
+     {% endblock %}
+   {% endembed %}
+#}
+
+{% set ratio = ratio|default('1:1') %}
+{% set gap = gap|default('gap-10') %}
+{% set align = align|default('start') %}
+
+{% set ratio_classes = {
+  '1:1': 'lg:grid-cols-2',
+  '1.2:1': 'lg:grid-cols-[1.2fr,1fr]',
+  '1:1.2': 'lg:grid-cols-[1fr,1.2fr]',
+}[ratio]|default('lg:grid-cols-2') %}
+
+{% set align_classes = {
+  'start': 'items-start',
+  'center': 'items-center',
+  'end': 'items-end',
+}[align]|default('items-start') %}
+
+<div class="grid {{ gap }} {{ ratio_classes }} {{ align_classes }} {{ class|default('') }}">
+  <div class="{% if reverse_mobile %}order-2 lg:order-1{% endif %}">
+    {% block left %}{% endblock %}
+  </div>
+  <div class="{% if reverse_mobile %}order-1 lg:order-2{% endif %}">
+    {% block right %}{% endblock %}
+  </div>
+</div>
