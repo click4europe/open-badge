@@ -21,3 +21,19 @@ two_tailw:
       label: Main content
     sidebar:
       label: Sidebar
+advanced_layout_badge:
+  label: 'Advanced Layout badge'
+  category: 'eu_layout'
+  template: templates/layout/advanced-layout-badge
+  default_region: main
+  regions:
+    head:
+      label: Head content
+    messaggi:
+      label: Messaggi content
+    main:
+      label: Main content
+    box:
+      label: Box Main content
+    foot:
+      label: Footer content

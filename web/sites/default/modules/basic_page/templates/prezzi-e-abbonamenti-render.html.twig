@@ -123,7 +123,7 @@
           Mensile
         </button>
         <button id="yearly-toggle" class="pricing-toggle px-8 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 text-slate-600 hover:text-slate-900">
-          Annuale <span class="ml-1.5 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Risparmia 20%</span>
+          Annuale
         </button>
       </div>
     </div>
@@ -191,8 +191,8 @@
           
           {# Price #}
           <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€41</span>
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€33</span>
+            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€70</span>
+            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€41</span>
             <span class="text-sm text-slate-500">/mese*</span>
           </div>
           
@@ -273,8 +273,8 @@
           
           {# Price #}
           <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€100</span>
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€80</span>
+            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€140</span>
+            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€100</span>
             <span class="text-sm text-slate-500">/mese*</span>
           </div>
           
@@ -357,8 +357,8 @@
           
           {# Price #}
           <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€175</span>
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€140</span>
+            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€225</span>
+            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€175</span>
             <span class="text-sm text-slate-500">/mese*</span>
           </div>
           
@@ -582,188 +582,153 @@
       });
     });
 
-    // Pricing Hero Carousel
-    const pricingCarousel = document.getElementById('pricing-partner-carousel');
-    const pricingPrevBtn = document.getElementById('pricing-carousel-prev');
-    const pricingNextBtn = document.getElementById('pricing-carousel-next');
-    
-    if (pricingCarousel && pricingPrevBtn && pricingNextBtn) {
-      let pricingCurrentIndex = 0;
-      const pricingItems = pricingCarousel.children;
-      const pricingItemWidth = pricingItems[0].offsetWidth + 12; // width + gap
-      const pricingVisibleItems = window.innerWidth < 640 ? 2 : 4;
-      const pricingMaxIndex = Math.max(0, pricingItems.length - pricingVisibleItems);
+    // Pricing Hero Carousel - Disabled carousel functionality
+    // Buttons remain visible but no longer control the carousel
 
-      function updatePricingCarousel() {
-        pricingCarousel.style.transform = `translateX(-${pricingCurrentIndex * pricingItemWidth}px)`;
-      }
-
-      pricingPrevBtn.addEventListener('click', function() {
-        pricingCurrentIndex = Math.max(0, pricingCurrentIndex - 1);
-        updatePricingCarousel();
+    // Companies carousel functionality - Vertical sliding
+    const companiesCarousel = document.getElementById('companies-carousel');
+    const companiesPrevBtn = document.getElementById('companies-carousel-prev');
+    const companiesNextBtn = document.getElementById('companies-carousel-next');
+    let companiesCurrentRow = 0;
+    const companiesTotalRows = 4; // Total number of rows
+  
+    if (companiesPrevBtn && companiesNextBtn && companiesCarousel) {
+      companiesPrevBtn.addEventListener('click', () => {
+        if (companiesCurrentRow > 0) {
+          companiesCurrentRow--;
+          companiesCarousel.style.transform = `translateY(${companiesCurrentRow * 100}%)`;
+        }
       });
 
-      pricingNextBtn.addEventListener('click', function() {
-        pricingCurrentIndex = Math.min(pricingMaxIndex, pricingCurrentIndex + 1);
-        updatePricingCarousel();
+      companiesNextBtn.addEventListener('click', () => {
+        if (companiesCurrentRow < companiesTotalRows - 1) {
+          companiesCurrentRow++;
+          companiesCarousel.style.transform = `translateY(${companiesCurrentRow * 100}%)`;
+        }
       });
     }
-
-    // Companies Grid Pagination
-    const companiesGrid = document.getElementById('companies-grid');
-    const companiesPrevBar = document.getElementById('companies-prev-bar');
-    const companiesNextBar = document.getElementById('companies-next-bar');
-    const companiesPages = document.getElementById('companies-pages');
-    const companiesLoading = document.getElementById('companies-loading');
-  
-  // Mock partners (inline SVG so it always renders; replace with real logos later)
-  const tileBackgrounds = [
-    '#f6f0f7', '#eaf4f5', '#fde6df', '#fdf3d7',
-    '#f1f1f1', '#fbf7d7', '#eef6ff', '#f2f7f2',
-    '#f6f6f6', '#eef2ff', '#fff1f2', '#ecfeff'
-  ];
-
-  function svgToDataUri(svgString) {
-    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svgString)}`;
-  }
-
-  const logoPaths = [
-    '/themes/custom/tailwind/images/public/obv_logo.png',
-    '/themes/custom/tailwind/images/public/open-badge.eu-img1.png',
-    '/themes/custom/tailwind/images/public/open-badge.eu-img2.png',
-    '/themes/custom/tailwind/images/public/open-badge.eu-img3.png',
-    '/themes/custom/tailwind/images/public/open-badge.eu-img4.png',
-    '/themes/custom/tailwind/images/public/oblogo2024-1.svg',
-    '/themes/custom/tailwind/images/public/oblogo2024-11.svg',
-    '/themes/custom/tailwind/images/public/openbadge-newlogo-blugreen.svg'
-  ];
-
-  const companies = Array.from({ length: 48 }, (_, i) => ({
-    id: i + 1,
-    bg: tileBackgrounds[i % tileBackgrounds.length],
-    logo: logoPaths[i % logoPaths.length]
-  }));
-  
-  let currentPage = 1;
-  const itemsPerPage = 12;
-  const totalPages = Math.ceil(companies.length / itemsPerPage);
-  
-  function renderCompanies(page) {
-    const start = (page - 1) * itemsPerPage;
-    const end = start + itemsPerPage;
-    const pageCompanies = companies.slice(start, end);
-    
-    companiesGrid.innerHTML = '';
-    
-    pageCompanies.forEach(company => {
-      const companyCard = document.createElement('div');
-      companyCard.className = 'flex items-center justify-center border border-white/70';
-      companyCard.style.backgroundColor = company.bg;
-      companyCard.style.aspectRatio = '1 / 1';
-      companyCard.innerHTML = `
-        <div class="w-full h-full flex items-center justify-center p-4">
-          <img src="${company.logo}" alt="Logo" style="width:120px;height:120px;" />
-        </div>
-      `;
-      companiesGrid.appendChild(companyCard);
-    });
-    
-    updatePaginationButtons();
-    updatePageInfo(page);
-  }
-  
-  function updatePaginationButtons() {
-    if (companiesPrevBar) companiesPrevBar.disabled = currentPage === 1;
-    if (companiesNextBar) companiesNextBar.disabled = currentPage === totalPages;
-
-    if (companiesPages) {
-      companiesPages.innerHTML = '';
-
-      for (let i = 1; i <= totalPages; i++) {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.textContent = String(i);
-        btn.className = i === currentPage
-          ? 'min-w-10 h-10 px-4 rounded-full bg-slate-900 text-white text-sm font-semibold'
-          : 'min-w-10 h-10 px-4 rounded-full bg-white border border-slate-200 text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors';
-        btn.addEventListener('click', () => {
-          currentPage = i;
-          renderCompanies(currentPage);
-        });
-        companiesPages.appendChild(btn);
-      }
-    }
-  }
-  
-  function updatePageInfo(page) {
-    // Scroll to top when changing pages
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  
-  function addPageButton(pageNum) {}
-  
-  
-  if (companiesPrevBar) {
-    companiesPrevBar.addEventListener('click', () => {
-      if (currentPage > 1) {
-        currentPage--;
-        renderCompanies(currentPage);
-      }
-    });
-  }
-
-  if (companiesNextBar) {
-    companiesNextBar.addEventListener('click', () => {
-      if (currentPage < totalPages) {
-        currentPage++;
-        renderCompanies(currentPage);
-      }
-    });
-  }
-  
-  // Initial render
-    renderCompanies(1);
   });
 </script>
 
-{# Companies Section - Import.io Style #}
-<section class="py-0 bg-white">
-  {# Gradient Header Banner #}
-  <div class="relative overflow-hidden bg-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 text-center relative z-10">
+{# Companies Section - Slider Style #}
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
+    {# Section Header #}
+    <div class="text-center">
       <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
         Unisciti alle organizzazioni che utilizzano la certificazione digitale Open Badges.
       </h2>
     </div>
+
+    {# Carousel Container #}
+    <div class="bg-white rounded-3xl shadow-md px-4 py-4 sm:px-8 sm:py-5 relative">
+      {# Navigation Buttons #}
+      <div class="flex justify-end gap-3 mb-4 relative z-10">
+        <button type="button" id="companies-carousel-prev-" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors cursor-pointer relative z-10" aria-label="Previous slide">
+          <svg class="w-6 h-6 text-slate-700 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button type="button" id="companies-carousel-next-" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors cursor-pointer relative z-10" aria-label="Next slide">
+          <svg class="w-6 h-6 text-slate-700 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
       </div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16">
-    <div class="text-center mb-12"></div>
-    {# Companies Grid Container #}
-    <div class="relative">
-      <div id="companies-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0 overflow-hidden rounded-2xl">
-        {# Company Logos will be dynamically loaded here #}
-      </div>
+      {# Grid Container with 4 rows, 6 logos each #}
+      <div class="overflow-hidden">
+        <div id="companies-carousel" class="flex flex-col gap-8 transition-transform duration-500 ease-in-out">
+          {# Row 1 #}
+          <div class="flex gap-8 justify-center">
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/obv_logo.png" alt="Partner 1" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img1.png" alt="Partner 2" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img2.png" alt="Partner 3" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img3.png" alt="Partner 4" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img4.png" alt="Partner 5" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/oblogo2024-1.svg" alt="Partner 6" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+          </div>
 
-      {# Loading State #}
-      <div id="companies-loading" class="flex justify-center py-12 hidden">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          {# Row 2 #}
+          <div class="flex gap-8 justify-center">
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/oblogo2024-11.svg" alt="Partner 7" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/openbadge-newlogo-blugreen.svg" alt="Partner 8" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Partner 9" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/obv_logo.png" alt="Partner 10" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80" alt="Partner 11" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img1.png" alt="Partner 12" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+          </div>
+
+          {# Row 3 #}
+          <div class="flex gap-8 justify-center">
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=400&q=80" alt="Partner 13" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img2.png" alt="Partner 14" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80" alt="Partner 15" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/oblogo2024-1.svg" alt="Partner 16" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=400&q=80" alt="Partner 17" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img3.png" alt="Partner 18" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+          </div>
+
+          {# Row 4 #}
+          <div class="flex gap-8 justify-center">
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/openbadge-newlogo-blugreen.svg" alt="Partner 19" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=400&q=80" alt="Partner 20" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img4.png" alt="Partner 21" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Partner 22" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="/themes/custom/tailwind/images/public/oblogo2024-11.svg" alt="Partner 23" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
+              <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80" alt="Partner 24" class="h-full w-full object-contain p-4" loading="lazy" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-    {# Normal Pagination #}
-    <div class="mt-20 flex justify-center pt-4">
-      <nav class="inline-flex items-center gap-2 bg-white/90 backdrop-blur border border-slate-200 shadow-lg rounded-full px-3 py-2" aria-label="Companies pagination">
-        <button id="companies-prev-bar" type="button" class="w-10 h-10 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors" aria-label="Pagina precedente">
-          <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-        </button>
-        <div id="companies-pages" class="flex items-center gap-2"></div>
-        <button id="companies-next-bar" type="button" class="w-10 h-10 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors" aria-label="Pagina successiva">
-          <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-        </button>
-      </nav>
-    </div>
-
-      </div>
+  </div>
 </section>
 

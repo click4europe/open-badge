@@ -117,6 +117,13 @@ function basic_page_theme() {
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
 
+    //webform page render
+    'webform_page_render' => [
+      'template' => 'webform-page-render',
+      'variables' => ['data' => NULL, 'title' => NULL, 'target_id' => NULL],
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
     // Skills Management page render.
     'skills_management_render' => [
       'variables' => [
@@ -150,6 +157,24 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'upskilling-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Notizie page render.
+    'notizie_page' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'notizie-page',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Notizia page render.
+    'notizia_page_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'notizia-page-render',
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
   ];

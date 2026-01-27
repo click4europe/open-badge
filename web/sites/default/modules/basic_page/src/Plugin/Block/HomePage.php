@@ -7,6 +7,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\blocchi\Utils\Blocchi;
 use Drupal\basic_page\Traits\StepDataTrait;
+use Drupal\basic_page\Utils\Notizie;
 
 
 
@@ -42,9 +43,32 @@ class HomePage extends BlockBase
             $data['boxs_edit'] = Link::fromTextAndUrl('Configura Blocchi Vantaggi', $url);
         }
 
+        // fetch Blocco Home (home section1)
+        $home_blocks = Blocchi::make_query_blocchi('blocco_home', $lang, TRUE, 'ASC', 0, 1);
+        if (!empty($home_blocks)) {
+            $data['home_section'] = $this->make__print_block($home_blocks[0]->id, $account);
+        }
+        // Add edit link for home section
+        if ($account->id() == 1 && !empty($home_blocks)) {
+            $options = ['absolute' => TRUE, 'query' => ['type' => 'blocco_home'], 'attributes' => ['class' => ['button text-slate-900 underline']]];
+            $url = Url::fromUri('internal:/admin/content/block', $options);
+            $data['home_edit'] = Link::fromTextAndUrl('Configura Blocco Home', $url);
+        }
+
         // Fetch step data using trait
         $stepData = $this->getStepData($lang, 6);
         $data = array_merge($data, $stepData);
+
+        // Fetch latest 6 notizie for the homepage
+        $notizie_data = Notizie::notizie_list(0, 'DESC', 0, 6, '', '');
+        $data['notizie'] = !empty($notizie_data['row']) ? $notizie_data['row'] : [];
+        
+        // Add edit link for notizie section (admin only)
+        if ($account->id() == 1) {
+            $options = ['absolute' => TRUE, 'query' => ['type' => 'notizie'], 'attributes' => ['class' => ['button text-slate-900 underline']]];
+            $url = Url::fromUri('internal:/admin/content', $options);
+            $data['notizie_edit'] = Link::fromTextAndUrl('Configura Notizie', $url);
+        }
 
         // Render the home-page layout defined in home-page-render.html.twig
         $build = [];
@@ -96,7 +120,9 @@ class HomePage extends BlockBase
         $rend = [];
         $block = \Drupal\block_content\Entity\BlockContent::load($id);
         $rend['titolo'] = $block->get('field_titolo')->getValue();
-        $rend['sub_title'] = $block->get('field_sub_title')->getValue();
+        $rend['sub_title'] = $block->get('field_sotto_titolo')->getValue();
+        $rend['body'] = $block->get('body')->getValue();
+        $rend['immagine'] = $block->get('field_immagine')->getValue();
         if (strcmp('1', $account->id()) === 0) {
             $options = ['absolute' => TRUE, 'query' => ['destination' => 'home'], 'attributes' => ['class' => ['button']]];
             $url = Url::fromUri('internal:/admin/content/block/' . $id, $options);

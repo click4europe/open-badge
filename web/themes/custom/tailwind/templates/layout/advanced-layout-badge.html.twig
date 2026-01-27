@@ -1,0 +1,91 @@
+{#
+/**
+ * @file
+ * Advanced layout badge template.
+ *
+ * Available variables:
+ * - content: An array of content, each item in the array is keyed to one
+ *   region of the layout.
+ * - settings: Configuration settings for the layout.
+ *
+ * Regions:
+ * - head: Head content (header, navigation)
+ * - badge: Badge/Featured content
+ * - main: Main content area
+ * - sidebar: Sidebar content
+ * - foot: Footer content
+ */
+#}
+
+{%
+  set container_classes = [
+    settings.container_width|default('container'),
+    settings.extra_classes|default('')
+  ]
+%}
+
+{%
+  set badge_classes = [
+    'layout-badge',
+    'layout-badge--' ~ settings.badge_style|default('default'),
+    settings.badge_bg_color|default('bg-gray-50'),
+    settings.show_badge_border ? 'border border-gray-200' : ''
+  ]
+%}
+
+{# Head region #}
+{% if content.head %}
+  <header class="layout-region layout-region--head">
+    {{ content.head }}
+  </header>
+{% endif %}
+
+{# Main wrapper with container #}
+<div class="{{ container_classes|join(' ')|trim }}">
+  
+  {# Badge region #}
+  {% if content.badge %}
+    <div class="{{ badge_classes|join(' ')|trim }}">
+      {% if settings.badge_style == 'card' %}
+        <div class="card-badge p-6 rounded-lg shadow-sm">
+          {{ content.badge }}
+        </div>
+      {% elseif settings.badge_style == 'highlight' %}
+        <div class="highlight-badge p-4 bg-gradient-to-r from-blue-50 to-indigo-50">
+          {{ content.badge }}
+        </div>
+      {% elseif settings.badge_style == 'floating' %}
+        <div class="floating-badge p-4 -mt-8 mx-auto max-w-2xl rounded-lg shadow-lg relative z-10">
+          {{ content.badge }}
+        </div>
+      {% else %}
+        <div class="default-badge p-4">
+          {{ content.badge }}
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+  
+  {# Main content with sidebar #}
+  <div class="flex flex-col lg:flex-row gap-8">
+    {% if content.main %}
+      <main class="flex-1 layout-region layout-region--main">
+        {{ content.main }}
+      </main>
+    {% endif %}
+    
+    {% if content.sidebar %}
+      <aside class="w-full lg:w-1/3 layout-region layout-region--sidebar">
+        {{ content.sidebar }}
+      </aside>
+    {% endif %}
+  </div>
+  
+</div>
+
+{# Footer region #}
+{% if content.foot %}
+  <footer class="layout-region layout-region--foot mt-12">
+    {{ content.foot }}
+  </footer>
+{% endif %}

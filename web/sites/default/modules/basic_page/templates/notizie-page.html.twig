@@ -1,0 +1,83 @@
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: 'Notizie',
+  description: 'Ultime notizie e aggiornamenti dal nostro progetto'
+} %}
+
+<!-- News Grid - Same style as homepage -->
+<section class="py-16 lg:py-20 bg-[#E9F5F6]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <!-- Filter Section -->
+        <div class="mb-10">
+            <form method="get" action="{{ data.path }}" class="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
+                <div class="w-full sm:flex-1">
+                    <label for="search" class="block text-sm font-medium text-slate-900 mb-2">Cerca notizie</label>
+                    <input 
+                        type="text" 
+                        id="search"
+                        name="name" 
+                        value="{{ data.titolo }}" 
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
+                        placeholder="Cerca notizie...">
+                </div>
+                <div class="flex gap-3">
+                    <button type="submit" class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+                        Cerca
+                    </button>
+                    <button type="button" onclick="window.location.href='{{ data.path }}'" class="px-6 py-2.5 bg-white text-slate-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+                        Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        {% if data.notizie.row %}
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-10">
+                {% for notizia in data.notizie.row %}
+                    <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        {% if notizia.image.path %}
+                            <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                                <img src="{{ notizia.image.path }}" alt="{{ notizia.image.alt }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" loading="lazy" style="aspect-ratio: 4/3;" />
+                            </div>
+                        {% else %}
+                            <div class="aspect-[4/3] bg-gradient-to-br from-blue-100 to-blue-50 overflow-hidden relative flex items-center justify-center">
+                                <svg class="w-16 h-16 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                </svg>
+                            </div>
+                        {% endif %}
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center gap-2 text-xs text-slate-500">
+                                <span>{{ notizia.created }}</span>
+                                <span>•</span>
+                                <span>Notizie</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 line-clamp-2">{{ notizia.title }}</h3>
+                            {% if notizia.teaser %}
+                                <p class="text-sm text-slate-600 line-clamp-3">{{ notizia.teaser }}</p>
+                            {% endif %}
+                            {% set url = notizia.url_object %}
+                            <a href="{{ url }}" class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                                Leggi di più <span aria-hidden="true" class="ml-1">→</span>
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            {% if data.pagination %}
+                <div class="mt-12 flex justify-center">
+                    {{ data.pagination|raw }}
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="text-center py-12">
+                <svg class="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                </svg>
+                <h3 class="text-lg font-medium text-gray-900 mb-2">Nessuna notizia trovata</h3>
+                <p class="text-gray-500">Prova a modificare i criteri di ricerca</p>
+            </div>
+        {% endif %}
+    </div>
+</section>

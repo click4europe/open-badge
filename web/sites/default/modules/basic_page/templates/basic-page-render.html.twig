@@ -1,0 +1,69 @@
+{#
+/**
+* @file
+* Default theme implementation to display a block.
+*
+* @see template_preprocess_block()
+*
+* @ingroup themeable
+*/
+#}
+{%
+  set classes = [
+    'main-wrapper',
+    'clear',
+  ]
+%}
+<div {{ attributes.addClass(classes) }}>
+  <div class="container">
+    <div class="main-container">
+      <main id="main" class="main-content">
+        <div class="node-content">
+        <div class="block-region region-content">
+    	<div id="block-ruhi-content" class="block">
+  		<div class="block-content">
+        <article data-history-node-id="8" role="article" about="" typeof="schema:WebPage" class="node node-view-mode-full">
+            	<span property="schema:name" content="Right Sidebar" class="hidden"></span>
+          		<div class="node-content clear">
+            		{% if data.scheda.sotto_titolo.0.value  %}
+            			<h1 class="e-margin-t-20 block-title-size-22">{{ data.scheda.sotto_titolo.0.value }}</h1>
+            		{% endif %}
+            		{% if data.scheda.image.path %}
+                    <div class="field field--name-field-image field--type-image field--label-hidden field-item">  
+                    <img src="{{ data.scheda.image.path }}" alt="{{ data.scheda.image.alt }}" title="{{ data.scheda.image.title }}" typeof="foaf:Image" class="image-field">
+        			</div>
+              		{% endif %}
+                    <div property="schema:text" class="field field--name-body field--type-text-with-summary field--label-hidden field-item">
+                    {{ data.scheda.body | raw }}
+        			</div>
+        			<div class="scheda-faq mt-2">
+                       	{% if data.scheda.field_faq %}
+                    	<div class="accordion-list">
+                    	{% for key, faq in data.scheda.field_faq %}
+                    			<div class="single-accordion">
+                    		    <h3>{{ faq.question }}</h3>
+                    			<div class="answer edk-basic-page-content">{{ faq.answer | raw }}</div>
+                    			</div>
+                    	{% endfor %}
+                    	</div>
+                    	{% endif %}
+                    </div>
+          		</div>
+        </article>
+    	</div>
+		</div>
+  		</div>
+        </div>
+      </main>
+    <aside id="sidebar-right" class="sidebar block-section" role="complementary">
+     <div class="block-region region-sidebar-second">
+        {% if data.scheda.personalizzati %}
+           {% for key, value in data.scheda.personalizzati  %}
+		   		{{ drupal_entity('block_content', value.target_id) }}
+           {% endfor %}
+        {% endif %}
+      </div>
+    </aside>        
+</div>
+</div>
+</div>

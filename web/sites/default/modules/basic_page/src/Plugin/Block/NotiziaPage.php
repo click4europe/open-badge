@@ -2,26 +2,23 @@
 
 namespace Drupal\basic_page\Plugin\Block;
 
-use Drupal\Core\Link;
-use Drupal\Core\Url;
-use Drupal\Core\Block\BlockBase;
 use Drupal\basic_page\Utils\Notizie;
-use Drupal\node\Entity\Node;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountProxyInterface;
+use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a 'BasicPageRender' block.
+ * Provides a 'NotiziaPage' block.
  *
  * @Block(
- *  id = "basic_page_render",
- *  admin_label = @Translation("Basic page render"),
+ *  id = "notizia_page",
+ *  admin_label = @Translation("Blocco Pagina Notizia"),
  * )
  */
-class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterface
+class NotiziaPage extends BlockBase implements ContainerFactoryPluginInterface
 {
-
     /**
      * @var $account \Drupal\Core\Session\AccountProxyInterface
      */
@@ -50,7 +47,6 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
      * @param string $plugin_id
      * @param mixed $plugin_definition
      * @param \Drupal\Core\Session\AccountProxyInterface $account
-     * @param \Drupal\social\Utils\Social $Social
      */
     public function __construct(array $configuration, $plugin_id, $plugin_definition, AccountProxyInterface $account)
     {
@@ -58,27 +54,35 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
         $this->account = $account;
     }
 
-
     /**
      * {@inheritdoc}
      */
     public function build()
     {
-
-        $data = array();
+        $data = [];
         $node = \Drupal::routeMatch()->getParameter('node');
         $data['scheda'] = Notizie::document($node);
         $data['host'] = \Drupal::request()->getSchemeAndHttpHost();
 
+        // Get related news (latest 2 news, excluding current one)
+        $related_news = Notizie::notizie_list(0, 'DESC', 0, 2, '', '');
+        if (!empty($related_news['row'])) {
+            // Remove current news from related if it appears
+            $data['related'] = array_filter($related_news['row'], function($item) use ($node) {
+                return $item['id'] != $node->id();
+            });
+            // Re-index array
+            $data['related'] = array_values($data['related']);
+        } else {
+            $data['related'] = [];
+        }
+
         $params = array();
         $params['type'] = 'nodo';
         $params['id'] = $node->id();
-        //$data['pdf_data'] = $base_url . '/pdf-data?'. UrlHelper::buildQuery($params);
-
-
 
         $build = [];
-        $build['#theme'] = 'basic_page_render';
+        $build['#theme'] = 'notizia_page_render';
         $build['#data'] = $data;
         $build['#title'] = '';
         $build['#attached'] = [
@@ -86,7 +90,7 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
                 'basic_page/basic_page.accordion',
             ],
             'drupalSettings' => [
-                'documentazione_faq' => [],
+                'notiziaId' => $data['scheda']['id'],
             ],
         ];
 

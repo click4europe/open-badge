@@ -1,0 +1,99 @@
+{#
+/**
+ * @file
+ * Theme override to display a notizie node (singular news article).
+ *
+ * This template replaces the default node display with a custom layout.
+ */
+#}
+
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: label,
+  description: ''
+} %}
+
+<article class="bg-white py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Article Header -->
+                <header class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+                        <time datetime="{{ node.getCreatedTime|date('Y-m-d') }}">{{ node.getCreatedTime|format_date('short') }}</time>
+                        <span>•</span>
+                        <span>Notizie</span>
+                    </div>
+                </header>
+                
+                <!-- Featured Image with Fixed Dimensions -->
+                {% if content.field_image|render|trim %}
+                    <div class="mb-8 rounded-2xl overflow-hidden shadow-lg bg-gray-100">
+                        <div class="aspect-[16/9] relative w-full [&_img]:absolute [&_img]:inset-0 [&_img]:w-full [&_img]:h-full [&_img]:object-cover">
+                            {{ content.field_image }}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Article Content -->
+                <div class="prose prose-lg prose-slate max-w-none">
+                    {{ content.body }}
+                </div>
+                
+                <!-- FAQ Section -->
+                {% if content.field_faq|render|trim %}
+                    <section class="mt-12 pt-8 border-t border-slate-200">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-6">Domande Frequenti</h2>
+                        <div class="space-y-4" id="faq-container">
+                            {{ content.field_faq }}
+                        </div>
+                    </section>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <!-- Related News -->
+                <div class="sticky top-8">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4">Ultime Notizie</h3>
+                    <div class="space-y-4">
+                        {{ drupal_view('notizie_sidebar', 'block_1') }}
+                    </div>
+                    
+                    <!-- View All News Button -->
+                    <div class="mt-6">
+                        <a href="/notizie" class="block w-full text-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+                            Vedi tutte le notizie
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+
+{# Render any remaining content #}
+{{ content|without('field_image', 'body', 'field_faq', 'field_subtitle') }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // FAQ Accordion
+    const faqButtons = document.querySelectorAll('.faq-button');
+    faqButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('svg');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+            faqButtons.forEach(otherButton => {
+                if (otherButton !== button) {
+                    const otherContent = otherButton.nextElementSibling;
+                    const otherIcon = otherButton.querySelector('svg');
+                    otherContent.classList.add('hidden');
+                    otherIcon.classList.remove('rotate-180');
+                }
+            });
+        });
+    });
+});
+</script>
