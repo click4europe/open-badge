@@ -1,0 +1,81 @@
+{# servizi-avanzati-render.html.twig #}
+
+{# Hero Section #}
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: 'Servizi avanzati',
+  description: 'Soluzioni enterprise per enti e organizzazioni che necessitano di funzionalità avanzate',
+  image: '/themes/custom/tailwind/images/public/IMG_openbadge/1000depositphotos_52464495_xl-1500w.webp'
+} %}
+
+{# Main Content Section #}
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      
+      {# Left Column - Image #}
+      <div class="order-2 lg:order-1">
+        <div class="rounded-2xl overflow-hidden shadow-lg bg-slate-100">
+          <img src="/themes/custom/tailwind/images/public/img_2.png" alt="Servizi avanzati" class="w-full h-auto object-cover">
+        </div>
+      </div>
+
+      {# Right Column - Content #}
+      <div class="order-1 lg:order-2">
+        <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Servizi avanzati</h2>
+        
+        <div class="prose prose-lg text-slate-700 space-y-4">
+          <p>
+            La piattaforma mette a disposizione alcuni servizi avanzati per il tramite del profilo <strong>Enterprise</strong>.
+          </p>
+          
+          <p>
+            E' caso dei servizi richiesti dallo SNA per gli operatori della formazione rivolta alle pubbliche amministrazioni. <strong>La Scuola Nazionale dell'Amministrazione</strong> ha introdotto nuovi criteri per l'accreditamento delle istituzioni formative in materia di contratti pubblici. Tra i requisiti richiesti, vi è l'obbligo di rilasciare, a conclusione dei corsi, Open Badge conformi al decreto 3/2025 SNA, in possesso dei seguenti requisiti:
+          </p>
+
+          <ul class="list-disc pl-6 space-y-2">
+            <li>open badge basati su standard <strong>OBI 2.0</strong> (o superiore);</li>
+            <li>accesso tramite <strong>SPID</strong> o tramite IDEM/EduGain;</li>
+            <li>certificati emessi su <strong>blockchain</strong> pubbliche.</li>
+          </ul>
+
+          <p>
+            La piattaforma open-badge è in possesso di questi requisiti.<br>
+            Per operare con queste funzionalità è necessario attivare un piano di <strong>abbonamento Enterprise</strong>.
+          </p>
+
+          <p>
+            E' un piano studiato per gli Enti e le Organizzazioni che necessitano di particolari caratteristiche nel rilascio del badge o che seguono procedure amministrative di abbonamento particolari (caratteristica tipica degli Enti Pubblici).
+          </p>
+
+          <p>
+            Nel piano Enterprise è, per esempio, possibile richiedere un numero maggiore di badge rispetto a quelli previsti dai piani tradizionali, oltre alle funzionalità dell'emissione degli open badge su blockchain e l'autenticazione SPID.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Inizia oggi Section - Same as component--solution-page-sections.html.twig #}
+<section class="py-20 lg:py-28 bg-[#050322]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <div class="space-y-6">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+        Inizia oggi
+      </h2>
+      <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+        Vai alla pagina degli abbonamenti oppure contattaci per avere una quotazione personalizzata
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+        <a href="/prezzi-e-abbonamenti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#050322] transition-colors">
+          Abbonamenti
+          <span aria-hidden="true" class="ml-2">→</span>
+        </a>
+        <a href="/contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white/80 text-sm font-semibold hover:bg-white/10 transition-colors">
+          Vai alle FAQ
+          <span aria-hidden="true" class="ml-2">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

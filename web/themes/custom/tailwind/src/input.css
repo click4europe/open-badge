@@ -1,7 +1,7 @@
 @import "tailwindcss";
+@plugin "daisyui";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap');
-@plugin "daisyui";
 /* Open Badge Template Styles */
 
 @theme {
@@ -15,6 +15,32 @@
 /* Apply Inter as default font, with Roboto as fallback */
 body {
   font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Drupal Admin Toolbar Compatibility */
+/* Push site header down when Drupal admin toolbar is present */
+body.toolbar-fixed .site-header {
+  top: 39px !important; /* Drupal toolbar height */
+}
+
+body.toolbar-horizontal.toolbar-tray-open .site-header {
+  top: 79px !important; /* Drupal toolbar + tray height */
+}
+
+/* For larger screens with vertical toolbar */
+@media (min-width: 976px) {
+  body.toolbar-fixed.toolbar-vertical .site-header {
+    top: 39px !important;
+  }
+  
+  body.toolbar-fixed.toolbar-vertical.toolbar-tray-open .site-header {
+    top: 39px !important; /* Vertical tray doesn't affect header position */
+  }
+}
+
+/* Ensure body has proper padding when both toolbars are present */
+body.toolbar-fixed {
+  padding-top: 0 !important;
 }
 
 @layer components {
@@ -34,5 +60,141 @@ body {
   /* Generic card container */
   .card {
     @apply bg-white rounded-lg shadow-md;
+  }
+
+  /* Font Classes for Open Badge Project */
+  
+  /* Title Fonts */
+  .font-title {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .font-title-large {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.05em;
+  }
+
+  .font-title-medium {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  .font-title-small {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  /* Text/Body Fonts */
+  .font-body {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+
+  .font-body-medium {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  .font-body-large {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    letter-spacing: 0;
+  }
+
+  .font-body-small {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+
+  /* UI/Interface Fonts */
+  .font-ui {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+  }
+
+  .font-label {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.025em;
+    font-size: 0.875rem;
+  }
+
+  .font-caption {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 400;
+    line-height: 1.4;
+    letter-spacing: 0.025em;
+    font-size: 0.75rem;
+  }
+
+  /* Special Font Classes */
+  .font-hero {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.08em;
+  }
+
+  .font-heading {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.03em;
+  }
+
+  .font-subheading {
+    font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+  .casi-studio-image {
+    object-fit: contain; 
+  }
+
+  /* Navbar hover animation */
+  .nav-link {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background-color: #64BF96;
+    transition: left 0.3s ease;
+  }
+  
+  
+  .nav-link:hover::before {
+    left: 0;
+  }
+  
+  .nav-link:hover {
+    color: #64BF96;
   }
 }

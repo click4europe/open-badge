@@ -1,8 +1,13 @@
 let mix = require('laravel-mix');
+mix.disableNotifications();
 mix.options({
   processCssUrls: false
 });
-mix.webpackConfig({ watchOptions: { ignored: /node_modules|css|mix-manifest.json/, }, });
+mix.webpackConfig({ watchOptions: {
+    aggregateTimeout: 900,
+    ignored:  ['**/css/*.css', '**/node_modules', '**/mix-manifest.json'] 
+  }, 
+});
 
 mix.postCss('src/input.css', 'css/style.css', [
     require("@tailwindcss/postcss", {}),

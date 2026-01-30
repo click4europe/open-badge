@@ -381,6 +381,141 @@
           startAutoSlide();
         }
 
+        // ========== DRUPAL ADMIN TOOLBAR POSITIONING ==========
+        function updateNavbarPosition() {
+          const header = document.querySelector('header');
+          const adminToolbar = document.querySelector('#toolbar-administration');
+          
+          // Check for admin toolbar with different selectors and methods
+          let toolbarHeight = 0;
+          
+          if (adminToolbar) {
+            toolbarHeight = adminToolbar.offsetHeight;
+          } else {
+            // Try other possible admin toolbar selectors
+            const toolbarBar = document.querySelector('.toolbar-bar');
+            if (toolbarBar) {
+              toolbarHeight = toolbarBar.offsetHeight;
+            }
+          }
+          
+          // Also check if body has admin toolbar class
+          const body = document.body;
+          if (body && (body.classList.contains('toolbar-horizontal') || body.classList.contains('toolbar-tray-open'))) {
+            // Admin toolbar is likely present, try to get its height
+            const anyToolbar = document.querySelector('[role="toolbar"], .toolbar, #toolbar');
+            if (anyToolbar) {
+              toolbarHeight = anyToolbar.offsetHeight;
+            }
+          }
+          
+          if (header) {
+            header.style.top = toolbarHeight + 'px';
+          }
+        }
+
+        // Update on load with delay for admin toolbar
+        setTimeout(updateNavbarPosition, 100);
+
+        // Update when toolbar changes
+        if (window.Drupal && window.Drupal.behaviors) {
+          Drupal.behaviors.navbarPosition = {
+            attach: function(context, settings) {
+              updateNavbarPosition();
+            }
+          };
+        }
+
+        // Update on window resize
+        window.addEventListener('resize', updateNavbarPosition);
+
+        // ========== MEGA DROPDOWN HOVER FUNCTIONALITY ==========
+        const soluzioniLink = document.querySelector('[data-mega-toggle="caratteristiche"]');
+        const megaDropdown = document.getElementById('caratteristiche-mega');
+        
+        if (soluzioniLink && megaDropdown) {
+          // Show dropdown on hover
+          soluzioniLink.addEventListener('mouseenter', function() {
+            megaDropdown.classList.remove('hidden');
+          });
+          
+          // Hide dropdown when mouse leaves the link or dropdown
+          function hideDropdown() {
+            megaDropdown.classList.add('hidden');
+          }
+          
+          soluzioniLink.addEventListener('mouseleave', function(e) {
+            // Give time to move mouse to dropdown
+            setTimeout(function() {
+              if (!megaDropdown.matches(':hover')) {
+                hideDropdown();
+              }
+            }, 100);
+          });
+          
+          megaDropdown.addEventListener('mouseleave', hideDropdown);
+          
+          // Hide on click outside
+          document.addEventListener('click', function(e) {
+            if (!soluzioniLink.contains(e.target) && !megaDropdown.contains(e.target)) {
+              hideDropdown();
+            }
+          });
+        }
+
+        // ========== VANTAGGI TAB FUNCTIONALITY ==========
+        const vantaggiTabButtons = document.querySelectorAll('.ob-tab');
+        const vantaggiTabPanels = document.querySelectorAll('.ob-tab-panel');
+        
+        if (vantaggiTabButtons.length > 0 && vantaggiTabPanels.length > 0) {
+          vantaggiTabButtons.forEach((button, index) => {
+            button.addEventListener('click', function() {
+              // Remove active styles from all tabs
+              vantaggiTabButtons.forEach(btn => {
+                btn.classList.remove('bg-[#fdece2]', 'text-slate-900', 'border-t-2', 'border-t-blue-600');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+              });
+              
+              // Hide all panels
+              vantaggiTabPanels.forEach(panel => {
+                panel.classList.add('hidden');
+              });
+              
+              // Add active styles to clicked tab
+              button.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+              button.classList.add('bg-[#fdece2]', 'text-slate-900', 'border-t-2', 'border-t-blue-600');
+              
+              // Show corresponding panel
+              const panelId = button.getAttribute('data-ob-tab');
+              const targetPanel = document.querySelector(`[data-ob-panel="${panelId}"]`);
+              if (targetPanel) {
+                targetPanel.classList.remove('hidden');
+              }
+            });
+          });
+        }
+
+        // ========== FAQ ACCORDION FUNCTIONALITY ==========
+        const faqButtons = document.querySelectorAll('.faq-button');
+        if (faqButtons.length > 0) {
+          faqButtons.forEach(button => {
+            button.addEventListener('click', function() {
+              const content = this.nextElementSibling;
+              const icon = this.querySelector('svg');
+              content.classList.toggle('hidden');
+              icon.classList.toggle('rotate-180');
+              faqButtons.forEach(otherButton => {
+                if (otherButton !== button) {
+                  const otherContent = otherButton.nextElementSibling;
+                  const otherIcon = otherButton.querySelector('svg');
+                  otherContent.classList.add('hidden');
+                  otherIcon.classList.remove('rotate-180');
+                }
+              });
+            });
+          });
+        }
+
       });
     }
   };

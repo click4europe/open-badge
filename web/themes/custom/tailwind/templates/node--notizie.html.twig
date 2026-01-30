@@ -74,26 +74,3 @@
 
 {# Render any remaining content #}
 {{ content|without('field_image', 'body', 'field_faq', 'field_subtitle') }}
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // FAQ Accordion
-    const faqButtons = document.querySelectorAll('.faq-button');
-    faqButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const content = this.nextElementSibling;
-            const icon = this.querySelector('svg');
-            content.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-            faqButtons.forEach(otherButton => {
-                if (otherButton !== button) {
-                    const otherContent = otherButton.nextElementSibling;
-                    const otherIcon = otherButton.querySelector('svg');
-                    otherContent.classList.add('hidden');
-                    otherIcon.classList.remove('rotate-180');
-                }
-            });
-        });
-    });
-});
-</script>

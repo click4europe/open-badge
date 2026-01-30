@@ -21,4 +21,4 @@ basic_page.seek:
   defaults:
      _controller: '\Drupal\basic_page\Controller\Storico::seek'
   requirements:
-    _permission: 'access content'    
+    _permission: 'access content'

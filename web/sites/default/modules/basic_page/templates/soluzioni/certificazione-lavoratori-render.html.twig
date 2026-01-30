@@ -1,0 +1,25 @@
+{# certificazione-lavoratori-render.html.twig #}
+
+{# Hero Section using reusable component #}
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: 'Certificazione Lavoratori e Dipendenti',
+  description: 'Attesta ruoli, incarichi e risultati professionali con Open Badge verificabili',
+  image: '/themes/custom/tailwind/images/public/IMG_openbadge/digital-credentials.jpg'
+} %}
+
+{# All repeated sections in one component #}
+{% include '@tailwind/components/component--solution-page-sections.html.twig' with {
+  page_title: 'Certificazione Lavoratori',
+  gradient_colors: 'from-rose-50 to-pink-50',
+  main_image: '/themes/custom/tailwind/images/public/img_2.png',
+  paragraphs: [
+    'La certificazione dei lavoratori e dipendenti attraverso Open Badge rappresenta un modo innovativo per attestare ufficialmente ruoli, incarichi, competenze e risultati professionali. Queste credenziali digitali offrono una soluzione moderna e verificabile per riconoscere il valore dei contributi individuali all\'interno dell\'organizzazione.',
+    'A differenza dei certificati tradizionali, gli Open Badge possono essere facilmente verificati da chiunque, condivisi su piattaforme professionali come LinkedIn e integrati in portfolio digitali personali. Questo aumenta la visibilità delle competenze certificate e facilita la mobilità professionale.',
+    'Le organizzazioni possono utilizzare questi badge per creare un sistema di riconoscimento continuo, premiando non solo i risultati finali ma anche i progressi intermedi, i progetti completati con successo e l\'acquisizione di nuove competenze rilevanti per il ruolo.'
+  ],
+  cta_subtitle: 'Scopri come gli Open Badge possono certificare le competenze dei tuoi dipendenti',
+  cta_button_text: 'Abbonamenti Business',
+  contact_placeholder: 'Descrivi le tue esigenze di certificazione...',
+  steps: data.steps,
+  steps_edit: data.steps_edit
+} %}

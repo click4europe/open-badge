@@ -353,6 +353,134 @@ __webpack_require__.r(__webpack_exports__);
           updateCarousel(false);
           startAutoSlide();
         }
+
+        // ========== DRUPAL ADMIN TOOLBAR POSITIONING ==========
+        function updateNavbarPosition() {
+          var header = document.querySelector('header');
+          var adminToolbar = document.querySelector('#toolbar-administration');
+
+          // Check for admin toolbar with different selectors and methods
+          var toolbarHeight = 0;
+          if (adminToolbar) {
+            toolbarHeight = adminToolbar.offsetHeight;
+          } else {
+            // Try other possible admin toolbar selectors
+            var toolbarBar = document.querySelector('.toolbar-bar');
+            if (toolbarBar) {
+              toolbarHeight = toolbarBar.offsetHeight;
+            }
+          }
+
+          // Also check if body has admin toolbar class
+          var body = document.body;
+          if (body && (body.classList.contains('toolbar-horizontal') || body.classList.contains('toolbar-tray-open'))) {
+            // Admin toolbar is likely present, try to get its height
+            var anyToolbar = document.querySelector('[role="toolbar"], .toolbar, #toolbar');
+            if (anyToolbar) {
+              toolbarHeight = anyToolbar.offsetHeight;
+            }
+          }
+          if (header) {
+            header.style.top = toolbarHeight + 'px';
+          }
+        }
+
+        // Update on load with delay for admin toolbar
+        setTimeout(updateNavbarPosition, 100);
+
+        // Update when toolbar changes
+        if (window.Drupal && window.Drupal.behaviors) {
+          Drupal.behaviors.navbarPosition = {
+            attach: function attach(context, settings) {
+              updateNavbarPosition();
+            }
+          };
+        }
+
+        // Update on window resize
+        window.addEventListener('resize', updateNavbarPosition);
+
+        // ========== MEGA DROPDOWN HOVER FUNCTIONALITY ==========
+        var soluzioniLink = document.querySelector('[data-mega-toggle="caratteristiche"]');
+        var megaDropdown = document.getElementById('caratteristiche-mega');
+        if (soluzioniLink && megaDropdown) {
+          // Hide dropdown when mouse leaves the link or dropdown
+          var hideDropdown = function hideDropdown() {
+            megaDropdown.classList.add('hidden');
+          };
+          // Show dropdown on hover
+          soluzioniLink.addEventListener('mouseenter', function () {
+            megaDropdown.classList.remove('hidden');
+          });
+          soluzioniLink.addEventListener('mouseleave', function (e) {
+            // Give time to move mouse to dropdown
+            setTimeout(function () {
+              if (!megaDropdown.matches(':hover')) {
+                hideDropdown();
+              }
+            }, 100);
+          });
+          megaDropdown.addEventListener('mouseleave', hideDropdown);
+
+          // Hide on click outside
+          document.addEventListener('click', function (e) {
+            if (!soluzioniLink.contains(e.target) && !megaDropdown.contains(e.target)) {
+              hideDropdown();
+            }
+          });
+        }
+
+        // ========== VANTAGGI TAB FUNCTIONALITY ==========
+        var vantaggiTabButtons = document.querySelectorAll('.ob-tab');
+        var vantaggiTabPanels = document.querySelectorAll('.ob-tab-panel');
+        if (vantaggiTabButtons.length > 0 && vantaggiTabPanels.length > 0) {
+          vantaggiTabButtons.forEach(function (button, index) {
+            button.addEventListener('click', function () {
+              // Remove active styles from all tabs
+              vantaggiTabButtons.forEach(function (btn) {
+                btn.classList.remove('bg-[#fdece2]', 'text-slate-900', 'border-t-2', 'border-t-blue-600');
+                btn.classList.add('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+              });
+
+              // Hide all panels
+              vantaggiTabPanels.forEach(function (panel) {
+                panel.classList.add('hidden');
+              });
+
+              // Add active styles to clicked tab
+              button.classList.remove('bg-slate-100', 'text-slate-600', 'hover:bg-slate-200');
+              button.classList.add('bg-[#fdece2]', 'text-slate-900', 'border-t-2', 'border-t-blue-600');
+
+              // Show corresponding panel
+              var panelId = button.getAttribute('data-ob-tab');
+              var targetPanel = document.querySelector("[data-ob-panel=\"".concat(panelId, "\"]"));
+              if (targetPanel) {
+                targetPanel.classList.remove('hidden');
+              }
+            });
+          });
+        }
+
+        // ========== FAQ ACCORDION FUNCTIONALITY ==========
+        var faqButtons = document.querySelectorAll('.faq-button');
+        if (faqButtons.length > 0) {
+          faqButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+              var content = this.nextElementSibling;
+              var icon = this.querySelector('svg');
+              content.classList.toggle('hidden');
+              icon.classList.toggle('rotate-180');
+              faqButtons.forEach(function (otherButton) {
+                if (otherButton !== button) {
+                  var otherContent = otherButton.nextElementSibling;
+                  var otherIcon = otherButton.querySelector('svg');
+                  otherContent.classList.add('hidden');
+                  otherIcon.classList.remove('rotate-180');
+                }
+              });
+            });
+          });
+        }
       });
     }
   };

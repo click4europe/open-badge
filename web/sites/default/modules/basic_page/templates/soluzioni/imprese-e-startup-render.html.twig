@@ -1,0 +1,24 @@
+{# imprese-e-startup-render.html.twig #}
+
+{# Hero Section using reusable component #}
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: 'Imprese e Startup',
+  description: 'Certifica le competenze del team con Open Badge digitali verificabili',
+  image: '/themes/custom/tailwind/images/public/IMG_openbadge/photo-1577896851231-70ef18881754.jpg'
+} %}
+
+{# All repeated sections in one component #}
+{% include '@tailwind/components/component--solution-page-sections.html.twig' with {
+  page_title: 'Credenziali digitali',
+  gradient_colors: 'from-orange-50 to-red-50',
+  main_image: '/themes/custom/tailwind/images/public/img_2.png',
+  paragraphs: [
+    'Gli open badge offrono numerosi vantaggi per le imprese e le startup, in quanto consentono di certificare competenze, traguardi e progressi dei dipendenti in modo digitale e facilmente verificabile. Questa tecnologia facilita il riconoscimento e la valorizzazione delle competenze acquisite attraverso l\'apprendimento formale, informale e non formale.',
+    'Gli open badge rappresentano un\'opportunità significativa per le imprese e le startup per innovare nel campo della certificazione delle competenze, rendere la formazione più flessibile e motivante e migliorare lo sviluppo professionale dei dipendenti. Il loro utilizzo può favorire un apprendimento più personalizzato e dinamico, in grado di valorizzare tutte le competenze acquisite, promuovendo al contempo una cultura di apprendimento continuo e trasparente.'
+  ],
+  cta_subtitle: 'Scopri come gli Open Badge possono trasformare la tua impresa',
+  cta_button_text: 'Abbonamenti Business',
+  contact_placeholder: 'Descrivi le tue esigenze aziendali...',
+  steps: data.steps,
+  steps_edit: data.steps_edit
+} %}

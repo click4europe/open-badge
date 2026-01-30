@@ -1,0 +1,160 @@
+{# contatti-render.html.twig #}
+
+{# Hero Section using reusable component #}
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: 'Prova gratis',
+  description: 'Verifica, condividi e valorizza le tue qualifiche con credenziali digitali .',
+  image: '/themes/custom/tailwind/images/public/img_headerscontatti.png',
+  background_color: '#49A0C6'
+} %}
+
+{# Contact Sections Side by Side #}
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid gap-12 lg:grid-cols-2">
+      
+      <!-- Left: Contact Form -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+        <div class="mb-8">
+          <h2 class="text-2xl font-bold text-slate-900 mb-2">Contattaci</h2>
+          <p class="text-slate-600">Se desideri entrare in contatto con il team di open-badge.eu inviaci il tuo messaggio tramite il modulo che segue.</p>
+        </div>
+        
+        <form>
+          <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="sm:col-span-3 pt-2">
+              <label for="nome" class="block text-sm font-semibold text-slate-700 mb-2">Nome e Cognome | Name and Surname</label>
+              <input id="nome" type="text" name="nome" autocomplete="name" class="block w-full rounded-lg bg-slate-50 px-4 py-3 text-slate-900 border border-slate-200 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 sm:text-sm" placeholder="Nome e Cognome" />
+            </div>
+
+            <div class="sm:col-span-3 pt-2">
+              <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+              <input id="email" type="email" name="email" autocomplete="email" class="block w-full rounded-lg bg-slate-50 px-4 py-3 text-slate-900 border border-slate-200 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 sm:text-sm" placeholder="Email" />
+            </div>
+
+            <div class="sm:col-span-6 pt-2">
+              <label for="oggetto" class="block text-sm font-semibold text-slate-700 mb-2">Oggetto della richiesta | Request reason</label>
+              <input id="oggetto" type="text" name="oggetto" class="block w-full rounded-lg bg-slate-50 px-4 py-3 text-slate-900 border border-slate-200 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 sm:text-sm" placeholder="Oggetto della richiesta" />
+            </div>
+
+            <div class="sm:col-span-6 pt-2">
+              <label for="descrizione" class="block text-sm font-semibold text-slate-700 mb-2">Descrizione della richiesta | Description of the request</label>
+              <textarea id="descrizione" name="descrizione" rows="5" class="block w-full rounded-lg bg-slate-50 px-4 py-3 text-slate-900 border border-slate-200 placeholder:text-slate-400 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 sm:text-sm resize-none" placeholder="Messaggio"></textarea>
+            </div>
+
+            <div class="sm:col-span-6 pt-2">
+              <div class="space-y-3 bg-slate-50 rounded-lg p-4 border border-slate-200">
+                <label class="flex items-start gap-3 cursor-pointer group">
+                  <input type="checkbox" id="trattamento-dati" name="trattamento-dati" class="mt-0.5 w-5 h-5 text-blue-600 bg-white border-slate-300 rounded focus:ring-2 focus:ring-blue-500 transition-colors">
+                  <span class="text-sm text-slate-700 group-hover:text-slate-900">Acconsento al <a href="#" class="text-blue-600 hover:text-blue-700 underline">trattamento dei miei dati personali</a></span>
+                </label>
+                
+                <label class="flex items-start gap-3 cursor-pointer group">
+                  <input type="checkbox" id="termini" name="termini" class="mt-0.5 w-5 h-5 text-blue-600 bg-white border-slate-300 rounded focus:ring-2 focus:ring-blue-500 transition-colors">
+                  <span class="text-sm text-slate-700 group-hover:text-slate-900">Ho letto e accetto i <a href="#" class="text-blue-600 hover:text-blue-700 underline">termini e condizioni</a></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="sm:col-span-6 pt-2">
+              <button type="submit" class="w-full px-8 py-4 text-white font-semibold rounded-lg focus:ring-4 focus:ring-slate-300 shadow-lg transition-all duration-300 transform hover:-translate-y-0.5" style="background-color: #49A0C6">
+                Invia / Submit
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Right: Book a Call -->
+      <div class="bg-slate-50 rounded-2xl p-8">
+        <div class="space-y-8">
+
+          <!-- Image -->
+             <div class="rounded-xl overflow-hidden">
+             <img src="/themes/custom/tailwind/images/public/(700)depositphotos_469900624_xl.jpg" alt="Prenota una chiamata" class="w-full h-48 object-cover">
+             </div>
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 mb-4">Desideri prenotare una chiamata con il team open-badge.eu?</h2>
+            <p class="text-slate-600 mb-2">Scegli cosa desideri approfondire e individua le disponibilità nel calendario.</p>
+            <p class="text-sm text-slate-500">Il servizio è riservato unicamente ad Enti/Organizzazioni.</p>
+          </div>
+          
+         
+          
+          <!-- Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Card 1 -->
+            <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
+              <!-- Header Section with Color -->
+              <div class="p-4 flex items-center gap-3" style="background-color: #C62E65;">
+                <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background-color: rgba(255, 255, 255, 0.2);">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <h3 class="font-bold text-white text-sm uppercase">Prenota una call</h3>
+              </div>
+              
+              <!-- Content Section -->
+              <div style="padding: 1.25rem;">
+                <p class="text-sm text-slate-700 mb-4">Approfondimento sulle funzionalità della piattaforma e/o sui profili di abbonamento.</p>
+                
+                <!-- Button -->
+                <button class="w-full py-2 px-4 bg-slate-900 hover:bg-slate-500 text-white font-bold text-sm rounded transition-colors duration-200">
+                  CONFERMA
+                </button>
+              </div>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden hover:shadow-md transition-all duration-300">
+              <!-- Header Section with Color -->
+              <div class="p-4 flex items-center gap-3" style="background-color: #2E5C8A;">
+                <div class="w-8 h-8 rounded flex items-center justify-center flex-shrink-0" style="background-color: rgba(255, 255, 255, 0.2);">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <h3 class="font-bold text-white text-sm uppercase">Prenota una call</h3>
+              </div>
+              
+              <!-- Content Section -->
+              <div style="padding: 1.25rem;">
+                <p class="text-sm text-slate-700 mb-4">Approfondimento sulle funzionalità della piattaforma e/o sui profili di abbonamento.</p>
+                
+                <!-- Button -->
+                <button class="w-full py-2 px-4 bg-slate-900 hover:bg-yellow-500 text-white font-bold text-sm rounded transition-colors duration-200">
+                  CONFERMA
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Inizia oggi Section #}
+<section class="py-20 lg:py-28 bg-[#050322]">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+    <div class="space-y-6">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
+        Inizia oggi
+      </h2>
+      <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto">
+        Scopri come gli Open Badge possono trasformare la tua organizzazione
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+        <a href="/prezzi-e-abbonamenti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#050322] transition-colors">
+          Abbonamenti
+          <span aria-hidden="true" class="ml-2">→</span>
+        </a>
+        <a href="/contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white/80 text-sm font-semibold hover:bg-white/10 transition-colors">
+          Contattaci
+          <span aria-hidden="true" class="ml-2">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

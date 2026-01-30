@@ -1,0 +1,85 @@
+{# case-studies-render.html.twig #}
+
+{# Hero Section using reusable component #}
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: 'Casi studio',
+  description: 'Progetti di successo con i nostri partner',
+  image: '/themes/custom/tailwind/images/public/IMG_openbadge/casi-studio.jpg'
+} %}
+
+{# Case Studies Cards Section #}
+<section class="py-16 lg:py-20 bg-[#E9F5F6]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      
+      <!-- Card 1 -->
+      <a href="#" class="group flex flex-col bg-gray-50 p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-2 hover:bg-white transition-all duration-300 ease-out">
+        <div class="mb-3">
+          <span class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">CASO STUDIO</span>
+        </div>
+        <img class="rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300 casi-studio-image" style="width: 100%; height: 160px;" src="/themes/custom/tailwind/images/public/IMG_openbadge/logo_skillon_claim.jpg" alt="Skillon e open badge">
+        <div class="flex flex-col justify-between leading-normal flex-1">
+          <div>
+            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-900">Skillon e open badge</h5>
+            <p class="mb-6 text-slate-800 text-sm">Skillon e open badge</p>
+          </div>
+          <div>
+            <button type="button" class="inline-flex items-center w-auto text-slate-700 bg-white border border-slate-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 hover:translate-x-1 focus:ring-4 focus:ring-slate-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-300">
+              Approfondisci
+              <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="#" class="group flex flex-col bg-gray-50 p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-2 hover:bg-white transition-all duration-300 ease-out">
+        <div class="mb-3">
+          <span class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">CASO STUDIO</span>
+        </div>
+        <img class="rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300" style="width: 100%; height: 160px; object-fit: none;" src="/themes/custom/tailwind/images/public/IMG_openbadge/edumobylogo.png" alt="Edumoby utilizza gli Open Badge">
+        <div class="flex flex-col justify-between leading-normal flex-1">
+          <div>
+            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-900">Edumoby utilizza gli Open Badge</h5>
+            <p class="mb-6 text-slate-800 text-sm">Edumoby utilizza gli Open Badge!</p>
+          </div>
+          <div>
+            <button type="button" class="inline-flex items-center w-auto text-slate-700 bg-white border border-slate-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 hover:translate-x-1 focus:ring-4 focus:ring-slate-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-300">
+              Approfondisci
+              <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="group flex flex-col bg-gray-50 p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-2 hover:bg-white transition-all duration-300 ease-out">
+        <div class="mb-3">
+          <span class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">CASO STUDIO</span>
+        </div>
+        <img class=" rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300 casi-studio-image" style="width: 100%; height: 160px;" src="/themes/custom/tailwind/images/public/IMG_openbadge/marchio_eurodesk + logo_colore.png" alt="Eurodesk Italy, i benefici nell'utilizzo degli Open Badge">
+        <div class="flex flex-col justify-between leading-normal flex-1">
+          <div>
+            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-900">Eurodesk Italy, i benefici nell'utilizzo degli Open Badge.</h5>
+            <p class="mb-6 text-slate-800 text-sm">Valorizzazione delle competenze tramite gli Open Badge</p>
+          </div>
+          <div>
+            <button type="button" class="inline-flex items-center w-auto text-slate-700 bg-white border border-slate-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 hover:translate-x-1 focus:ring-4 focus:ring-slate-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-300">
+              Approfondisci
+              <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+

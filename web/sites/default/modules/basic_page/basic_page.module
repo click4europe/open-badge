@@ -78,7 +78,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'pubbliche-amministrazioni-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     // Prezzi e Abbonamenti page render.
@@ -96,7 +96,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'scuole-e-centri-di-formazione-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     // Imprese e Startup page render.
@@ -105,7 +105,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'imprese-e-startup-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     // Digital Credentialing page render.
@@ -114,7 +114,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'digital-credentialing-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     //webform page render
@@ -130,7 +130,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'skills-management-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     // Certificazione Lavoratori page render.
@@ -139,7 +139,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'certificazione-lavoratori-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     // Apprendimento Continuo page render.
@@ -148,7 +148,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'apprendimento-continuo-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     // Upskilling page render.
@@ -157,7 +157,7 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'upskilling-render',
-      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates/soluzioni',
     ],
 
     // Notizie page render.
@@ -175,6 +175,42 @@ function basic_page_theme() {
         'data' => NULL,
       ],
       'template' => 'notizia-page-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Servizi Avanzati page render.
+    'servizi_avanzati_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'servizi-avanzati-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Cosa Sono Gli Open Badges page render.
+    'cosa_sono_gli_open_badges_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'cosa-sono-gli-open-badges-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Case Studies page render.
+    'case_studies_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'case-studies-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Contatti page render.
+    'contatti_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'contatti-render',
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
   ];
