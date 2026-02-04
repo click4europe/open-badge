@@ -47,8 +47,11 @@
     </div>
     
     {# Badge Count #}
-    {% if content.field_badge_count.0 %}
-      <p class="text-slate-600 text-sm mb-4 text-center">{{ content.field_badge_count.0 }} badge inclusi</p>
+    {% set badge_count = content.field_badge_count.0|render|striptags|trim %}
+    {% if badge_count and badge_count != '0' %}
+      <p class="text-slate-600 text-sm mb-4 text-center">{{ badge_count }} badge inclusi</p>
+    {% else %}
+      <p class="text-slate-600 text-sm mb-4 text-center">Un piano calibrato sulle esigenze di pubbliche amministrazioni e grande azienda</p>
     {% endif %}
 
     {# Features List #}
