@@ -36,10 +36,13 @@
     </div>
     
     {# Price #}
+    {% set price_value = content.field_price.0|render|striptags|trim %}
+    {% set is_numeric = price_value matches '/^[0-9]+$/' %}
     <div class="mb-2 text-center">
-      <span class="text-3xl lg:text-4xl font-black text-slate-900">{{ content.field_price.0 }}</span>
-      {% if content.field_price_suffix.0 %}
-        <span class="text-sm text-slate-500">{{ content.field_price_suffix.0 }}</span>
+      {% if is_numeric %}
+        <span class="text-3xl lg:text-4xl font-black text-slate-900">€{{ price_value }}</span><span class="text-base text-slate-500">/mese*</span>
+      {% else %}
+        <span class="text-3xl lg:text-4xl font-black text-slate-900">{{ content.field_price.0 }}</span>
       {% endif %}
     </div>
     
