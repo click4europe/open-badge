@@ -3134,6 +3134,13 @@ body.toolbar-horizontal.toolbar-tray-open {
   opacity: 0;
   transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
 }
+.pricing-btn {
+  background-color: #1877F2;
+  color: white;
+}
+.pricing-btn:hover {
+  background-color: #1565D8;
+}
 .pricing-dropdown-content.show {
   max-height: 500px;
   opacity: 1;

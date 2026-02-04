@@ -4,6 +4,10 @@
  * Template for the pricing card paragraph.
  */
 #}
+{# Check if card is featured by field OR by Professional title #}
+{% set plan_title = content.field_plan_title.0|render|striptags|trim|lower %}
+{% set is_featured = content.field_is_featured.value == '1' or plan_title == 'professional' %}
+
 {%
   set classes = [
     'pricing-card',
@@ -12,18 +16,18 @@
     'rounded-2xl',
     'shadow-lg',
     'overflow-hidden',
-    content.field_is_featured.value == '1' ? 'shadow-xl hover:shadow-2xl transition-all duration-300 relative' : '',
+    is_featured ? 'shadow-xl hover:shadow-2xl transition-all duration-300 relative' : '',
   ]
 %}
 
-{% if content.field_is_featured.value == '1' %}
+{% if is_featured %}
   {% set bg_style = 'background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);' %}
 {% else %}
   {% set bg_style = 'background: linear-gradient(180deg, #f5f0eb 0%, #ebe4dd 100%);' %}
 {% endif %}
 
 <div{{ attributes.addClass(classes) }} style="{{ bg_style }}">
-  {% if content.field_is_featured.value == '1' %}
+  {% if is_featured %}
     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 z-10">
       <span class="bg-slate-900 text-white text-xs font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-wider">Consigliato</span>
     </div>
@@ -64,7 +68,7 @@
       </button>
 
       <div id="card-{{ paragraph.id.value }}-details" class="pricing-dropdown-content hidden overflow-hidden transition-all duration-300 mb-4">
-        <div class="{{ content.field_is_featured.value == '1' ? 'bg-white/50' : 'bg-white/30' }} rounded-xl p-3">
+        <div class="{{ is_featured ? 'bg-white/50' : 'bg-white/30' }} rounded-xl p-3">
           {% if content.field_additional_info|render|trim is not empty %}
             <p class="text-xs text-slate-600 mb-3">{{ content.field_additional_info.0 }}</p>
           {% endif %}
@@ -104,11 +108,7 @@
         'duration-300',
       ] %}
       
-      {% if content.field_is_featured.value == '1' %}
-        {% set button_classes = button_classes|merge(['bg-blue-600', 'hover:bg-blue-700', 'text-white']) %}
-      {% else %}
-        {% set button_classes = button_classes|merge(['bg-slate-800', 'hover:bg-slate-900', 'text-white']) %}
-      {% endif %}
+      {% set button_classes = button_classes|merge(['pricing-btn']) %}
       
       {{ link(
         content.field_cta_text.0,
