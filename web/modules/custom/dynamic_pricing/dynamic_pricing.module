@@ -84,13 +84,13 @@ function dynamic_pricing_preprocess_prezzi_e_abbonamenti_render(&$variables) {
         if (strpos($title, 'mensile') !== false || strpos($title, 'monthly') !== false) {
           $variables['pricing_monthly_cards'] = $pricing_cards;
           if ($can_edit) {
-            $variables['pricing_monthly_edit_url'] = \Drupal\Core\Url::fromRoute('entity.block_content.edit_form', ['block_content' => $block->id()]);
+            $variables['pricing_monthly_edit_url'] = \Drupal\Core\Url::fromRoute('entity.block_content.edit_form', ['block_content' => $block->id()], ['query' => ['destination' => '/prezzi-e-abbonamenti']]);
             $variables['pricing_monthly_title'] = $block->label();
           }
         } elseif (strpos($title, 'annuale') !== false || strpos($title, 'annual') !== false || strpos($title, 'yearly') !== false) {
           $variables['pricing_annual_cards'] = $pricing_cards;
           if ($can_edit) {
-            $variables['pricing_annual_edit_url'] = \Drupal\Core\Url::fromRoute('entity.block_content.edit_form', ['block_content' => $block->id()]);
+            $variables['pricing_annual_edit_url'] = \Drupal\Core\Url::fromRoute('entity.block_content.edit_form', ['block_content' => $block->id()], ['query' => ['destination' => '/prezzi-e-abbonamenti']]);
             $variables['pricing_annual_title'] = $block->label();
           }
         }
