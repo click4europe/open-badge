@@ -1,114 +1,10 @@
 {# prezzi-e-abbonamenti-render.html.twig #}
-
-{# Floating Card Animation Styles #}
-<style>
-  .pricing-card {
-    animation: float 6s ease-in-out infinite;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .pricing-card:nth-child(1) { animation-delay: 0s; }
-  .pricing-card:nth-child(2) { animation-delay: 0.5s; }
-  .pricing-card:nth-child(3) { animation-delay: 1s; }
-  .pricing-card:nth-child(4) { animation-delay: 1.5s; }
-  .pricing-card:nth-child(5) { animation-delay: 2s; }
-  
-  @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-  
-  .pricing-card:hover {
-    animation-play-state: paused;
-    transform: translateY(-12px) !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-  }
-  
-  .pricing-card.card-expanded {
-    animation-play-state: paused;
-    transform: translateY(-6px);
-    box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
-  }
-  
-  .pricing-dropdown-content {
-    max-height: 0;
-    opacity: 0;
-    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
-  }
-  
-  .pricing-dropdown-content.show {
-    max-height: 500px;
-    opacity: 1;
-  }
-</style>
+{# CSS moved to input.css - Pricing Card Animations & Grid #}
 
 {# Hero Section - Matching Home Page Style #}
-<section class="bg-[#e4f4f7] py-16 lg:py-20">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
-    <div class="max-w-4xl">
-      <p class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500 mb-3">Prezzi e abbonamenti</p>
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Scegli l'abbonamento adatto alle tue esigenze ed inizia ad assegnare certificazioni digitali in pochi minuti</h1>
-      <p class="text-sm sm:text-base text-slate-700">
-        Unisciti agli enti e organizzazioni che utilizzano la piattaforma Open-Badge.eu, conforme allo standard internazionale 
-        <span class="font-semibold">Open Badges v2.0</span>. Scegli il piano più adatto alle tue necessità e inizia subito a creare, 
-        gestire e distribuire certificazioni digitali riconosciute a livello globale.
-      </p>
-    </div>
+{{ drupal_entity('block_content', 17) }}
 
-    <div class="bg-white rounded-3xl shadow-md px-4 py-4 sm:px-8 sm:py-5 relative">
-      {# Navigation Buttons #}
-      <div class="flex justify-end gap-3 mb-4 relative z-10">
-        <button type="button" id="pricing-carousel-prev" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors cursor-pointer relative z-10" aria-label="Previous slide">
-          <svg class="w-6 h-6 text-slate-700 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-        </button>
-        <button type="button" id="pricing-carousel-next" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors cursor-pointer relative z-10" aria-label="Next slide">
-          <svg class="w-6 h-6 text-slate-700 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </button>
-      </div>
-
-      {# Carousel Container #}
-      <div class="overflow-hidden">
-        <div id="pricing-partner-carousel" class="flex transition-transform duration-500 ease-in-out gap-3">
-          <div class="flex-shrink-0 w-1/2 sm:w-1/4 flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Partner 1" class="h-full w-full object-cover" loading="lazy" />
-            </div>
-          </div>
-          <div class="flex-shrink-0 w-1/2 sm:w-1/4 flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80" alt="Partner 2" class="h-full w-full object-cover" loading="lazy" />
-            </div>
-          </div>
-          <div class="flex-shrink-0 w-1/2 sm:w-1/4 flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=400&q=80" alt="Partner 3" class="h-full w-full object-cover" loading="lazy" />
-            </div>
-          </div>
-          <div class="flex-shrink-0 w-1/2 sm:w-1/4 flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80" alt="Partner 4" class="h-full w-full object-cover" loading="lazy" />
-            </div>
-          </div>
-          <div class="flex-shrink-0 w-1/2 sm:w-1/4 flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=400&q=80" alt="Partner 5" class="h-full w-full object-cover" loading="lazy" />
-            </div>
-          </div>
-          <div class="flex-shrink-0 w-1/2 sm:w-1/4 flex items-center justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=400&q=80" alt="Partner 6" class="h-full w-full object-cover" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-{# Pricing Cards Section #}
+{# Dynamic Pricing Cards Section #}
 <section class="py-16 lg:py-24 bg-slate-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6">
     
@@ -128,607 +24,193 @@
       </div>
     </div>
 
-    {# Pricing Cards Grid - 5 Plans #}
-    <div class="mx-auto" style="display: grid; grid-template-columns: repeat(5, minmax(220px, 1fr)); gap: 1rem; align-items: start; max-width: 1400px;">
-      
-      {# Starter Plan - FREE #}
-      <div class="pricing-card flex flex-col rounded-2xl shadow-lg overflow-hidden" style="background: linear-gradient(180deg, #f5f0eb 0%, #ebe4dd 100%);">
-        <div class="p-6 flex flex-col h-full">
-          {# Plan Name #}
-          <div class="mb-2 text-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">STARTER</span>
+    {# Monthly Pricing Cards #}
+    <div id="monthly-pricing" class="pricing-section">
+      {% if pricing_monthly_cards is not empty %}
+        {% if pricing_monthly_edit_url %}
+          <div class="text-right mb-3">
+            <a href="{{ pricing_monthly_edit_url }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              Edit {{ pricing_monthly_title }}
+            </a>
           </div>
-          
-          {# Price #}
-          <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900">gratis</span>
-          </div>
-          
-          {# Badge Count #}
-          <p class="text-slate-600 text-sm mb-4 text-center">15 badge gratis</p>
-
-          {# Dropdown Toggle #}
-          <button class="pricing-dropdown-toggle flex items-center justify-between w-full py-3 px-4 bg-white/50 rounded-xl text-sm font-medium text-slate-700 hover:bg-white/80 transition-all duration-200 mb-4" data-target="starter-details">
-            <span>Dettagli piano</span>
-            <svg class="dropdown-icon flex-shrink-0 transition-transform duration-200" style="width: 20px; height: 20px; min-width: 20px; max-width: 20px;" fill="none" stroke="#334155" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-
-          {# Dropdown Content #}
-          <div id="starter-details" class="pricing-dropdown-content hidden overflow-hidden transition-all duration-300 mb-4">
-            <div class="bg-white/30 rounded-xl p-3">
-              <p class="text-xs text-slate-600 mb-3">Prova gratuita per 90 giorni con tutte le funzionalità base</p>
-              <ul class="space-y-2">
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Template e verifica automatica</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Badge Gallery & Export PDF</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-400">IA, Bulk Import, SSO</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {# CTA Button #}
-          <a href="#" class="mt-auto block w-full text-center border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
-            Attiva Account
-          </a>
+        {% endif %}
+        <div class="pricing-cards-grid">
+          {% for card in pricing_monthly_cards %}
+            {{ card }}
+          {% endfor %}
         </div>
-      </div>
-
-      {# Standard Plan #}
-      <div class="pricing-card flex flex-col rounded-2xl shadow-lg overflow-hidden" style="background: linear-gradient(180deg, #f5f0eb 0%, #ebe4dd 100%);">
-        <div class="p-6 flex flex-col h-full">
-          {# Plan Name #}
-          <div class="mb-2 text-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">STANDARD</span>
-          </div>
-          
-          {# Price #}
-          <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€70</span>
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€41</span>
-            <span class="text-sm text-slate-500">/mese*</span>
-          </div>
-          
-          {# Badge Count #}
-          <p class="text-slate-600 text-sm mb-4 text-center">540 badge inclusi</p>
-
-          {# Dropdown Toggle #}
-          <button class="pricing-dropdown-toggle flex items-center justify-between w-full py-3 px-4 bg-white/50 rounded-xl text-sm font-medium text-slate-700 hover:bg-white/80 transition-all duration-200 mb-4" data-target="standard-details">
-            <span>Dettagli piano</span>
-            <svg class="dropdown-icon flex-shrink-0 transition-transform duration-200" style="width: 20px; height: 20px; min-width: 20px; max-width: 20px;" fill="none" stroke="#334155" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-
-          {# Dropdown Content #}
-          <div id="standard-details" class="pricing-dropdown-content hidden overflow-hidden transition-all duration-300 mb-4">
-            <div class="bg-white/30 rounded-xl p-3">
-              <ul class="space-y-2">
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Creazione Badge Template</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Gestione revisioni certificati</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">25 template attivi max</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Manager Addizionali</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">IA scrittura (beta)</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Bulk Import XLS</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Multi-lingua & Notifiche</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Badge Gallery & Export PDF</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Personalizzazione grafica</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-400">2FA / SSO</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-400">SPID / Blockchain</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {# CTA Button #}
-          <a href="#" class="mt-auto block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
-            Inizia Ora
-          </a>
+      {% else %}
+        <div class="text-center py-8">
+          <p class="text-slate-600">No monthly pricing plans available.</p>
         </div>
-      </div>
+      {% endif %}
+    </div>
 
-      {# Plus Plan #}
-      <div class="pricing-card flex flex-col rounded-2xl shadow-lg overflow-hidden" style="background: linear-gradient(180deg, #f5f0eb 0%, #ebe4dd 100%);">
-        <div class="p-6 flex flex-col h-full">
-          {# Plan Name #}
-          <div class="mb-2 text-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">PLUS</span>
+    {# Annual Pricing Cards #}
+    <div id="yearly-pricing" class="pricing-section hidden">
+      {% if pricing_annual_cards is not empty %}
+        {% if pricing_annual_edit_url %}
+          <div class="text-right mb-3">
+            <a href="{{ pricing_annual_edit_url }}" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              Edit {{ pricing_annual_title }}
+            </a>
           </div>
-          
-          {# Price #}
-          <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€140</span>
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€100</span>
-            <span class="text-sm text-slate-500">/mese*</span>
-          </div>
-          
-          {# Badge Count #}
-          <p class="text-slate-600 text-sm mb-4 text-center">1500 badge inclusi</p>
-
-          {# Dropdown Toggle #}
-          <button class="pricing-dropdown-toggle flex items-center justify-between w-full py-3 px-4 bg-white/50 rounded-xl text-sm font-medium text-slate-700 hover:bg-white/80 transition-all duration-200 mb-4" data-target="plus-details">
-            <span>Dettagli piano</span>
-            <svg class="dropdown-icon flex-shrink-0 transition-transform duration-200" style="width: 20px; height: 20px; min-width: 20px; max-width: 20px;" fill="none" stroke="#334155" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-
-          {# Dropdown Content #}
-          <div id="plus-details" class="pricing-dropdown-content hidden overflow-hidden transition-all duration-300 mb-4">
-            <div class="bg-white/30 rounded-xl p-3">
-              <ul class="space-y-2">
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Creazione Badge Template</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Gestione revisioni certificati</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">100 template attivi max</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">2 Manager Addizionali</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">IA scrittura (beta)</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Bulk Import XLS</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Multi-lingua & Notifiche</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Badge Gallery & Export PDF</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Personalizzazione grafica</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-400">2FA / SSO</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-400">SPID / Blockchain</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {# CTA Button #}
-          <a href="#" class="mt-auto block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
-            Inizia Ora
-          </a>
+        {% endif %}
+        <div class="pricing-cards-grid">
+          {% for card in pricing_annual_cards %}
+            {{ card }}
+          {% endfor %}
         </div>
-      </div>
-
-      {# Professional Plan - Featured #}
-      <div class="pricing-card flex flex-col rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden relative" style="background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);">
-        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 z-10">
-          <span class="bg-slate-900 text-white text-xs font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-wider">Consigliato</span>
+      {% else %}
+        <div class="text-center py-8">
+          <p class="text-slate-600">No annual pricing plans available.</p>
         </div>
-        <div class="p-6 flex flex-col h-full">
-          {# Plan Name #}
-          <div class="mb-2 text-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-600">PROFESSIONAL</span>
-          </div>
-          
-          {# Price #}
-          <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 monthly-price">€225</span>
-            <span class="text-3xl lg:text-4xl font-black text-slate-900 yearly-price hidden">€175</span>
-            <span class="text-sm text-slate-500">/mese*</span>
-          </div>
-          
-          {# Badge Count #}
-          <p class="text-slate-600 text-sm mb-4 text-center">3600 badge inclusi</p>
-
-          {# Dropdown Toggle #}
-          <button class="pricing-dropdown-toggle flex items-center justify-between w-full py-3 px-4 bg-white/60 rounded-xl text-sm font-medium text-slate-700 hover:bg-white/80 transition-all duration-200 mb-4" data-target="professional-details">
-            <span>Dettagli piano</span>
-            <svg class="dropdown-icon flex-shrink-0 transition-transform duration-200" style="width: 20px; height: 20px; min-width: 20px; max-width: 20px;" fill="none" stroke="#334155" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-
-          {# Dropdown Content #}
-          <div id="professional-details" class="pricing-dropdown-content hidden overflow-hidden transition-all duration-300 mb-4">
-            <div class="bg-white/50 rounded-xl p-3">
-              <ul class="space-y-2">
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Creazione Badge Template</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Gestione revisioni certificati</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">100 template attivi max</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">5 Manager Addizionali</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">IA scrittura completa</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Bulk Import XLS</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Multi-lingua & Notifiche</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Badge Gallery & Export PDF</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Personalizzazione grafica</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-400">2FA / SSO</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-400">SPID / Blockchain</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {# CTA Button #}
-          <a href="#" class="mt-auto block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
-            Inizia Ora
-          </a>
-        </div>
-      </div>
-
-      {# Enterprise Plan #}
-      <div class="pricing-card flex flex-col rounded-2xl shadow-lg overflow-hidden" style="background: linear-gradient(180deg, #f5f0eb 0%, #ebe4dd 100%);">
-        <div class="p-6 flex flex-col h-full">
-          {# Plan Name #}
-          <div class="mb-2 text-center">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">ENTERPRISE</span>
-          </div>
-          
-          {# Price #}
-          <div class="mb-2 text-center">
-            <span class="text-3xl lg:text-4xl font-black text-slate-900">contattaci</span>
-          </div>
-          
-          {# Description #}
-          <p class="text-slate-600 text-xs mb-4 text-center leading-relaxed">Un piano calibrato sulle esigenze di pubbliche amministrazioni e grande aziende</p>
-
-          {# Dropdown Toggle #}
-          <button class="pricing-dropdown-toggle flex items-center justify-between w-full py-3 px-4 bg-white/50 rounded-xl text-sm font-medium text-slate-700 hover:bg-white/80 transition-all duration-200 mb-4" data-target="enterprise-details">
-            <span>Dettagli piano</span>
-            <svg class="dropdown-icon flex-shrink-0 transition-transform duration-200" style="width: 20px; height: 20px; min-width: 20px; max-width: 20px;" fill="none" stroke="#334155" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-          </button>
-
-          {# Dropdown Content #}
-          <div id="enterprise-details" class="pricing-dropdown-content hidden overflow-hidden transition-all duration-300 mb-4">
-            <div class="bg-white/30 rounded-xl p-3">
-              <ul class="space-y-2">
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Creazione Badge Template</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Gestione revisioni certificati</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">Badge su richiesta</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">Template illimitati</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="text-xs text-slate-700 font-medium">Manager su richiesta</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">IA scrittura completa</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Bulk Import XLS</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Multi-lingua & Notifiche</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">2FA / SSO</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Accesso SPID</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Blockchain</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Badge Gallery & Export PDF</span>
-                </li>
-                <li class="flex items-center gap-2">
-                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                  <span class="text-xs text-slate-700">Personalizzazione grafica</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {# CTA Button #}
-          <a href="#" class="mt-auto block w-full text-center bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300">
-            Richiedi Info
-          </a>
-        </div>
-      </div>
-
+      {% endif %}
     </div>
   </div>
 </section>
 
-{# JavaScript for Monthly/Yearly Toggle and Dropdown #}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Monthly/Yearly Toggle
-    const monthlyToggle = document.getElementById('monthly-toggle');
-    const yearlyToggle = document.getElementById('yearly-toggle');
-    const monthlyPrices = document.querySelectorAll('.monthly-price');
-    const yearlyPrices = document.querySelectorAll('.yearly-price');
-    const monthlyBilling = document.querySelectorAll('.monthly-billing');
-    const yearlyBilling = document.querySelectorAll('.yearly-billing');
+{# JavaScript moved to app.js - Pricing Toggle & Dropdown #}
 
-    monthlyToggle.addEventListener('click', function() {
-      monthlyToggle.classList.add('bg-blue-600', 'text-white');
-      monthlyToggle.classList.remove('text-slate-600');
-      yearlyToggle.classList.remove('bg-blue-600', 'text-white');
-      yearlyToggle.classList.add('text-slate-600');
-      
-      monthlyPrices.forEach(el => el.classList.remove('hidden'));
-      yearlyPrices.forEach(el => el.classList.add('hidden'));
-      monthlyBilling.forEach(el => el.classList.remove('hidden'));
-      yearlyBilling.forEach(el => el.classList.add('hidden'));
-    });
-
-    yearlyToggle.addEventListener('click', function() {
-      yearlyToggle.classList.add('bg-blue-600', 'text-white');
-      yearlyToggle.classList.remove('text-slate-600');
-      monthlyToggle.classList.remove('bg-blue-600', 'text-white');
-      monthlyToggle.classList.add('text-slate-600');
-      
-      monthlyPrices.forEach(el => el.classList.add('hidden'));
-      yearlyPrices.forEach(el => el.classList.remove('hidden'));
-      monthlyBilling.forEach(el => el.classList.add('hidden'));
-      yearlyBilling.forEach(el => el.classList.remove('hidden'));
-    });
-
-    // Pricing Dropdown Toggle with Animation
-    const dropdownToggles = document.querySelectorAll('.pricing-dropdown-toggle');
-    
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target');
-        const targetContent = document.getElementById(targetId);
-        const icon = this.querySelector('.dropdown-icon');
-        const card = this.closest('.pricing-card');
-        
-        if (targetContent) {
-          // Toggle show class for animation
-          const isExpanding = targetContent.classList.contains('hidden');
-          
-          if (isExpanding) {
-            targetContent.classList.remove('hidden');
-            setTimeout(() => targetContent.classList.add('show'), 10);
-            if (card) card.classList.add('card-expanded');
-            icon.style.transform = 'rotate(180deg)';
-          } else {
-            targetContent.classList.remove('show');
-            if (card) card.classList.remove('card-expanded');
-            icon.style.transform = 'rotate(0deg)';
-            setTimeout(() => targetContent.classList.add('hidden'), 400);
-          }
-        }
-      });
-    });
-
-    // Pricing Hero Carousel - Disabled carousel functionality
-    // Buttons remain visible but no longer control the carousel
-
-    // Companies carousel functionality - Vertical sliding
-    const companiesCarousel = document.getElementById('companies-carousel');
-    const companiesPrevBtn = document.getElementById('companies-carousel-prev');
-    const companiesNextBtn = document.getElementById('companies-carousel-next');
-    let companiesCurrentRow = 0;
-    const companiesTotalRows = 4; // Total number of rows
-  
-    if (companiesPrevBtn && companiesNextBtn && companiesCarousel) {
-      companiesPrevBtn.addEventListener('click', () => {
-        if (companiesCurrentRow > 0) {
-          companiesCurrentRow--;
-          companiesCarousel.style.transform = `translateY(${companiesCurrentRow * 100}%)`;
-        }
-      });
-
-      companiesNextBtn.addEventListener('click', () => {
-        if (companiesCurrentRow < companiesTotalRows - 1) {
-          companiesCurrentRow++;
-          companiesCarousel.style.transform = `translateY(${companiesCurrentRow * 100}%)`;
-        }
-      });
-    }
-  });
-</script>
-
-{# Companies Section - Slider Style #}
+{# Companies Section - Grid with Pagination #}
 <section class="py-16 bg-white">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-8">
     {# Section Header #}
     <div class="text-center">
-      <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-3">
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">
         Unisciti alle organizzazioni che utilizzano la certificazione digitale Open Badges.
       </h2>
     </div>
 
-    {# Carousel Container #}
-    <div class="bg-white rounded-3xl shadow-md px-4 py-4 sm:px-8 sm:py-5 relative">
-      {# Navigation Buttons #}
-      <div class="flex justify-end gap-3 mb-4 relative z-10">
-        <button type="button" id="companies-carousel-prev-" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors cursor-pointer relative z-10" aria-label="Previous slide">
-          <svg class="w-6 h-6 text-slate-700 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
+    {# Companies Grid Container #}
+    <div class="relative">
+      {# Pages Container #}
+      <div id="companies-pages" class="overflow-hidden">
+        {# Page 1 - 5 rows x 5 logos = 25 logos #}
+        <div class="companies-page" data-page="1">
+          <div class="image-logo-showcase">
+            <a target="_blank" title="Upel Milano" href="https://app.open-badge.eu/public/issuers/5e952019-065f-4954-87e6-103e2fa7100e"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/5e952019-065f-4954-87e6-103e2fa7100e/organization-logos/i2xcS2pYpUR0TnBuPKC5kacvNgPbi6NAtCKBRZOv.png" alt="Upel Milano" loading="lazy" /></a>
+            <a target="_blank" title="Certipass" href="https://app.open-badge.eu/public/issuers/d7489bb9-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/d7489bb9-97ad-11ef-b877-960003b7967d/organization-logos/4oDAJoL9RjYVC83iMZnBZQc2nH21YKevgKGvOU4A.png" alt="Certipass" loading="lazy" /></a>
+            <a target="_blank" title="Upskill 4.0 srl Società Benefit" href="https://app.open-badge.eu/public/issuers/d7473343-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/5537-d7473343-97ad-11ef-b877-960003b7967d.png" alt="Upskill 4.0 srl Società Benefit" loading="lazy" /></a>
+            <a target="_blank" title="UPI Emilia-Romagna" href="https://app.open-badge.eu/public/issuers/ffcde52a-7cd3-4c7a-8f87-95c9a7696b61"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/ffcde52a-7cd3-4c7a-8f87-95c9a7696b61/organization-logos/DT7zpXPJBhbBgx1bOkrlpFt0U1s8RGOEE3pTw2Xt.png" alt="UPI Emilia-Romagna" loading="lazy" /></a>
+            <a target="_blank" title="TOPForGrowth Associazione Culturale" href="https://app.open-badge.eu/public/issuers/5449a07a-7b30-4ff2-8f71-97b8ff161b5a"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/5449a07a-7b30-4ff2-8f71-97b8ff161b5a/organization-logos/E9dJ8PdL2b6b9IzYXFVIrxKunWyPYYn3WZmMQri2.png" alt="TOPForGrowth Associazione Culturale" loading="lazy" /></a>
+            <a target="_blank" title="Ti Forma S.r.L." href="https://app.open-badge.eu/public/issuers/f687d7e0-fd25-4de7-a28c-a1be6c64afff"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/f687d7e0-fd25-4de7-a28c-a1be6c64afff/organization-logos/7tusLJFVcj9MhKBPY94zmchwHa7FGMSlOsWx2P0p.jpg" alt="Ti Forma S.r.L." loading="lazy" /></a>
+            <a target="_blank" title="T.E.S. The English School di Davies Anna Marie s.a.s." href="https://app.open-badge.eu/public/issuers/2effeb1e-7ff4-41ff-84bf-17386f4802ac"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/2effeb1e-7ff4-41ff-84bf-17386f4802ac/organization-logos/IZZ6OZOONLn2kttPPaJO6ccnZvWcLpe76ZwVppk2.jpg" alt="T.E.S. The English School di Davies Anna Marie s.a.s." loading="lazy" /></a>
+            <a target="_blank" title="Synanto srl" href="https://app.open-badge.eu/public/issuers/efe730fa-a12a-4452-ae77-a84e38eb9c27"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/efe730fa-a12a-4452-ae77-a84e38eb9c27/organization-logos/DcOIxsEGxOkxYXRC9ZP6AcQ7D4Rl4orfeMEPPL1E.png" alt="Synanto srl" loading="lazy" /></a>
+            <a target="_blank" title="Galgano Consulting s.r.l." href="https://app.open-badge.eu/public/issuers/d7472f8c-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/5425-d7472f8c-97ad-11ef-b877-960003b7967d.png" alt="Galgano Consulting s.r.l." loading="lazy" /></a>
+            <a target="_blank" title="Made in Motor Valley" href="https://app.open-badge.eu/public/issuers/d746e768-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/3707-d746e768-97ad-11ef-b877-960003b7967d.jpg" alt="Made in Motor Valley" loading="lazy" /></a>
+            <a target="_blank" title="UP2YOU SRL" href="https://app.open-badge.eu/public/issuers/d748963b-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/d748963b-97ad-11ef-b877-960003b7967d/organization-logos/AZDolrB1wimwVX2CHTg5JYbhM4QfYKGEY9W38zNv.webp" alt="UP2YOU SRL" loading="lazy" /></a>
+            <a target="_blank" title="FYM formazione e coaching" href="https://app.open-badge.eu/public/issuers/d746f7e0-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/4134-d746f7e0-97ad-11ef-b877-960003b7967d.png" alt="FYM formazione e coaching" loading="lazy" /></a>
+            <a target="_blank" title="I.I.S. Umberto Masotto" href="https://app.open-badge.eu/public/issuers/d748ac41-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/8881-d748ac41-97ad-11ef-b877-960003b7967d.jpg" alt="I.I.S. Umberto Masotto" loading="lazy" /></a>
+            <a target="_blank" title="Rightnow" href="https://app.open-badge.eu/public/issuers/99d81ce6-5073-4ced-841e-d9338d01ebd1"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/99d81ce6-5073-4ced-841e-d9338d01ebd1/organization-logos/UcE2YsjpxUHiWn9RHbhSg0ewz8wNSXZLe3n8Kp1X.png" alt="Rightnow" loading="lazy" /></a>
+            <a target="_blank" title="CONSORZIO ENTI FORM" href="https://app.open-badge.eu/public/issuers/d74808cc-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/6702-d74808cc-97ad-11ef-b877-960003b7967d.png" alt="CONSORZIO ENTI FORM" loading="lazy" /></a>
+            <a target="_blank" title="UniversiData" href="https://app.open-badge.eu/public/issuers/d747c64b-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/d747c64b-97ad-11ef-b877-960003b7967d/organization-logos/dmwD7J1vBJ0hCqyYJS3LRtfrWg5JL3IdZ40SMeY7.png" alt="UniversiData" loading="lazy" /></a>
+            <a target="_blank" title="Polity design" href="https://app.open-badge.eu/public/issuers/f2c11ac6-3ec8-48c3-81f9-edf9b088c28b"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/f2c11ac6-3ec8-48c3-81f9-edf9b088c28b/organization-logos/KmpVFJ8DikuHEPjHe3gWitXDt87dfIQqaSH0LqVT.png" alt="Polity design" loading="lazy" /></a>
+            <a target="_blank" title="Ordine TSRM e PSTRP di BL-TV-VI" href="https://app.open-badge.eu/public/issuers/0edb232f-9f02-4ea9-9bb3-7d4031609eb2"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/0edb232f-9f02-4ea9-9bb3-7d4031609eb2/organization-logos/QI9o58hjLE3TFhmS401Yroj89kBVJl3I7rwpv2CL.png" alt="Ordine TSRM e PSTRP di BL-TV-VI" loading="lazy" /></a>
+            <a target="_blank" title="Omnia Scrl" href="https://app.open-badge.eu/public/issuers/d7473e6d-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/5555-d7473e6d-97ad-11ef-b877-960003b7967d.jpg" alt="Omnia Scrl" loading="lazy" /></a>
+            <a target="_blank" title="Job Farm - Recruit" href="https://app.open-badge.eu/public/issuers/d7478ba1-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/6103-d7478ba1-97ad-11ef-b877-960003b7967d.jpg" alt="Job Farm - Recruit" loading="lazy" /></a>
+            <a target="_blank" title="NetCoach" href="https://app.open-badge.eu/public/issuers/d7478e0c-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/6144-d7478e0c-97ad-11ef-b877-960003b7967d.png" alt="NetCoach" loading="lazy" /></a>
+            <a target="_blank" title="Legambiente Piemonte e Valle d'Aosta" href="https://app.open-badge.eu/public/issuers/d74898c9-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/8281-d74898c9-97ad-11ef-b877-960003b7967d.png" alt="Legambiente Piemonte e Valle d'Aosta" loading="lazy" /></a>
+            <a target="_blank" title="Laborplay s.r.l." href="https://app.open-badge.eu/public/issuers/d7463725-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/2585-d7463725-97ad-11ef-b877-960003b7967d.jpg" alt="Laborplay s.r.l." loading="lazy" /></a>
+            <a target="_blank" title="Anpal - Punti di Contatto Nazionali di EQF, Euroguidance ed Europass in Italia" href="https://app.open-badge.eu/public/issuers/d746a604-97ad-11ef-b877-960003b7967d"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organization-logos/2916-d746a604-97ad-11ef-b877-960003b7967d.jpg" alt="Anpal - Punti di Contatto Nazionali di EQF, Euroguidance ed Europass in Italia" loading="lazy" /></a>
+            <a target="_blank" title="Open Badge Consulting" href="https://app.open-badge.eu/public/issuers/9043fdf1-6d31-4199-9b27-a29f2e24043e"><img class="logo-customer" src="https://storage.googleapis.com/open-badge-storage/app/organizations/9043fdf1-6d31-4199-9b27-a29f2e24043e/organization-logos/u6SIYOrEDMGrCHhNkndKPteULThZDQzzIFO8F7Lt.png" alt="Open Badge Consulting" loading="lazy" /></a>
+          </div>
+        </div>
+
+        {# Page 2 #}
+        <div class="companies-page hidden" data-page="2">
+          <div class="image-logo-showcase">
+            <img class="logo-customer" src="https://picsum.photos/seed/logo26/160/100.jpg" alt="Company 26" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo27/160/100.jpg" alt="Company 27" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo28/160/100.jpg" alt="Company 28" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo29/160/100.jpg" alt="Company 29" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo30/160/100.jpg" alt="Company 30" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo31/160/100.jpg" alt="Company 31" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo32/160/100.jpg" alt="Company 32" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo33/160/100.jpg" alt="Company 33" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo34/160/100.jpg" alt="Company 34" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo35/160/100.jpg" alt="Company 35" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo36/160/100.jpg" alt="Company 36" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo37/160/100.jpg" alt="Company 37" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo38/160/100.jpg" alt="Company 38" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo39/160/100.jpg" alt="Company 39" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo40/160/100.jpg" alt="Company 40" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo41/160/100.jpg" alt="Company 41" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo42/160/100.jpg" alt="Company 42" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo43/160/100.jpg" alt="Company 43" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo44/160/100.jpg" alt="Company 44" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo45/160/100.jpg" alt="Company 45" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo46/160/100.jpg" alt="Company 46" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo47/160/100.jpg" alt="Company 47" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo48/160/100.jpg" alt="Company 48" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo49/160/100.jpg" alt="Company 49" loading="lazy" />
+            <img class="logo-customer" src="https://picsum.photos/seed/logo50/160/100.jpg" alt="Company 50" loading="lazy" />
+          </div>
+        </div>
+      </div>
+
+      {# Pagination #}
+      <div class="flex items-center justify-center gap-3 mt-10">
+        <button type="button" id="companies-prev" class="group relative px-4 py-2 rounded-full bg-white border-2 border-slate-200 text-slate-600 font-medium transition-all duration-300 hover:border-[#0891b2] hover:text-[#0891b2] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Previous page">
+          <span class="flex items-center gap-2">
+            <svg class="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.75 19.5L8.25 12l7.5-7.5"></path>
+            </svg>
+            <span class="hidden sm:inline">Precedente</span>
+          </span>
         </button>
-        <button type="button" id="companies-carousel-next-" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center transition-colors cursor-pointer relative z-10" aria-label="Next slide">
-          <svg class="w-6 h-6 text-slate-700 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
+        
+        <div class="flex items-center gap-2">
+          <div class="hidden sm:flex items-center gap-1 px-3 py-1">
+            <span class="text-sm text-slate-500">Pagina</span>
+            <span id="current-page-indicator" class="text-sm font-semibold text-[#0891b2]">1</span>
+            <span class="text-sm text-slate-500">di</span>
+            <span class="text-sm font-semibold text-slate-700">2</span>
+          </div>
+          
+          <div id="companies-pagination" class="flex items-center gap-1.5">
+            <button type="button" class="page-btn relative w-10 h-10 rounded-xl bg-[#0891b2] text-white font-semibold text-sm shadow-md transform transition-all duration-300 hover:scale-110 hover:shadow-xl" data-page="1">
+              <span class="relative z-10">1</span>
+            </button>
+            <button type="button" class="page-btn relative w-10 h-10 rounded-xl bg-white border-2 border-slate-200 text-slate-600 font-semibold text-sm transform transition-all duration-300 hover:border-[#0891b2] hover:text-[#0891b2] hover:scale-110 hover:shadow-md" data-page="2">
+              <span class="relative z-10">2</span>
+            </button>
+          </div>
+        </div>
+        
+        <button type="button" id="companies-next" class="group relative px-4 py-2 rounded-full bg-white border-2 border-slate-200 text-slate-600 font-medium transition-all duration-300 hover:border-[#0891b2] hover:text-[#0891b2] hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" aria-label="Next page">
+          <span class="flex items-center gap-2">
+            <span class="hidden sm:inline">Successiva</span>
+            <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8.25 4.5L15.75 12l-7.5 7.5"></path>
+            </svg>
+          </span>
         </button>
       </div>
 
-      {# Grid Container with 4 rows, 6 logos each #}
-      <div class="overflow-hidden">
-        <div id="companies-carousel" class="flex flex-col gap-8 transition-transform duration-500 ease-in-out">
-          {# Row 1 #}
-          <div class="flex gap-8 justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/obv_logo.png" alt="Partner 1" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img1.png" alt="Partner 2" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img2.png" alt="Partner 3" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img3.png" alt="Partner 4" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img4.png" alt="Partner 5" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/oblogo2024-1.svg" alt="Partner 6" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-          </div>
+      {# Footer Text #}
+      <p class="text-center text-sm text-slate-500 mt-6">
+        Elenco (non esaustivo) degli Enti ed Organizzazioni presenti in piattaforma
+      </p>
 
-          {# Row 2 #}
-          <div class="flex gap-8 justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/oblogo2024-11.svg" alt="Partner 7" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/openbadge-newlogo-blugreen.svg" alt="Partner 8" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Partner 9" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/obv_logo.png" alt="Partner 10" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80" alt="Partner 11" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img1.png" alt="Partner 12" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-          </div>
-
-          {# Row 3 #}
-          <div class="flex gap-8 justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1560179707-f14e90ef3623?auto=format&fit=crop&w=400&q=80" alt="Partner 13" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img2.png" alt="Partner 14" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=400&q=80" alt="Partner 15" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/oblogo2024-1.svg" alt="Partner 16" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=400&q=80" alt="Partner 17" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img3.png" alt="Partner 18" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-          </div>
-
-          {# Row 4 #}
-          <div class="flex gap-8 justify-center">
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/openbadge-newlogo-blugreen.svg" alt="Partner 19" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=400&q=80" alt="Partner 20" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/open-badge.eu-img4.png" alt="Partner 21" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80" alt="Partner 22" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="/themes/custom/tailwind/images/public/oblogo2024-11.svg" alt="Partner 23" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-            <div class="flex items-center justify-center rounded-2xl bg-white overflow-hidden h-32 w-32">
-              <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=400&q=80" alt="Partner 24" class="h-full w-full object-contain p-4" loading="lazy" />
-            </div>
-          </div>
-        </div>
+      {# CTA Button #}
+      <div class="text-center mt-6">
+        <a href="/user/register" class="inline-flex items-center gap-2 bg-[#0891b2] hover:bg-[#0e7490] text-white px-6 py-3 rounded-lg font-medium transition-colors">
+          Registrati Ora
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
       </div>
     </div>
   </div>
 </section>
+
+{# JavaScript moved to app.js - Companies Pagination #}
 

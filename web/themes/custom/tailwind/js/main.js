@@ -356,43 +356,32 @@ __webpack_require__.r(__webpack_exports__);
 
         // ========== DRUPAL ADMIN TOOLBAR POSITIONING ==========
         function updateNavbarPosition() {
-          var header = document.querySelector('header');
-          var adminToolbar = document.querySelector('#toolbar-administration');
-
-          // Check for admin toolbar with different selectors and methods
-          var toolbarHeight = 0;
-          if (adminToolbar) {
-            toolbarHeight = adminToolbar.offsetHeight;
-          } else {
-            // Try other possible admin toolbar selectors
-            var toolbarBar = document.querySelector('.toolbar-bar');
-            if (toolbarBar) {
-              toolbarHeight = toolbarBar.offsetHeight;
-            }
-          }
-
-          // Also check if body has admin toolbar class
+          var header = document.querySelector('.site-header');
+          if (!header) return;
           var body = document.body;
-          if (body && (body.classList.contains('toolbar-horizontal') || body.classList.contains('toolbar-tray-open'))) {
-            // Admin toolbar is likely present, try to get its height
-            var anyToolbar = document.querySelector('[role="toolbar"], .toolbar, #toolbar');
-            if (anyToolbar) {
-              toolbarHeight = anyToolbar.offsetHeight;
+          var toolbarHeight = 0;
+
+          // Check if body has toolbar classes (most reliable method)
+          if (body.classList.contains('toolbar-fixed')) {
+            toolbarHeight = 39; // Standard Drupal toolbar height
+
+            // Check if tray is open (horizontal)
+            if (body.classList.contains('toolbar-horizontal') && body.classList.contains('toolbar-tray-open')) {
+              toolbarHeight = 79; // Toolbar + tray height
             }
           }
-          if (header) {
-            header.style.top = toolbarHeight + 'px';
-          }
+          header.style.top = toolbarHeight + 'px';
         }
 
-        // Update on load with delay for admin toolbar
+        // Update on load with delay for admin toolbar to initialize
         setTimeout(updateNavbarPosition, 100);
+        setTimeout(updateNavbarPosition, 500);
 
-        // Update when toolbar changes
+        // Update when toolbar changes via Drupal behaviors
         if (window.Drupal && window.Drupal.behaviors) {
           Drupal.behaviors.navbarPosition = {
             attach: function attach(context, settings) {
-              updateNavbarPosition();
+              setTimeout(updateNavbarPosition, 50);
             }
           };
         }
@@ -480,6 +469,166 @@ __webpack_require__.r(__webpack_exports__);
               });
             });
           });
+        }
+
+        // ========== PRICING TOGGLE & DROPDOWN ==========
+        var monthlyToggle = document.getElementById('monthly-toggle');
+        var yearlyToggle = document.getElementById('yearly-toggle');
+        var monthlyPricing = document.getElementById('monthly-pricing');
+        var yearlyPricing = document.getElementById('yearly-pricing');
+        if (monthlyToggle && yearlyToggle) {
+          monthlyToggle.addEventListener('click', function () {
+            monthlyToggle.classList.add('bg-blue-600', 'text-white');
+            monthlyToggle.classList.remove('text-slate-600');
+            yearlyToggle.classList.remove('bg-blue-600', 'text-white');
+            yearlyToggle.classList.add('text-slate-600');
+            if (monthlyPricing) monthlyPricing.classList.remove('hidden');
+            if (yearlyPricing) yearlyPricing.classList.add('hidden');
+          });
+          yearlyToggle.addEventListener('click', function () {
+            yearlyToggle.classList.add('bg-blue-600', 'text-white');
+            yearlyToggle.classList.remove('text-slate-600');
+            monthlyToggle.classList.remove('bg-blue-600', 'text-white');
+            monthlyToggle.classList.add('text-slate-600');
+            if (yearlyPricing) yearlyPricing.classList.remove('hidden');
+            if (monthlyPricing) monthlyPricing.classList.add('hidden');
+          });
+        }
+
+        // Pricing Dropdown Toggle with Animation
+        var dropdownToggles = document.querySelectorAll('.pricing-dropdown-toggle');
+        dropdownToggles.forEach(function (toggle) {
+          toggle.addEventListener('click', function () {
+            var targetId = this.getAttribute('data-target');
+            var targetContent = document.getElementById(targetId);
+            var icon = this.querySelector('.dropdown-icon');
+            var card = this.closest('.pricing-card');
+            if (targetContent) {
+              var isExpanding = targetContent.classList.contains('hidden');
+              if (isExpanding) {
+                targetContent.classList.remove('hidden');
+                setTimeout(function () {
+                  return targetContent.classList.add('show');
+                }, 10);
+                if (card) card.classList.add('card-expanded');
+                if (icon) icon.style.transform = 'rotate(180deg)';
+              } else {
+                targetContent.classList.remove('show');
+                if (card) card.classList.remove('card-expanded');
+                if (icon) icon.style.transform = 'rotate(0deg)';
+                setTimeout(function () {
+                  return targetContent.classList.add('hidden');
+                }, 400);
+              }
+            }
+          });
+        });
+
+        // ========== COMPANIES PAGINATION ==========
+        var companiesPages = document.querySelectorAll('.companies-page');
+        var companyPageButtons = document.querySelectorAll('#companies-pagination .page-btn');
+        var companiesPrevBtn = document.getElementById('companies-prev');
+        var companiesNextBtn = document.getElementById('companies-next');
+        if (companiesPages.length > 0 && companyPageButtons.length > 0) {
+          var showCompanyPage = function showCompanyPage(pageNum) {
+            currentCompanyPage = pageNum;
+            companiesPages.forEach(function (page) {
+              page.classList.add('hidden');
+              if (parseInt(page.dataset.page) === pageNum) {
+                page.classList.remove('hidden');
+              }
+            });
+            companyPageButtons.forEach(function (btn) {
+              btn.classList.remove('bg-[#0891b2]', 'text-white', 'shadow-md', 'scale-110');
+              btn.classList.add('bg-white', 'border-2', 'border-slate-200', 'text-slate-600');
+              if (parseInt(btn.dataset.page) === pageNum) {
+                btn.classList.add('bg-[#0891b2]', 'text-white', 'shadow-md');
+                btn.classList.remove('bg-white', 'border-2', 'border-slate-200', 'text-slate-600');
+              }
+            });
+            var pageIndicator = document.getElementById('current-page-indicator');
+            if (pageIndicator) {
+              pageIndicator.textContent = pageNum;
+            }
+            if (companiesPrevBtn) {
+              if (pageNum === 1) {
+                companiesPrevBtn.disabled = true;
+                companiesPrevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+              } else {
+                companiesPrevBtn.disabled = false;
+                companiesPrevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+              }
+            }
+            if (companiesNextBtn) {
+              if (pageNum === totalCompanyPages) {
+                companiesNextBtn.disabled = true;
+                companiesNextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+              } else {
+                companiesNextBtn.disabled = false;
+                companiesNextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+              }
+            }
+          };
+          var currentCompanyPage = 1;
+          var totalCompanyPages = companiesPages.length;
+          companyPageButtons.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              showCompanyPage(parseInt(this.dataset.page));
+            });
+          });
+          if (companiesPrevBtn) {
+            companiesPrevBtn.addEventListener('click', function () {
+              if (currentCompanyPage > 1) {
+                showCompanyPage(currentCompanyPage - 1);
+              }
+            });
+          }
+          if (companiesNextBtn) {
+            companiesNextBtn.addEventListener('click', function () {
+              if (currentCompanyPage < totalCompanyPages) {
+                showCompanyPage(currentCompanyPage + 1);
+              }
+            });
+          }
+
+          // Initialize first page
+          showCompanyPage(1);
+        }
+
+        // ========== COSA SONO FAQ ITEMS ==========
+        var faqItems = document.querySelectorAll('.faq-item');
+        var faqImage = document.getElementById('faq-image');
+        if (faqItems.length > 0 && faqImage) {
+          var imageMap = {
+            'mybadges': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-1.png',
+            'learning': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-2.webp',
+            'earners': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-3.webp'
+          };
+          faqItems.forEach(function (item) {
+            item.addEventListener('click', function () {
+              var faqType = this.getAttribute('data-faq');
+              var content = this.querySelector('.faq-content');
+              faqItems.forEach(function (otherItem) {
+                if (otherItem !== item) {
+                  var otherContent = otherItem.querySelector('.faq-content');
+                  if (otherContent) otherContent.classList.add('hidden');
+                  var otherH3 = otherItem.querySelector('h3');
+                  if (otherH3) otherH3.classList.remove('text-blue-600');
+                }
+              });
+              if (content) content.classList.toggle('hidden');
+              var h3 = this.querySelector('h3');
+              if (h3) h3.classList.toggle('text-blue-600');
+              if (content && !content.classList.contains('hidden') && imageMap[faqType]) {
+                faqImage.src = imageMap[faqType];
+              }
+            });
+          });
+
+          // Auto-open first item on load
+          if (faqItems.length > 0) {
+            faqItems[0].click();
+          }
         }
       });
     }

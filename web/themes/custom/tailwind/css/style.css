@@ -1782,6 +1782,9 @@
   .h-4 {
     height: calc(var(--spacing) * 4);
   }
+  .h-5 {
+    height: calc(var(--spacing) * 5);
+  }
   .h-6 {
     height: calc(var(--spacing) * 6);
   }
@@ -1817,6 +1820,9 @@
   }
   .w-4 {
     width: calc(var(--spacing) * 4);
+  }
+  .w-5 {
+    width: calc(var(--spacing) * 5);
   }
   .w-6 {
     width: calc(var(--spacing) * 6);
@@ -1866,6 +1872,12 @@
   .flex-shrink-0 {
     flex-shrink: 0;
   }
+  .scale-110 {
+    --tw-scale-x: 110%;
+    --tw-scale-y: 110%;
+    --tw-scale-z: 110%;
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
   .rotate-180 {
     rotate: 180deg;
   }
@@ -1891,6 +1903,9 @@
       outline: 2px solid currentColor;
       outline-offset: 2px;
     }
+  }
+  .cursor-not-allowed {
+    cursor: not-allowed;
   }
   .cursor-pointer {
     cursor: pointer;
@@ -2031,6 +2046,10 @@
     border-style: var(--tw-border-style);
     border-width: 1px;
   }
+  .border-2 {
+    border-style: var(--tw-border-style);
+    border-width: 2px;
+  }
   .border-t {
     border-top-style: var(--tw-border-style);
     border-top-width: 1px;
@@ -2088,6 +2107,9 @@
   }
   .border-t-blue-600 {
     border-top-color: var(--color-blue-600);
+  }
+  .bg-\[\#0891b2\] {
+    background-color: #0891b2;
   }
   .bg-\[\#050322\] {
     background-color: #050322;
@@ -3023,22 +3045,98 @@
 body {
   font-family: "Inter", "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+.site-header {
+  top: 0;
+}
 body.toolbar-fixed .site-header {
-  top: 39px !important;
+  top: 39px;
 }
 body.toolbar-horizontal.toolbar-tray-open .site-header {
-  top: 79px !important;
+  top: 79px;
 }
 @media (min-width: 976px) {
   body.toolbar-fixed.toolbar-vertical .site-header {
-    top: 39px !important;
+    top: 39px;
   }
   body.toolbar-fixed.toolbar-vertical.toolbar-tray-open .site-header {
-    top: 39px !important;
+    top: 39px;
   }
 }
+body {
+  padding-top: 60px;
+}
 body.toolbar-fixed {
-  padding-top: 0 !important;
+  padding-top: 99px;
+}
+body.toolbar-horizontal.toolbar-tray-open {
+  padding-top: 139px;
+}
+.pricing-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+@media (max-width: 1280px) {
+  .pricing-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .pricing-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 640px) {
+  .pricing-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.pricing-card {
+  animation: float 6s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.pricing-card:nth-child(1) {
+  animation-delay: 0s;
+}
+.pricing-card:nth-child(2) {
+  animation-delay: 0.5s;
+}
+.pricing-card:nth-child(3) {
+  animation-delay: 1s;
+}
+.pricing-card:nth-child(4) {
+  animation-delay: 1.5s;
+}
+.pricing-card:nth-child(5) {
+  animation-delay: 2s;
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.pricing-card:hover {
+  animation-play-state: paused;
+  transform: translateY(-12px) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+.pricing-card.card-expanded {
+  animation-play-state: paused;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
+}
+.pricing-dropdown-content {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+.pricing-dropdown-content.show {
+  max-height: 500px;
+  opacity: 1;
 }
 @layer components {
   .btn {
@@ -3187,6 +3285,44 @@ body.toolbar-fixed {
   }
   .nav-link:hover {
     color: #64BF96;
+  }
+  .logo-customer {
+    width: 160px;
+    height: 100px;
+    -o-object-fit: contain;
+       object-fit: contain;
+    transition: all 0.3s ease;
+  }
+  .logo-customer:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+  .image-logo-showcase {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    justify-items: center;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 1024px) {
+    .image-logo-showcase {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    .image-logo-showcase {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (max-width: 640px) {
+    .image-logo-showcase {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .logo-customer {
+      width: 120px;
+      height: 80px;
+    }
   }
 }
 @layer base {
@@ -3443,6 +3579,21 @@ body.toolbar-fixed {
     background-position-x: -115%;
   }
 }
+@property --tw-scale-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
@@ -3600,21 +3751,6 @@ body.toolbar-fixed {
   syntax: "*";
   inherits: false;
 }
-@property --tw-scale-x {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-y {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
 @property --tw-outline-style {
   syntax: "*";
   inherits: false;
@@ -3623,6 +3759,9 @@ body.toolbar-fixed {
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-scale-x: 1;
+      --tw-scale-y: 1;
+      --tw-scale-z: 1;
       --tw-rotate-x: initial;
       --tw-rotate-y: initial;
       --tw-rotate-z: initial;
@@ -3658,9 +3797,6 @@ body.toolbar-fixed {
       --tw-ring-offset-shadow: 0 0 #0000;
       --tw-duration: initial;
       --tw-ease: initial;
-      --tw-scale-x: 1;
-      --tw-scale-y: 1;
-      --tw-scale-z: 1;
       --tw-outline-style: solid;
     }
   }

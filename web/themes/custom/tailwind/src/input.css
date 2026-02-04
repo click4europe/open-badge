@@ -18,29 +18,106 @@ body {
 }
 
 /* Drupal Admin Toolbar Compatibility */
-/* Push site header down when Drupal admin toolbar is present */
+/* Position site header below admin toolbar */
+.site-header {
+  top: 0;
+}
+
 body.toolbar-fixed .site-header {
-  top: 39px !important; /* Drupal toolbar height */
+  top: 39px; /* Drupal toolbar height */
 }
 
 body.toolbar-horizontal.toolbar-tray-open .site-header {
-  top: 79px !important; /* Drupal toolbar + tray height */
+  top: 79px; /* Drupal toolbar + tray height */
 }
 
 /* For larger screens with vertical toolbar */
 @media (min-width: 976px) {
   body.toolbar-fixed.toolbar-vertical .site-header {
-    top: 39px !important;
+    top: 39px;
   }
   
   body.toolbar-fixed.toolbar-vertical.toolbar-tray-open .site-header {
-    top: 39px !important; /* Vertical tray doesn't affect header position */
+    top: 39px; /* Vertical tray doesn't affect header position */
   }
 }
 
-/* Ensure body has proper padding when both toolbars are present */
+/* Add padding to body content to account for fixed header */
+body {
+  padding-top: 60px; /* Approximate header height */
+}
+
 body.toolbar-fixed {
-  padding-top: 0 !important;
+  padding-top: 99px; /* Toolbar (39px) + Header (~60px) */
+}
+
+body.toolbar-horizontal.toolbar-tray-open {
+  padding-top: 139px; /* Toolbar + Tray (79px) + Header (~60px) */
+}
+
+/* Pricing Card Animations */
+.pricing-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 1280px) {
+  .pricing-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .pricing-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pricing-card {
+  animation: float 6s ease-in-out infinite;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:nth-child(1) { animation-delay: 0s; }
+.pricing-card:nth-child(2) { animation-delay: 0.5s; }
+.pricing-card:nth-child(3) { animation-delay: 1s; }
+.pricing-card:nth-child(4) { animation-delay: 1.5s; }
+.pricing-card:nth-child(5) { animation-delay: 2s; }
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.pricing-card:hover {
+  animation-play-state: paused;
+  transform: translateY(-12px) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.pricing-card.card-expanded {
+  animation-play-state: paused;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.12);
+}
+
+.pricing-dropdown-content {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.pricing-dropdown-content.show {
+  max-height: 500px;
+  opacity: 1;
 }
 
 @layer components {
@@ -196,5 +273,49 @@ body.toolbar-fixed {
   
   .nav-link:hover {
     color: #64BF96;
+  }
+
+  .logo-customer {
+    width: 160px;
+    height: 100px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+  }
+  
+  .logo-customer:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+  }
+
+  .image-logo-showcase {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    justify-items: center;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 1024px) {
+    .image-logo-showcase {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .image-logo-showcase {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .image-logo-showcase {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    
+    .logo-customer {
+      width: 120px;
+      height: 80px;
+    }
   }
 }

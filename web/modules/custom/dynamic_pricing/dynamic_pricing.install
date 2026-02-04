@@ -1,0 +1,106 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Dynamic Pricing module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function dynamic_pricing_install() {
+  // Create the pricing cards block type if it doesn't exist.
+  if (!\Drupal\block_content\Entity\BlockContentType::load('pricing_cards')) {
+    $block_content_type = \Drupal\block_content\Entity\BlockContentType::create([
+      'id' => 'pricing_cards',
+      'label' => 'Pricing Cards',
+      'description' => 'Dynamic pricing cards section with multiple pricing plans.',
+    ]);
+    $block_content_type->save();
+  }
+
+  // Add the pricing cards paragraph field.
+  $field_storage_name = 'block_content.field_pricing_cards';
+  if (!\Drupal\field\Entity\FieldStorageConfig::loadByName('block_content', 'field_pricing_cards')) {
+    $field_storage = [
+      'field_name' => 'field_pricing_cards',
+      'entity_type' => 'block_content',
+      'type' => 'entity_reference_revisions',
+      'settings' => [
+        'target_type' => 'paragraph',
+        'handler' => 'default:paragraph',
+        'handler_settings' => [
+          'target_bundles' => [
+            'pricing_card' => 'pricing_card'
+          ],
+          'negate' => 0,
+          'target_bundles_drag_drop' => [
+            'pricing_card' => [
+              'enabled' => TRUE,
+              'weight' => 1
+            ]
+          ]
+        ]
+      ],
+      'cardinality' => -1, // Unlimited cards
+    ];
+    \Drupal\field\Entity\FieldStorageConfig::create($field_storage)->save();
+
+    if (!\Drupal\field\Entity\FieldConfig::loadByName('block_content', 'pricing_cards', 'field_pricing_cards')) {
+      \Drupal\field\Entity\FieldConfig::create([
+        'field_storage' => \Drupal\field\Entity\FieldStorageConfig::loadByName('block_content', 'field_pricing_cards'),
+        'bundle' => 'pricing_cards',
+        'label' => 'Pricing Cards',
+        'description' => 'Add pricing cards to display in the section.',
+        'required' => FALSE,
+      ])->save();
+    }
+  }
+
+  // Assign form display.
+  $entity_form_display = \Drupal\entity_display\Entity\EntityFormDisplay::load('block_content.pricing_cards.default');
+  if (!$entity_form_display) {
+    $entity_form_display = \Drupal\entity_display\Entity\EntityFormDisplay::create([
+      'targetEntityType' => 'block_content',
+      'bundle' => 'pricing_cards',
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+  
+  $entity_form_display
+    ->setComponent('field_pricing_cards', [
+      'type' => 'paragraphs',
+      'settings' => [
+        'edit_mode' => 'open',
+        'add_mode' => 'dropdown',
+        'form_display_mode' => 'default',
+        'default_paragraph_type' => '',
+      ],
+      'weight' => 0,
+    ])
+    ->save();
+
+  // Assign view display.
+  $entity_view_display = \Drupal\entity_display\Entity\EntityViewDisplay::load('block_content.pricing_cards.default');
+  if (!$entity_view_display) {
+    $entity_view_display = \Drupal\entity_display\Entity\EntityViewDisplay::create([
+      'targetEntityType' => 'block_content',
+      'bundle' => 'pricing_cards',
+      'mode' => 'default',
+      'status' => TRUE,
+    ]);
+  }
+  
+  $entity_view_display
+    ->setComponent('field_pricing_cards', [
+      'type' => 'entity_reference_revisions_entity_view',
+      'label' => 'hidden',
+      'settings' => [
+        'view_mode' => 'default',
+        'link' => FALSE,
+      ],
+      'weight' => 0,
+    ])
+    ->save();
+}

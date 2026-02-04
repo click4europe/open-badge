@@ -1,0 +1,114 @@
+{#
+/**
+ * @file
+ * Template for the pricing card paragraph.
+ */
+#}
+{%
+  set classes = [
+    'pricing-card',
+    'flex',
+    'flex-col',
+    'rounded-2xl',
+    'shadow-lg',
+    'overflow-hidden',
+    content.field_is_featured.value == '1' ? 'shadow-xl hover:shadow-2xl transition-all duration-300 relative' : '',
+  ]
+%}
+
+{% if content.field_is_featured.value == '1' %}
+  {% set bg_style = 'background: linear-gradient(180deg, #e0f2fe 0%, #bae6fd 100%);' %}
+{% else %}
+  {% set bg_style = 'background: linear-gradient(180deg, #f5f0eb 0%, #ebe4dd 100%);' %}
+{% endif %}
+
+<div{{ attributes.addClass(classes) }} style="{{ bg_style }}">
+  {% if content.field_is_featured.value == '1' %}
+    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 z-10">
+      <span class="bg-slate-900 text-white text-xs font-bold px-4 py-1.5 rounded-b-lg uppercase tracking-wider">Consigliato</span>
+    </div>
+  {% endif %}
+  
+  <div class="p-6 flex flex-col h-full">
+    {# Plan Name #}
+    <div class="mb-2 text-center">
+      <span class="text-xs font-bold uppercase tracking-wider text-slate-500">{{ content.field_plan_title.0 }}</span>
+    </div>
+    
+    {# Price #}
+    <div class="mb-2 text-center">
+      <span class="text-3xl lg:text-4xl font-black text-slate-900">{{ content.field_price.0 }}</span>
+      {% if content.field_price_suffix.0 %}
+        <span class="text-sm text-slate-500">{{ content.field_price_suffix.0 }}</span>
+      {% endif %}
+    </div>
+    
+    {# Badge Count #}
+    {% if content.field_badge_count.0 %}
+      <p class="text-slate-600 text-sm mb-4 text-center">{{ content.field_badge_count.0 }} badge inclusi</p>
+    {% endif %}
+
+    {# Features List #}
+    {% if has_features %}
+      <button class="pricing-dropdown-toggle flex items-center justify-between w-full py-3 px-4 bg-white/50 rounded-xl text-sm font-medium text-slate-700 hover:bg-white/80 transition-all duration-200 mb-4" data-target="card-{{ paragraph.id.value }}-details">
+        <span>Dettagli piano</span>
+        <svg class="dropdown-icon flex-shrink-0 transition-transform duration-200" style="width: 20px; height: 20px; min-width: 20px; max-width: 20px;" fill="none" stroke="#334155" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+
+      <div id="card-{{ paragraph.id.value }}-details" class="pricing-dropdown-content hidden overflow-hidden transition-all duration-300 mb-4">
+        <div class="{{ content.field_is_featured.value == '1' ? 'bg-white/50' : 'bg-white/30' }} rounded-xl p-3">
+          {% if content.field_additional_info|render|trim is not empty %}
+            <p class="text-xs text-slate-600 mb-3">{{ content.field_additional_info.0 }}</p>
+          {% endif %}
+          <ul class="space-y-2">
+            {% for feature in features %}
+              <li class="flex items-center gap-2">
+                {% if feature.enabled == '1' or feature.enabled == 1 or feature.enabled == true %}
+                  <svg class="flex-shrink-0" style="color: #16a34a;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="text-xs text-slate-700">{{ feature.label }}</span>
+                {% else %}
+                  <svg class="flex-shrink-0" style="color: #ef4444;" width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span class="text-xs text-slate-400">{{ feature.label }}</span>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+
+    {# CTA Button #}
+    {% if content.field_cta_link.0 %}
+      {% set button_classes = [
+        'mt-auto',
+        'block',
+        'w-full',
+        'text-center',
+        'font-bold',
+        'py-3',
+        'px-4',
+        'rounded-xl',
+        'transition-all',
+        'duration-300',
+      ] %}
+      
+      {% if content.field_is_featured.value == '1' %}
+        {% set button_classes = button_classes|merge(['bg-blue-600', 'hover:bg-blue-700', 'text-white']) %}
+      {% else %}
+        {% set button_classes = button_classes|merge(['bg-slate-800', 'hover:bg-slate-900', 'text-white']) %}
+      {% endif %}
+      
+      {{ link(
+        content.field_cta_text.0,
+        content.field_cta_link.0['#url'],
+        { 'class': button_classes }
+      ) }}
+    {% endif %}
+  </div>
+</div>

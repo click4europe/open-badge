@@ -1,0 +1,9 @@
+name: 'Dynamic Pricing'
+type: module
+description: 'Dynamic pricing cards using Paragraphs.'
+core_version_requirement: ^10
+package: 'Custom'
+dependencies:
+  - drupal:block_content
+  - drupal:paragraphs
+  - drupal:field

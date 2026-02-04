@@ -1,0 +1,108 @@
+<?php
+
+/**
+ * @file
+ * Main module file for the Dynamic Pricing module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function dynamic_pricing_theme($existing, $type, $theme, $path) {
+  return [
+    'paragraph__pricing_card' => [
+      'base hook' => 'paragraph',
+    ],
+    'paragraph__pricing_feature' => [
+      'base hook' => 'paragraph',
+    ],
+    'block__block_content__pricing_cards' => [
+      'base hook' => 'block',
+    ],
+    'block__block_content__pricing_section' => [
+      'base hook' => 'block',
+    ],
+    'field__field_pricing_cards' => [
+      'base hook' => 'field',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for pricing card paragraphs.
+ */
+function dynamic_pricing_preprocess_paragraph__pricing_card(&$variables) {
+  $paragraph = $variables['paragraph'];
+  
+  // Make features accessible to all users
+  if ($paragraph->hasField('field_features_list') && !$paragraph->get('field_features_list')->isEmpty()) {
+    $variables['has_features'] = TRUE;
+    $features = [];
+    foreach ($paragraph->get('field_features_list')->referencedEntities() as $feature_paragraph) {
+      $features[] = [
+        'enabled' => $feature_paragraph->get('field_feature_enabled')->value,
+        'label' => $feature_paragraph->get('field_feature_label')->value,
+      ];
+    }
+    $variables['features'] = $features;
+  } else {
+    $variables['has_features'] = FALSE;
+    $variables['features'] = [];
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function dynamic_pricing_preprocess_prezzi_e_abbonamenti_render(&$variables) {
+  // Load pricing cards blocks.
+  $block_storage = \Drupal::entityTypeManager()->getStorage('block_content');
+  $query = $block_storage->getQuery()
+    ->condition('type', 'pricing_section')
+    ->accessCheck(TRUE)
+    ->sort('info', 'ASC');
+  
+  $ids = $query->execute();
+  
+  if (!empty($ids)) {
+    $blocks = $block_storage->loadMultiple($ids);
+    $view_builder = \Drupal::entityTypeManager()->getViewBuilder('paragraph');
+    $current_user = \Drupal::currentUser();
+    $can_edit = $current_user->hasPermission('administer blocks') || $current_user->hasPermission('edit any block content');
+    
+    // Separate monthly and annual blocks based on title
+    foreach ($blocks as $id => $block) {
+      $title = strtolower($block->label());
+      
+      // Get the pricing cards from the block
+      if ($block->hasField('field_pricing_cards') && !$block->get('field_pricing_cards')->isEmpty()) {
+        $pricing_cards = [];
+        foreach ($block->get('field_pricing_cards')->referencedEntities() as $paragraph) {
+          $pricing_cards[] = $view_builder->view($paragraph);
+        }
+        
+        if (strpos($title, 'mensile') !== false || strpos($title, 'monthly') !== false) {
+          $variables['pricing_monthly_cards'] = $pricing_cards;
+          if ($can_edit) {
+            $variables['pricing_monthly_edit_url'] = \Drupal\Core\Url::fromRoute('entity.block_content.edit_form', ['block_content' => $block->id()]);
+            $variables['pricing_monthly_title'] = $block->label();
+          }
+        } elseif (strpos($title, 'annuale') !== false || strpos($title, 'annual') !== false || strpos($title, 'yearly') !== false) {
+          $variables['pricing_annual_cards'] = $pricing_cards;
+          if ($can_edit) {
+            $variables['pricing_annual_edit_url'] = \Drupal\Core\Url::fromRoute('entity.block_content.edit_form', ['block_content' => $block->id()]);
+            $variables['pricing_annual_title'] = $block->label();
+          }
+        }
+      }
+    }
+  }
+  
+  // Set defaults if not found
+  if (!isset($variables['pricing_monthly_cards'])) {
+    $variables['pricing_monthly_cards'] = [];
+  }
+  if (!isset($variables['pricing_annual_cards'])) {
+    $variables['pricing_annual_cards'] = [];
+  }
+}

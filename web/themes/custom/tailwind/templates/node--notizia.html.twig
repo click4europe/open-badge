@@ -1,0 +1,121 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a notizia (news) node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available.
+ * - label: (optional) The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}.
+ * - url: Direct URL of the current node.
+ * - attributes: HTML attributes for the containing element.
+ * - title_attributes: Same as attributes, except applied to the main title tag.
+ * - content_attributes: Same as attributes, except applied to the main content tag.
+ * - author_attributes: Same as attributes, except applied to the author of the node tag.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ */
+#}
+
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: label,
+  description: content.field_subtitle.0['#context'].value|default('')
+} %}
+
+<article class="bg-white py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Article Header -->
+                <header class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+                        <time datetime="{{ node.created.value|date('Y-m-d') }}">{{ node.created.value|format_date('short') }}</time>
+                        <span>•</span>
+                        <span>Notizie</span>
+                    </div>
+                    
+                    {% if content.field_subtitle %}
+                        <p class="text-xl text-slate-600 font-medium mb-6">{{ content.field_subtitle.0['#context'].value }}</p>
+                    {% endif %}
+                </header>
+                
+                <!-- Featured Image with Fixed Dimensions -->
+                {% if content.field_image %}
+                    <div class="mb-8 rounded-2xl overflow-hidden shadow-lg bg-gray-100">
+                        <div class="aspect-[16/9] relative w-full">
+                            {{ content.field_image|field_value }}
+                        </div>
+                    </div>
+                {% endif %}
+                
+                <!-- Article Content -->
+                <div class="prose prose-lg prose-slate max-w-none">
+                    {{ content.body|field_value }}
+                </div>
+                
+                <!-- FAQ Section -->
+                {% if content.field_faq %}
+                    <section class="mt-12 pt-8 border-t border-slate-200">
+                        <h2 class="text-2xl font-bold text-slate-900 mb-6">Domande Frequenti</h2>
+                        <div class="space-y-4" id="faq-container">
+                            {% for item in content.field_faq %}
+                                {% set faq_entity = item['#paragraph'] %}
+                                <div class="bg-white border border-slate-200 rounded-lg overflow-hidden">
+                                    <button class="faq-button w-full px-6 py-4 text-left bg-slate-50 hover:bg-slate-100 transition-colors flex justify-between items-center">
+                                        <span class="font-medium text-slate-900">{{ faq_entity.field_question.value }}</span>
+                                        <svg class="w-5 h-5 text-slate-500 transform transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </button>
+                                    <div class="faq-content hidden px-6 py-4 bg-white">
+                                        <div class="prose prose-sm text-slate-600">
+                                            {{ faq_entity.field_answer.value|raw }}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </section>
+                {% endif %}
+            </div>
+            
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <!-- Related News -->
+                <div class="sticky top-8">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4">Ultime Notizie</h3>
+                    <div class="space-y-4">
+                        <!-- This will be populated by the block or view -->
+                        <p class="text-slate-600">Caricamento notizie correlate...</p>
+                    </div>
+                    
+                    <!-- View All News Button -->
+                    <div class="mt-6">
+                        <a href="/notizie" class="block w-full text-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+                            Vedi tutte le notizie
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+
+{{ content|without('field_image', 'field_subtitle', 'body', 'field_faq') }}
+
+{# JavaScript moved to app.js - FAQ Accordion #}

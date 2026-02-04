@@ -240,45 +240,4 @@
   </div>
 </section>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const faqItems = document.querySelectorAll('.faq-item');
-  const faqImage = document.getElementById('faq-image');
-  
-  const imageMap = {
-    'mybadges': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-1.png',
-    'learning': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-2.webp',
-    'earners': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-3.webp'
-  };
-  
-  faqItems.forEach(item => {
-    item.addEventListener('click', function() {
-      const faqType = this.getAttribute('data-faq');
-      const content = this.querySelector('.faq-content');
-      
-      // Close all other FAQ items
-      faqItems.forEach(otherItem => {
-        if (otherItem !== item) {
-          const otherContent = otherItem.querySelector('.faq-content');
-          otherContent.classList.add('hidden');
-          otherItem.querySelector('h3').classList.remove('text-blue-600');
-        }
-      });
-      
-      // Toggle current item
-      content.classList.toggle('hidden');
-      this.querySelector('h3').classList.toggle('text-blue-600');
-      
-      // Change image if content is visible
-      if (!content.classList.contains('hidden') && imageMap[faqType]) {
-        faqImage.src = imageMap[faqType];
-      }
-    });
-  });
-  
-  // Auto-open first item on load
-  if (faqItems.length > 0) {
-    faqItems[0].click();
-  }
-});
-</script>
+{# JavaScript moved to app.js - FAQ Items with Image Switcher #}
