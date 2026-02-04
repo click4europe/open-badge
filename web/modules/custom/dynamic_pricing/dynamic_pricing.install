@@ -58,9 +58,9 @@ function dynamic_pricing_install() {
   }
 
   // Assign form display.
-  $entity_form_display = \Drupal\entity_display\Entity\EntityFormDisplay::load('block_content.pricing_cards.default');
+  $entity_form_display = \Drupal\Core\Entity\Entity\EntityFormDisplay::load('block_content.pricing_cards.default');
   if (!$entity_form_display) {
-    $entity_form_display = \Drupal\entity_display\Entity\EntityFormDisplay::create([
+    $entity_form_display = \Drupal\Core\Entity\Entity\EntityFormDisplay::create([
       'targetEntityType' => 'block_content',
       'bundle' => 'pricing_cards',
       'mode' => 'default',
@@ -82,9 +82,9 @@ function dynamic_pricing_install() {
     ->save();
 
   // Assign view display.
-  $entity_view_display = \Drupal\entity_display\Entity\EntityViewDisplay::load('block_content.pricing_cards.default');
+  $entity_view_display = \Drupal\Core\Entity\Entity\EntityViewDisplay::load('block_content.pricing_cards.default');
   if (!$entity_view_display) {
-    $entity_view_display = \Drupal\entity_display\Entity\EntityViewDisplay::create([
+    $entity_view_display = \Drupal\Core\Entity\Entity\EntityViewDisplay::create([
       'targetEntityType' => 'block_content',
       'bundle' => 'pricing_cards',
       'mode' => 'default',
