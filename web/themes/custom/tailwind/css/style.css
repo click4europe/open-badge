@@ -3046,11 +3046,6 @@
     }
   }
   @media (width >= 64rem) {
-    .lg\:pt-36 {
-      padding-top: calc(var(--spacing) * 36);
-    }
-  }
-  @media (width >= 64rem) {
     .lg\:text-left {
       text-align: left;
     }
