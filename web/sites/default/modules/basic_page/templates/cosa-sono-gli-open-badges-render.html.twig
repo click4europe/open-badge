@@ -1,13 +1,9 @@
 {# cosa-sono-gli-open-badges-render.html.twig #}
 
 {# Hero Section using reusable component #}
-{% include '@tailwind/components/component--page-hero.html.twig' with {
-  title: 'Open-badge.eu',
-  description: "Open-Badge.eu permette di creare e gestire certificati digitali verificabili e conformi allo standard internazionale 1EDTECH. E' tra le poche piattaforme europee che garantiscono badge riconosciuti globalmente, integrabili con altri sistemi tramite API.",
-  image: '/themes/custom/tailwind/images/public/IMG_openbadge/hero-img.webp',
-  eyebrow: null,
-  background_color: '#5299D8'
-} %}
+{# Replace old hero include with #}
+{% set hero_block = drupal_entity('block_content', 21) %}
+{{ hero_block|render }}
 
 {# La tecnologia Open Badge Section #}
 <section class="py-16 lg:py-20 bg-white">

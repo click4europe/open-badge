@@ -8,26 +8,35 @@
    - image_alt: Alt text for image (defaults to title)
    - eyebrow: Optional small text above title
    - background_color: Optional custom background color (defaults to #050322)
+   - compact: Boolean - if true, reduces height/padding (defaults to false)
    
    Usage:
    {% include '@tailwind/components/component--page-hero.html.twig' with {
      title: 'title',
      description: 'description',
      image: '/themes/custom/tailwind/images/public/hero-competenze.jpg',
-     background_color: '#5299D8'
+     background_color: '#5299D8',
+     compact: true
    } %}
 #}
 
+{% set hero_padding = compact ? 'py-8 lg:py-10' : 'py-12 lg:py-16' %}
+{% set hero_min_height = compact ? 'min-h-[240px]' : 'min-h-[320px]' %}
+{% set hero_gap = compact ? 'gap-8' : 'gap-12' %}
+{% set image_aspect = compact ? 'aspect-[16/9]' : 'aspect-[4/3]' %}
+{% set title_size = compact ? 'text-2xl sm:text-3xl lg:text-4xl' : 'text-3xl sm:text-4xl lg:text-5xl' %}
+{% set image_max_size = compact ? 'max-w-[300px] lg:max-w-[400px]' : 'max-w-full' %}
+
 <section style="background-color: {{ background_color|default('#050322') }};">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 lg:py-24 min-h-[400px] flex items-center">
-    <div class="grid gap-12 lg:grid-cols-2 items-center w-full">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 {{ hero_padding }} {{ hero_min_height }} flex items-center pt-20 lg:pt-24">
+    <div class="grid {{ hero_gap }} lg:grid-cols-2 items-center w-full text-center lg:text-left">
       <!-- Text -->
-      <div class="space-y-6 text-white">
+      <div class="space-y-4 text-white">
         {% if eyebrow %}
           <p class="font-ui text-obYellow">{{ eyebrow }}</p>
         {% endif %}
         {% if title %}
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight">
+          <h1 class="{{ title_size }} font-extrabold leading-tight">
             {{ title }}
           </h1>
         {% endif %}
@@ -40,8 +49,8 @@
 
       <!-- Image -->
       {% if image %}
-        <div class="relative">
-          <div class="rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
+        <div class="relative {{ image_max_size }} justify-self-center">
+          <div class="rounded-3xl overflow-hidden shadow-2xl {{ image_aspect }}">
             <img src="{{ image }}" alt="{{ image_alt|default(title) }}" class="w-full h-full object-cover" />
           </div>
         </div>

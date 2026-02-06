@@ -685,4 +685,65 @@
     }
   };
 
+  // Lazy loading for sections with IntersectionObserver
+  Drupal.behaviors.lazyLoadSections = {
+    attach: function (context, settings) {
+      if (typeof IntersectionObserver === 'undefined') return;
+
+      const lazyElements = once('lazy-sections', '[data-lazy-load]', context);
+      if (!lazyElements.length) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('lazy-loaded');
+            entry.target.classList.remove('lazy-hidden');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: '100px 0px',
+        threshold: 0.1
+      });
+
+      lazyElements.forEach(el => {
+        el.classList.add('lazy-hidden');
+        observer.observe(el);
+      });
+    }
+  };
+
+  // Lazy load images that come into viewport (for dynamically loaded content)
+  Drupal.behaviors.lazyLoadImages = {
+    attach: function (context, settings) {
+      if (typeof IntersectionObserver === 'undefined') return;
+
+      const lazyImages = once('lazy-images', 'img[data-src]', context);
+      if (!lazyImages.length) return;
+
+      const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.removeAttribute('data-src');
+            }
+            if (img.dataset.srcset) {
+              img.srcset = img.dataset.srcset;
+              img.removeAttribute('data-srcset');
+            }
+            img.classList.add('lazy-loaded');
+            imageObserver.unobserve(img);
+          }
+        });
+      }, {
+        rootMargin: '50px 0px',
+        threshold: 0.01
+      });
+
+      lazyImages.forEach(img => imageObserver.observe(img));
+    }
+  };
+
 })(once, Drupal, drupalSettings);

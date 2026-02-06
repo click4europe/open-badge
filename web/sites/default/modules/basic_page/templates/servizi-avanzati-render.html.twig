@@ -1,11 +1,9 @@
 {# servizi-avanzati-render.html.twig #}
 
-{# Hero Section #}
-{% include '@tailwind/components/component--page-hero.html.twig' with {
-  title: 'Servizi avanzati',
-  description: 'Soluzioni enterprise per enti e organizzazioni che necessitano di funzionalità avanzate',
-  image: '/themes/custom/tailwind/images/public/IMG_openbadge/1000depositphotos_52464495_xl-1500w.webp'
-} %}
+{# Hero Section using reusable component #}
+{# Replace old hero include with #}
+{% set hero_block = drupal_entity('block_content', 22) %}
+{{ hero_block|render }}
 
 {# Main Content Section #}
 <section class="py-16 lg:py-20 bg-white">

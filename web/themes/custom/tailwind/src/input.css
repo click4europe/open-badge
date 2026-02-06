@@ -124,6 +124,26 @@ body.toolbar-horizontal.toolbar-tray-open {
   background-color: #1565D8;
 }
 
+/* Lazy loading styles */
+.lazy-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.lazy-loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+img.lazy-loaded {
+  transition: opacity 0.3s ease-in;
+}
+
+img[data-src] {
+  opacity: 0;
+}
+
 .pricing-dropdown-content.show {
   max-height: 500px;
   opacity: 1;

@@ -1,0 +1,94 @@
+{#
+/**
+ * @file
+ * Block template for Page Hero (block_content--page_hero)
+ * 
+ * Displays a hero section with dynamic styling based on compact mode.
+ * 
+ * Available fields:
+ * - field_hero_title: Hero title text
+ * - field_hero_description: Hero description (formatted text)
+ * - field_hero_image: Hero image
+ * - field_compact_mode: Boolean - enables compact styling
+ * - field_hero_background_color: Background color (optional)
+ */
+#}
+
+{# ========================================
+   1. EXTRACT FIELD VALUES
+   ======================================== #}
+{% set title = content.field_hero_title.0 %}
+{% set description = content.field_hero_description.0 %}
+{% set background_color = content.field_hero_background_color.0|default('#050322') %}
+{% set compact_mode = content.field_compact_mode.0['#markup'] %}
+
+{# Convert compact mode to boolean #}
+{% set is_compact = (compact_mode == 'On') %}
+
+{# Get image URL #}
+{% set image_url = '' %}
+{% if content.field_hero_image.0 is not empty %}
+  {% set image_url = file_url(content.field_hero_image['#items'].entity.fileuri) %}
+{% endif %}
+
+{# Edit URL for admins #}
+{% set edit_url = path('entity.block_content.edit_form', {'block_content': elements['#block_content'].id()}) %}
+
+{# ========================================
+   2. DEFINE STYLING VARIANTS
+   ======================================== #}
+{# Compact mode: smaller height, tighter spacing, smaller images #}
+{# Normal mode: larger height, more spacing, full-size images #}
+
+{% set hero_padding = is_compact ? 'py-8 lg:py-10' : 'py-12 lg:py-16' %}
+{% set hero_min_height = is_compact ? 'min-h-[240px]' : 'min-h-[320px]' %}
+{% set hero_gap = is_compact ? 'gap-8' : 'gap-12' %}
+{% set image_aspect = is_compact ? 'aspect-[16/9]' : 'aspect-[4/3]' %}
+{% set title_size = is_compact ? 'text-2xl sm:text-3xl lg:text-4xl' : 'text-3xl sm:text-4xl lg:text-5xl' %}
+{% set image_max_size = is_compact ? 'max-w-[300px] lg:max-w-[400px]' : 'max-w-full' %}
+
+{# ========================================
+   3. HERO SECTION
+   ======================================== #}
+<section style="background-color: {{ background_color|default('#050322') }};">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 {{ hero_padding }} {{ hero_min_height }} flex items-center pt-32 lg:pt-36">
+    <div class="grid {{ hero_gap }} lg:grid-cols-2 items-center w-full text-center lg:text-left">
+      
+      <!-- Text -->
+      <div class="space-y-4 text-white">
+        {% if title %}
+          <h1 class="{{ title_size }} font-extrabold leading-tight">
+            {{ title }}
+          </h1>
+        {% endif %}
+        
+        {% if description %}
+          <div class="font-body-large text-sm sm:text-base text-slate-200 max-w-xl">
+            {{ description|raw }}
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Image -->
+      {% if image_url %}
+        <div class="relative {{ image_max_size }} justify-self-center">
+          <div class="rounded-3xl overflow-hidden shadow-2xl {{ image_aspect }}">
+            <img src="{{ image_url }}" alt="{{ title }}" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      {% endif %}
+      
+    </div>
+  </div>
+  {# Edit button for admins #}
+{% if user.hasPermission('administer blocks') %}
+  <div class="right-4 z-50">
+    <a href="{{ edit_url }}" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-700 text-white text-sm font-medium rounded-lg shadow-lg transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+      </svg>
+      Edit Hero
+    </a>
+  </div>
+{% endif %}
+</section>

@@ -1,12 +1,9 @@
 {# contatti-render.html.twig #}
 
 {# Hero Section using reusable component #}
-{% include '@tailwind/components/component--page-hero.html.twig' with {
-  title: 'Prova gratis',
-  description: 'Verifica, condividi e valorizza le tue qualifiche con credenziali digitali .',
-  image: '/themes/custom/tailwind/images/public/img_headerscontatti.png',
-  background_color: '#49A0C6'
-} %}
+{# Replace old hero include with #}
+{% set hero_block = drupal_entity('block_content', 20) %}
+{{ hero_block|render }}
 
 {# Contact Sections Side by Side #}
 <section class="py-16 lg:py-20 bg-white">
