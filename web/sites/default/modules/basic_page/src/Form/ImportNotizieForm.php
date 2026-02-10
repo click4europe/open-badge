@@ -44,7 +44,7 @@ class ImportNotizieForm extends FormBase {
         . '<li><strong>title</strong> – (obbligatorio) Titolo della notizia</li>'
         . '<li><strong>subtitle</strong> – (opzionale) Sottotitolo</li>'
         . '<li><strong>body</strong> – (opzionale) Testo HTML</li>'
-        . '<li><strong>image_path</strong> – (opzionale) Percorso completo dell\'immagine dal PC (es. <code>C:\\Users\\nome\\Pictures\\foto.jpg</code>)</li>'
+        . '<li><strong>image_path</strong> – (opzionale) Nome del file immagine caricato sotto (es. <code>foto.jpg</code>)</li>'
         . '<li><strong>published</strong> – (opzionale) 1 = pubblicato, 0 = bozza. Default 1</li>'
         . '</ul>'
         . '<p class="mt-2">La prima riga del CSV deve contenere le intestazioni. Separatore: <strong>virgola</strong> o <strong>punto e virgola</strong>.</p>'
@@ -61,6 +61,19 @@ class ImportNotizieForm extends FormBase {
         'file_validate_size' => [5 * 1024 * 1024],
       ],
       '#required' => TRUE,
+    ];
+
+    $form['images'] = [
+      '#type' => 'managed_file',
+      '#title' => $this->t('Immagini'),
+      '#description' => $this->t('Carica le immagini da associare alle notizie. Nel CSV inserisci solo il nome del file (es. foto.jpg).'),
+      '#upload_location' => 'public://notizie-import',
+      '#upload_validators' => [
+        'file_validate_extensions' => ['jpg jpeg png gif webp svg'],
+        'file_validate_size' => [10 * 1024 * 1024],
+      ],
+      '#multiple' => TRUE,
+      '#required' => FALSE,
     ];
 
     $form['delimiter'] = [
@@ -129,6 +142,21 @@ class ImportNotizieForm extends FormBase {
     $uri = $file->getFileUri();
     $path = \Drupal::service('file_system')->realpath($uri);
     $delimiter = $form_state->getValue('delimiter');
+
+    // Build a map of uploaded images: filename => File entity.
+    $uploaded_images = [];
+    $image_fids = $form_state->getValue('images');
+    if (!empty($image_fids)) {
+      foreach ($image_fids as $fid) {
+        $img_file = File::load($fid);
+        if ($img_file) {
+          $img_file->setPermanent();
+          $img_file->save();
+          $filename = strtolower(basename($img_file->getFileUri()));
+          $uploaded_images[$filename] = $img_file;
+        }
+      }
+    }
 
     // Read file content and strip BOM if present (Excel adds BOM to CSV).
     $content = file_get_contents($path);
@@ -208,7 +236,7 @@ class ImportNotizieForm extends FormBase {
 
         // Image (attach after save so node has an ID).
         if (!empty($data['image_path'])) {
-          $img_error = $this->attachImage($node, $data['image_path']);
+          $img_error = $this->attachImage($node, $data['image_path'], $uploaded_images);
           if ($img_error) {
             $errors[] = $this->t('Riga @num: immagine - @msg', ['@num' => $row_num, '@msg' => $img_error]);
           }
@@ -243,7 +271,7 @@ class ImportNotizieForm extends FormBase {
    * @param string $image_path
    *   Relative path inside public:// (e.g. "notizie/my-image.jpg").
    */
-  protected function attachImage(Node $node, string $image_path) {
+  protected function attachImage(Node $node, string $image_path, array $uploaded_images = []) {
     // Determine the image field.
     $image_field = NULL;
     if ($node->hasField('field_immagine')) {
@@ -259,8 +287,18 @@ class ImportNotizieForm extends FormBase {
 
     $file = NULL;
 
-    // Check if path is a URL.
-    if (filter_var($image_path, FILTER_VALIDATE_URL)) {
+    // Clean up the image_path value.
+    $image_path = trim($image_path, '"\' ');
+    $image_path = str_replace('\\', '/', $image_path);
+    // Extract just the filename for matching.
+    $lookup_name = strtolower(basename($image_path));
+
+    // 1. First try to match from uploaded images by filename.
+    if (!empty($uploaded_images) && isset($uploaded_images[$lookup_name])) {
+      $file = $uploaded_images[$lookup_name];
+    }
+    // 2. Try as URL.
+    elseif (filter_var($image_path, FILTER_VALIDATE_URL)) {
       $file_data = @file_get_contents($image_path);
       if ($file_data === FALSE) {
         return 'Impossibile scaricare immagine da URL: ' . $image_path;
@@ -274,47 +312,31 @@ class ImportNotizieForm extends FormBase {
       );
       $file = \Drupal::service('file.repository')->writeData($file_data, $destination);
     }
+    // 3. Try as local absolute path (works on same machine only).
+    elseif (preg_match('/^[a-zA-Z]:/', $image_path) || strpos($image_path, '/') === 0) {
+      if (!file_exists($image_path)) {
+        return 'File non trovato: ' . $image_path . ' — Hai caricato le immagini nel campo "Immagini"?';
+      }
+      $filename = basename($image_path);
+      $dir = 'public://notizie-import';
+      \Drupal::service('file_system')->prepareDirectory(
+        $dir,
+        \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY
+      );
+      $destination = 'public://notizie-import/' . $filename;
+      $dest_realpath = \Drupal::service('file_system')->realpath($dir);
+      if (!@copy($image_path, $dest_realpath . '/' . $filename)) {
+        return 'Impossibile copiare il file: ' . $image_path;
+      }
+      $file = File::create([
+        'uri' => $destination,
+        'status' => 1,
+      ]);
+      $file->save();
+    }
     else {
-      // Normalise path separators.
-      $image_path = str_replace('\\', '/', $image_path);
-      // Remove surrounding quotes if present.
-      $image_path = trim($image_path, '"\' ');
-
-      // Absolute local path (e.g. C:/Users/name/Pictures/photo.jpg).
-      if (preg_match('/^[a-zA-Z]:/', $image_path) || strpos($image_path, '/') === 0) {
-        if (!file_exists($image_path)) {
-          return 'File non trovato: ' . $image_path;
-        }
-        $filename = basename($image_path);
-        $dir = 'public://notizie-import';
-        \Drupal::service('file_system')->prepareDirectory(
-          $dir,
-          \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY
-        );
-        $destination = 'public://notizie-import/' . $filename;
-        $dest_realpath = \Drupal::service('file_system')->realpath($dir);
-        if (!@copy($image_path, $dest_realpath . '/' . $filename)) {
-          return 'Impossibile copiare il file: ' . $image_path;
-        }
-        $file = File::create([
-          'uri' => $destination,
-          'status' => 1,
-        ]);
-        $file->save();
-      }
-      else {
-        // Treat as relative path in public://.
-        $uri = 'public://' . ltrim($image_path, '/');
-        $real = \Drupal::service('file_system')->realpath($uri);
-        if (!$real || !file_exists($real)) {
-          return 'File non trovato in public://: ' . $image_path;
-        }
-        $file = File::create([
-          'uri' => $uri,
-          'status' => 1,
-        ]);
-        $file->save();
-      }
+      // No match found.
+      return 'Immagine "' . $lookup_name . '" non trovata tra i file caricati. Carica l\'immagine nel campo "Immagini".';
     }
 
     if ($file) {

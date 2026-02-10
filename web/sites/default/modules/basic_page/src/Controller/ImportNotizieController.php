@@ -19,7 +19,7 @@ class ImportNotizieController extends ControllerBase {
       'Titolo notizia esempio',
       'Sottotitolo esempio',
       '<p>Testo della notizia in HTML.</p>',
-      'C:\\Users\\nome\\Pictures\\immagine-esempio.jpg',
+      'immagine-esempio.jpg',
       '1',
     ];
 
