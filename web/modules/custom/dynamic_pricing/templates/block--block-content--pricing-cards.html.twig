@@ -49,35 +49,3 @@
     </div>
   </div>
 </section>
-
-{# JavaScript for Dropdown Toggle #}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Pricing Dropdown Toggle with Animation
-    const dropdownToggles = document.querySelectorAll('.pricing-dropdown-toggle');
-    
-    dropdownToggles.forEach(function(toggle) {
-      toggle.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target');
-        const targetContent = document.getElementById(targetId);
-        const icon = this.querySelector('.dropdown-icon');
-        
-        if (targetContent.classList.contains('hidden')) {
-          // Open
-          targetContent.classList.remove('hidden');
-          setTimeout(() => {
-            targetContent.style.maxHeight = targetContent.scrollHeight + 'px';
-          }, 10);
-          icon.style.transform = 'rotate(180deg)';
-        } else {
-          // Close
-          targetContent.style.maxHeight = '0';
-          setTimeout(() => {
-            targetContent.classList.add('hidden');
-          }, 300);
-          icon.style.transform = 'rotate(0deg)';
-        }
-      });
-    });
-  });
-</script>

@@ -41,7 +41,39 @@
     <div id="mobile-menu" class="md:hidden hidden border-t border-slate-200 bg-white">
       <div class="max-w-6xl mx-auto px-4 py-3 space-y-2 text-sm">
         <a href="/" class="nav-link block py-1 text-slate-700 relative">Home</a>
-        <a href="#cosa-puoi-fare" class="nav-link block py-1 text-slate-700 relative">Soluzioni</a>
+
+        <!-- Mobile Soluzioni accordion -->
+        <div>
+          <button id="mobile-soluzioni-toggle" type="button" class="w-full flex items-center justify-between py-1 text-slate-700 text-sm">
+            <span>Soluzioni</span>
+            <svg id="mobile-soluzioni-arrow" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div id="mobile-soluzioni-dropdown" class="hidden pl-3 pb-2 space-y-4">
+            <!-- Soluzioni per settore -->
+            <div class="pt-2">
+              <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-2">Soluzioni per settore</p>
+              <div class="space-y-2">
+                <a href="/settore/pubbliche-amministrazioni" class="block text-sm text-slate-700 hover:text-blue-600">Pubbliche amministrazioni</a>
+                <a href="/settore/scuole-e-centri-di-formazione" class="block text-sm text-slate-700 hover:text-green-600">Scuole e centri di formazione</a>
+                <a href="/settore/imprese-e-startup" class="block text-sm text-slate-700 hover:text-orange-600">Imprese e startup</a>
+              </div>
+            </div>
+            <!-- Soluzioni per tipologia -->
+            <div>
+              <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-2">Soluzioni per tipologia</p>
+              <div class="space-y-2">
+                <a href="/digital-credentialing" class="block text-sm text-slate-700 hover:text-purple-600">Digital Credentialing</a>
+                <a href="/soluzioni/skills-management" class="block text-sm text-slate-700 hover:text-teal-600">Skill management</a>
+                <a href="/soluzioni/certificazione-lavoratori-e-dipendenti" class="block text-sm text-slate-700 hover:text-rose-600">Certificazione dei lavoratori</a>
+                <a href="/soluzioni/apprendimento-continuo" class="block text-sm text-slate-700 hover:text-amber-600">Apprendimento continuo</a>
+                <a href="/soluzioni/upskilling" class="block text-sm text-slate-700 hover:text-indigo-600">Upskilling</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <a href="/cosa-sono-gli-open-badges" class="nav-link block py-1 text-slate-700 relative">Cos'è Open Badge</a>
         <a href="/servizi-avanzati" class="nav-link block py-1 text-slate-700 relative">Servizi</a>
         <a href="/prezzi-e-abbonamenti" class="nav-link block py-1 text-slate-700 relative">Abbonamenti</a>

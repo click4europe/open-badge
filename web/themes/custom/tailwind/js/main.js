@@ -389,6 +389,19 @@ __webpack_require__.r(__webpack_exports__);
         // Update on window resize
         window.addEventListener('resize', updateNavbarPosition);
 
+        // ========== MOBILE SOLUZIONI ACCORDION ==========
+        var mobileSoluzioniToggle = document.getElementById('mobile-soluzioni-toggle');
+        var mobileSoluzioniDropdown = document.getElementById('mobile-soluzioni-dropdown');
+        var mobileSoluzioniArrow = document.getElementById('mobile-soluzioni-arrow');
+        if (mobileSoluzioniToggle && mobileSoluzioniDropdown) {
+          mobileSoluzioniToggle.addEventListener('click', function () {
+            mobileSoluzioniDropdown.classList.toggle('hidden');
+            if (mobileSoluzioniArrow) {
+              mobileSoluzioniArrow.classList.toggle('rotate-180');
+            }
+          });
+        }
+
         // ========== MEGA DROPDOWN HOVER FUNCTIONALITY ==========
         var soluzioniLink = document.querySelector('[data-mega-toggle="caratteristiche"]');
         var megaDropdown = document.getElementById('caratteristiche-mega');

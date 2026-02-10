@@ -22,3 +22,18 @@ basic_page.seek:
      _controller: '\Drupal\basic_page\Controller\Storico::seek'
   requirements:
     _permission: 'access content'
+
+basic_page.import_notizie:
+  path: '/admin/import-notizie'
+  defaults:
+    _form: '\Drupal\basic_page\Form\ImportNotizieForm'
+    _title: 'Importa Notizie da CSV'
+  requirements:
+    _permission: 'administer nodes'
+
+basic_page.import_notizie_template:
+  path: '/admin/import-notizie/template'
+  defaults:
+    _controller: '\Drupal\basic_page\Controller\ImportNotizieController::downloadTemplate'
+  requirements:
+    _permission: 'administer nodes'

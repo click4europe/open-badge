@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * Custom menu template for the Footer menu.
+ *
+ * Each top-level menu item renders as a separate column
+ * with its children as links below.
+ *
+ * Available variables:
+ * - items: A nested list of menu items.
+ */
+#}
+
+{% for item in items %}
+  <div class="space-y-3">
+    {# Section Header (parent item) #}
+    <h4 class="text-xs uppercase tracking-widest text-slate-500 font-semibold">
+      {{ item.title }}
+    </h4>
+
+    {# Child Links #}
+    {% if item.below %}
+      <ul class="space-y-2">
+        {% for child in item.below %}
+          <li>
+            <a href="{{ child.url }}" class="text-xs text-slate-400 hover:text-white transition-colors">
+              {{ child.title }}
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endfor %}
