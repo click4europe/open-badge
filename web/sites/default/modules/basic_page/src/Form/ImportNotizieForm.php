@@ -130,11 +130,15 @@ class ImportNotizieForm extends FormBase {
     $path = \Drupal::service('file_system')->realpath($uri);
     $delimiter = $form_state->getValue('delimiter');
 
-    $handle = fopen($path, 'r');
-    if (!$handle) {
-      $this->messenger()->addError($this->t('Impossibile aprire il file CSV.'));
-      return;
-    }
+    // Read file content and strip BOM if present (Excel adds BOM to CSV).
+    $content = file_get_contents($path);
+    $bom = pack('H*', 'EFBBBF');
+    $content = preg_replace("/^$bom/", '', $content);
+    // Write cleaned content to a temp file.
+    $tmp = tmpfile();
+    fwrite($tmp, $content);
+    rewind($tmp);
+    $handle = $tmp;
 
     // Read header row.
     $header = fgetcsv($handle, 0, $delimiter);
@@ -200,12 +204,15 @@ class ImportNotizieForm extends FormBase {
           $node->set('field_sotto_titolo', $data['subtitle']);
         }
 
-        // Image (local file path relative to public://).
-        if (!empty($data['image_path'])) {
-          $this->attachImage($node, $data['image_path']);
-        }
-
         $node->save();
+
+        // Image (attach after save so node has an ID).
+        if (!empty($data['image_path'])) {
+          $img_error = $this->attachImage($node, $data['image_path']);
+          if ($img_error) {
+            $errors[] = $this->t('Riga @num: immagine - @msg', ['@num' => $row_num, '@msg' => $img_error]);
+          }
+        }
         $imported++;
       }
       catch (\Exception $e) {
@@ -247,38 +254,48 @@ class ImportNotizieForm extends FormBase {
     }
 
     if (!$image_field) {
-      return;
+      return 'Nessun campo immagine trovato sul content type notizie.';
     }
+
+    $file = NULL;
 
     // Check if path is a URL.
     if (filter_var($image_path, FILTER_VALIDATE_URL)) {
       $file_data = @file_get_contents($image_path);
       if ($file_data === FALSE) {
-        return;
+        return 'Impossibile scaricare immagine da URL: ' . $image_path;
       }
       $filename = basename(parse_url($image_path, PHP_URL_PATH));
       $destination = 'public://notizie-import/' . $filename;
+      $dir = 'public://notizie-import';
+      \Drupal::service('file_system')->prepareDirectory(
+        $dir,
+        \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY
+      );
       $file = \Drupal::service('file.repository')->writeData($file_data, $destination);
     }
     else {
       // Normalise path separators.
       $image_path = str_replace('\\', '/', $image_path);
+      // Remove surrounding quotes if present.
+      $image_path = trim($image_path, '"\' ');
 
       // Absolute local path (e.g. C:/Users/name/Pictures/photo.jpg).
       if (preg_match('/^[a-zA-Z]:/', $image_path) || strpos($image_path, '/') === 0) {
         if (!file_exists($image_path)) {
-          return;
+          return 'File non trovato: ' . $image_path;
         }
         $filename = basename($image_path);
-        $destination = 'public://notizie-import/' . $filename;
-        // Ensure directory exists.
         $dir = 'public://notizie-import';
         \Drupal::service('file_system')->prepareDirectory(
           $dir,
           \Drupal\Core\File\FileSystemInterface::CREATE_DIRECTORY
         );
-        $dest_realpath = \Drupal::service('file_system')->realpath('public://notizie-import');
-        copy($image_path, $dest_realpath . '/' . $filename);
+        $destination = 'public://notizie-import/' . $filename;
+        $dest_realpath = \Drupal::service('file_system')->realpath($dir);
+        if (!@copy($image_path, $dest_realpath . '/' . $filename)) {
+          return 'Impossibile copiare il file: ' . $image_path;
+        }
         $file = File::create([
           'uri' => $destination,
           'status' => 1,
@@ -288,8 +305,9 @@ class ImportNotizieForm extends FormBase {
       else {
         // Treat as relative path in public://.
         $uri = 'public://' . ltrim($image_path, '/');
-        if (!file_exists(\Drupal::service('file_system')->realpath($uri))) {
-          return;
+        $real = \Drupal::service('file_system')->realpath($uri);
+        if (!$real || !file_exists($real)) {
+          return 'File non trovato in public://: ' . $image_path;
         }
         $file = File::create([
           'uri' => $uri,
@@ -304,7 +322,11 @@ class ImportNotizieForm extends FormBase {
         'target_id' => $file->id(),
         'alt' => $node->getTitle(),
       ]);
+      $node->save();
+      return NULL;
     }
+
+    return 'Errore sconosciuto durante il salvataggio dell\'immagine.';
   }
 
 }
