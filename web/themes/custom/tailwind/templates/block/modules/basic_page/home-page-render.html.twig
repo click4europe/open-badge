@@ -220,7 +220,12 @@
           <p class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500 mb-3">Resta aggiornato</p>
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">Ultime Notizie</h2>
           {% if data.notizie_edit %}
-            <div class="mt-2">{{ data.notizie_edit }}</div>
+            <div class="mt-2 flex items-center justify-center gap-4">
+              {{ data.notizie_edit }}
+              {% if data.notizie_import %}
+                {{ data.notizie_import }}
+              {% endif %}
+            </div>
           {% endif %}
         </div>
 

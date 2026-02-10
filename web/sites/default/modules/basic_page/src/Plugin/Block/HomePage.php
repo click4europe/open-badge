@@ -68,6 +68,10 @@ class HomePage extends BlockBase
             $options = ['absolute' => TRUE, 'query' => ['type' => 'notizie'], 'attributes' => ['class' => ['button text-slate-900 underline']]];
             $url = Url::fromUri('internal:/admin/content', $options);
             $data['notizie_edit'] = Link::fromTextAndUrl('Configura Notizie', $url);
+
+            $import_options = ['absolute' => TRUE, 'attributes' => ['class' => ['button text-slate-900 underline ml-4']]];
+            $import_url = Url::fromRoute('basic_page.import_notizie', [], $import_options);
+            $data['notizie_import'] = Link::fromTextAndUrl('Importa Notizie CSV', $import_url);
         }
 
         // Render the home-page layout defined in home-page-render.html.twig
