@@ -5,18 +5,8 @@
         <img src="/themes/custom/tailwind/images/public/openbadge-newlogo-blugreen.svg" alt="Open Badge" class="h-10 w-auto" />
       </a>
 
-      <!-- Desktop nav -->
-      <nav class="hidden md:flex items-center gap-8 text-sm">
-        <a href="/" class="nav-link text-slate-700 relative py-1 transition-colors">Home</a>
-        <a href="#cosa-puoi-fare" data-mega-toggle="caratteristiche" data-skip-scroll="true" class="nav-link text-slate-700 relative py-1 transition-colors flex items-center gap-1">
-          <span>Soluzioni</span>
-          <span aria-hidden="true" class="text-[10px]">▾</span>
-        </a>
-        <a href="/cosa-sono-gli-open-badges" class="nav-link text-slate-700 relative py-1 transition-colors">Cos'è Open Badge</a>
-        <a href="/servizi-avanzati" class="nav-link text-slate-700 relative py-1 transition-colors">Servizi</a>
-        <a href="/prezzi-e-abbonamenti" class="nav-link text-slate-700 relative py-1 transition-colors">Abbonamenti</a>
-        <a href="/contatti" class="nav-link text-slate-900 relative py-1 transition-colors">Contatti</a>
-      </nav>
+      <!-- Dynamic main menu (desktop nav + mobile menu + mega dropdowns) -->
+      {{ drupal_menu('main', 1, 3, true) }}
 
       <!-- Actions -->
       <div class="hidden md:flex items-center gap-3 text-xs font-semibold">
@@ -37,115 +27,12 @@
       </button>
     </div>
 
-    <!-- Mobile nav -->
-    <div id="mobile-menu" class="md:hidden hidden border-t border-slate-200 bg-white">
-      <div class="max-w-6xl mx-auto px-4 py-3 space-y-2 text-sm">
-        <a href="/" class="nav-link block py-1 text-slate-700 relative">Home</a>
-
-        <!-- Mobile Soluzioni accordion -->
-        <div>
-          <button id="mobile-soluzioni-toggle" type="button" class="w-full flex items-center justify-between py-1 text-slate-700 text-sm">
-            <span>Soluzioni</span>
-            <svg id="mobile-soluzioni-arrow" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div id="mobile-soluzioni-dropdown" class="hidden pl-3 pb-2 space-y-4">
-            <!-- Soluzioni per settore -->
-            <div class="pt-2">
-              <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-2">Soluzioni per settore</p>
-              <div class="space-y-2">
-                <a href="/settore/pubbliche-amministrazioni" class="block text-sm text-slate-700 hover:text-blue-600">Pubbliche amministrazioni</a>
-                <a href="/settore/scuole-e-centri-di-formazione" class="block text-sm text-slate-700 hover:text-green-600">Scuole e centri di formazione</a>
-                <a href="/settore/imprese-e-startup" class="block text-sm text-slate-700 hover:text-orange-600">Imprese e startup</a>
-              </div>
-            </div>
-            <!-- Soluzioni per tipologia -->
-            <div>
-              <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-2">Soluzioni per tipologia</p>
-              <div class="space-y-2">
-                <a href="/digital-credentialing" class="block text-sm text-slate-700 hover:text-purple-600">Digital Credentialing</a>
-                <a href="/soluzioni/skills-management" class="block text-sm text-slate-700 hover:text-teal-600">Skill management</a>
-                <a href="/soluzioni/certificazione-lavoratori-e-dipendenti" class="block text-sm text-slate-700 hover:text-rose-600">Certificazione dei lavoratori</a>
-                <a href="/soluzioni/apprendimento-continuo" class="block text-sm text-slate-700 hover:text-amber-600">Apprendimento continuo</a>
-                <a href="/soluzioni/upskilling" class="block text-sm text-slate-700 hover:text-indigo-600">Upskilling</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <a href="/cosa-sono-gli-open-badges" class="nav-link block py-1 text-slate-700 relative">Cos'è Open Badge</a>
-        <a href="/servizi-avanzati" class="nav-link block py-1 text-slate-700 relative">Servizi</a>
-        <a href="/prezzi-e-abbonamenti" class="nav-link block py-1 text-slate-700 relative">Abbonamenti</a>
-        <a href="/contatti" class="nav-link block py-1 text-slate-700 relative">Contatti</a>
-        <div class="pt-2 flex items-center gap-3">
-          <a href="https://app.open-badge.eu/login" class="px-4 py-1.5 rounded-full border border-emerald-500 text-emerald-600 hover:bg-emerald-50 text-xs font-semibold">
-            Login
-          </a>
-          <a href="/#contatti" class="flex-1 text-center px-4 py-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 text-xs font-semibold">
-            Inizia Ora 
-            <span aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Desktop mega dropdown for “Caratteristiche” -->
-    <div id="caratteristiche-mega" class="hidden md:absolute md:inset-x-0 md:top-full bg-[#f6f7ed] border-t border-slate-200 shadow-lg">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 lg:py-16 grid gap-12 lg:grid-cols-[1.1fr_1.1fr_1.3fr] min-h-[340px]">
-        <!-- Soluzioni per settore -->
-        <div class="space-y-4">
-          <h3 class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">Soluzioni per settore</h3>
-          <div class="space-y-4 text-sm">
-            <div>
-              <a href="/settore/pubbliche-amministrazioni" class="font-semibold text-slate-900 hover:text-blue-600 transition-colors">Pubbliche amministrazioni</a>
-              <p class="text-xs text-slate-600">Creare e assegnare facilmente badge digitali.</p>
-            </div>
-            <div>
-              <a href="/settore/scuole-e-centri-di-formazione" class="font-semibold text-slate-900 hover:text-green-600 transition-colors">Scuole e centri di formazione</a>
-              <p class="text-xs text-slate-600">Certificare le competenze acquisite dagli studenti.</p>
-            </div>
-            <div>
-              <a href="/settore/imprese-e-startup" class="font-semibold text-slate-900 hover:text-orange-600 transition-colors">Imprese e startup</a>
-              <p class="text-xs text-slate-600">Riconoscere percorsi interni di formazione e upskilling.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Soluzioni per tipologia -->
-        <div class="space-y-4">
-          <h3 class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">Soluzioni per tipologia</h3>
-          <div class="space-y-4 text-sm">
-            <div>
-              <a href="/digital-credentialing" class="font-semibold text-slate-900 hover:text-purple-600 transition-colors">Digital Credentialing</a>
-              <p class="text-xs text-slate-600">Il digital credentialing e il processo di emissione dei badge.</p>
-            </div>
-            <div>
-              <a href="/soluzioni/skills-management" class="font-semibold text-slate-900 hover:text-teal-600 transition-colors">Skill management</a>
-              <p class="text-xs text-slate-600">Gestire le competenze con badge strutturati e verificabili.</p>
-            </div>
-            <div>
-              <a href="/soluzioni/certificazione-lavoratori-e-dipendenti" class="font-semibold text-slate-900 hover:text-rose-600 transition-colors">Certificazione dei lavoratori</a>
-              <p class="text-xs text-slate-600">Open Badge per attestare ruoli, incarichi e risultati.</p>
-            </div>
-            <div>
-              <a href="/soluzioni/apprendimento-continuo" class="font-semibold text-slate-900 hover:text-amber-600 transition-colors">Apprendimento continuo</a>
-              <p class="text-xs text-slate-600">Percorsi modulari con badge intermedi e certificato finale.</p>
-            </div>
-            <div>
-              <a href="/soluzioni/upskilling" class="font-semibold text-slate-900 hover:text-indigo-600 transition-colors">Upskilling</a>
-              <p class="text-xs text-slate-600">Supportare piani di aggiornamento delle competenze.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Visual preview -->
-        <div class="relative hidden lg:block">
-          <div class="absolute -inset-4 bg-[#eef3d9] rounded-3xl"></div>
-          <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200">
-            <img src="/themes/custom/tailwind/images/public/mybadge_obvissuer.png" alt="Open Badge Interface" class="w-full h-full object-cover" />
-          </div>
-        </div>
-      </div>
-    </div>
+    {% if logged_in and user.hasPermission('administer menu') %}
+      <a href="/admin/structure/menu/manage/main" class="hidden md:flex items-center gap-1 absolute top-1 right-2 bg-white/90 hover:bg-white text-slate-400 hover:text-slate-700 px-2 py-0.5 rounded text-[10px] font-medium transition-colors border border-slate-200 shadow-sm" style="z-index: 500;" title="Edit Menu">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+        </svg>
+        Edit Menu
+      </a>
+    {% endif %}
   </header>

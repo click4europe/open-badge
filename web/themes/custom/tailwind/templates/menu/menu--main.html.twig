@@ -1,0 +1,120 @@
+{#
+/**
+ * @file
+ * Custom menu template for the Main navigation menu.
+ *
+ * Renders:
+ * 1. Desktop nav links (inline flex child)
+ * 2. Mobile accordion menu (absolute positioned)
+ * 3. Mega dropdowns for items with children (absolute positioned)
+ *
+ * Available variables:
+ * - items: A nested list of menu items. Each item has:
+ *   - title, url, below, original_link, attributes,
+ *     is_expanded, is_collapsed, in_active_trail.
+ */
+#}
+
+{# ── 1. Desktop nav links ── #}
+<nav class="hidden md:flex items-center gap-8 text-sm">
+  {% for item in items %}
+    {% if item.below %}
+      <a href="{{ item.url }}" data-mega-toggle="mega-{{ loop.index }}" data-skip-scroll="true" class="nav-link text-slate-700 relative py-1 transition-colors flex items-center gap-1 cursor-pointer">
+        <span>{{ item.title }}</span>
+        <span aria-hidden="true" class="text-[10px]">▾</span>
+      </a>
+    {% else %}
+      <a href="{{ item.url }}" class="nav-link text-slate-700 relative py-1 transition-colors">{{ item.title }}</a>
+    {% endif %}
+  {% endfor %}
+</nav>
+
+{# ── 2. Mobile accordion menu (absolute to escape flex container) ── #}
+<div id="mobile-menu" class="md:hidden hidden border-t border-slate-200 bg-white absolute left-0 right-0" style="top: 100%;">
+  <div class="max-w-6xl mx-auto px-4 py-3 space-y-2 text-sm">
+    {% for item in items %}
+      {% if item.below %}
+        <div>
+          <button type="button" class="mobile-menu-toggle w-full flex items-center justify-between py-1 text-slate-700 text-sm">
+            <span>{{ item.title }}</span>
+            <svg class="mobile-menu-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          <div class="mobile-menu-dropdown hidden pl-3 pb-2 space-y-4">
+            {% for child in item.below %}
+              {% if child.below %}
+                <div class="pt-2">
+                  <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-slate-400 mb-2">{{ child.title }}</p>
+                  <div class="space-y-2">
+                    {% for grandchild in child.below %}
+                      <a href="{{ grandchild.url }}" class="block text-sm text-slate-700 hover:text-blue-600">{{ grandchild.title }}</a>
+                    {% endfor %}
+                  </div>
+                </div>
+              {% else %}
+                <a href="{{ child.url }}" class="block text-sm text-slate-700 hover:text-blue-600 pt-1">{{ child.title }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <a href="{{ item.url }}" class="nav-link block py-1 text-slate-700 relative">{{ item.title }}</a>
+      {% endif %}
+    {% endfor %}
+    <div class="pt-2 flex items-center gap-3">
+      <a href="https://app.open-badge.eu/login" class="px-4 py-1.5 rounded-full border border-emerald-500 text-emerald-600 hover:bg-emerald-50 text-xs font-semibold">
+        Login
+      </a>
+      <a href="/#contatti" class="flex-1 text-center px-4 py-2 rounded-full bg-slate-900 text-white hover:bg-slate-800 text-xs font-semibold">
+        Inizia Ora
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+{# ── 3. Desktop mega dropdowns ── #}
+{% for item in items %}
+  {% if item.below %}
+    {% set child_count = item.below|length %}
+    <div id="mega-{{ loop.index }}" class="mega-dropdown hidden absolute left-0 right-0 bg-[#f6f7ed] border-t border-slate-200 shadow-lg" style="top: 100%;">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-14 lg:py-16 grid gap-12 {% if child_count <= 2 %}lg:grid-cols-[1.1fr_1.1fr_1.3fr]{% else %}lg:grid-cols-{{ child_count }}{% endif %} min-h-[280px]">
+        {% for child in item.below %}
+          <div class="space-y-4">
+            {% if child.below %}
+              <h3 class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">{{ child.title }}</h3>
+              <div class="space-y-4 text-sm">
+                {% for grandchild in child.below %}
+                  <div>
+                    <a href="{{ grandchild.url }}" class="font-semibold text-slate-900 hover:text-blue-600 transition-colors">{{ grandchild.title }}</a>
+                    {% if grandchild.original_link.description %}
+                      <p class="text-xs text-slate-600 mt-0.5">{{ grandchild.original_link.description }}</p>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div>
+                <a href="{{ child.url }}" class="font-semibold text-slate-900 hover:text-blue-600 transition-colors text-sm">{{ child.title }}</a>
+                {% if child.original_link.description %}
+                  <p class="text-xs text-slate-600 mt-0.5">{{ child.original_link.description }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        {% if child_count <= 2 %}
+        <!-- Visual preview -->
+        <div class="relative hidden lg:block">
+          <div class="absolute -inset-4 bg-[#eef3d9] rounded-3xl"></div>
+          <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200">
+            <img src="/themes/custom/tailwind/images/public/mybadge_obvissuer.png" alt="Open Badge Interface" class="w-full h-full object-cover" />
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

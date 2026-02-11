@@ -82,52 +82,46 @@ __webpack_require__.r(__webpack_exports__);
         var mobileMenuButton = document.getElementById('mobile-menu-button');
         var mobileMenu = document.getElementById('mobile-menu');
 
-        // Mega dropdown elements (used on open-badge-home.html)
+        // Generic mega dropdown support (dynamic menu items)
         var header = document.querySelector('header');
-        var megaToggle = document.querySelector('[data-mega-toggle="caratteristiche"]');
-        var megaPanel = document.getElementById('caratteristiche-mega');
-        function openMegaPanel() {
-          if (!megaPanel) return;
-          megaPanel.classList.remove('hidden');
-          megaPanel.classList.add('md:block');
-        }
-        function closeMegaPanel() {
-          if (!megaPanel) return;
-          megaPanel.classList.add('hidden');
-          megaPanel.classList.remove('md:block');
+        var allMegaToggles = document.querySelectorAll('[data-mega-toggle]');
+        var allMegaPanels = document.querySelectorAll('.mega-dropdown');
+        function closeAllMegaPanels() {
+          allMegaPanels.forEach(function (panel) {
+            panel.classList.add('hidden');
+            panel.classList.remove('md:block');
+          });
         }
         if (mobileMenuButton && mobileMenu) {
           mobileMenuButton.addEventListener('click', function () {
             mobileMenu.classList.toggle('hidden');
-
-            // Always close mega panel when opening mobile menu
-            if (megaPanel) {
-              megaPanel.classList.add('hidden');
-            }
+            closeAllMegaPanels();
           });
         }
 
-        // Toggle mega dropdown on desktop
-        if (megaToggle && megaPanel) {
-          megaToggle.addEventListener('click', function (e) {
-            // Prevent smooth scroll when used as mega toggle
+        // Toggle mega dropdown on desktop (click)
+        allMegaToggles.forEach(function (toggle) {
+          var panelId = toggle.getAttribute('data-mega-toggle');
+          var panel = document.getElementById(panelId);
+          if (!panel) return;
+          toggle.addEventListener('click', function (e) {
             if (this.dataset.skipScroll === 'true') {
               e.preventDefault();
             }
-            var isHidden = megaPanel.classList.contains('hidden');
+            var isHidden = panel.classList.contains('hidden');
+            closeAllMegaPanels();
             if (isHidden) {
-              openMegaPanel();
-            } else {
-              closeMegaPanel();
+              panel.classList.remove('hidden');
+              panel.classList.add('md:block');
             }
           });
-        }
+        });
 
         // Close mega dropdown when clicking outside header
         document.addEventListener('click', function (e) {
-          if (!megaPanel || !header) return;
+          if (!header) return;
           if (!header.contains(e.target)) {
-            closeMegaPanel();
+            closeAllMegaPanels();
           }
         });
 
@@ -147,10 +141,8 @@ __webpack_require__.r(__webpack_exports__);
                 mobileMenu.classList.add('hidden');
               }
 
-              // Close mega panel on navigation
-              if (megaPanel) {
-                closeMegaPanel();
-              }
+              // Close mega panels on navigation
+              closeAllMegaPanels();
 
               // Scroll to the target
               window.scrollTo({
@@ -389,48 +381,40 @@ __webpack_require__.r(__webpack_exports__);
         // Update on window resize
         window.addEventListener('resize', updateNavbarPosition);
 
-        // ========== MOBILE SOLUZIONI ACCORDION ==========
-        var mobileSoluzioniToggle = document.getElementById('mobile-soluzioni-toggle');
-        var mobileSoluzioniDropdown = document.getElementById('mobile-soluzioni-dropdown');
-        var mobileSoluzioniArrow = document.getElementById('mobile-soluzioni-arrow');
-        if (mobileSoluzioniToggle && mobileSoluzioniDropdown) {
-          mobileSoluzioniToggle.addEventListener('click', function () {
-            mobileSoluzioniDropdown.classList.toggle('hidden');
-            if (mobileSoluzioniArrow) {
-              mobileSoluzioniArrow.classList.toggle('rotate-180');
+        // ========== MOBILE MENU ACCORDIONS (generic) ==========
+        document.querySelectorAll('.mobile-menu-toggle').forEach(function (toggle) {
+          toggle.addEventListener('click', function () {
+            var dropdown = this.nextElementSibling;
+            var arrow = this.querySelector('.mobile-menu-arrow');
+            if (dropdown && dropdown.classList.contains('mobile-menu-dropdown')) {
+              dropdown.classList.toggle('hidden');
+              if (arrow) {
+                arrow.classList.toggle('rotate-180');
+              }
             }
           });
-        }
+        });
 
-        // ========== MEGA DROPDOWN HOVER FUNCTIONALITY ==========
-        var soluzioniLink = document.querySelector('[data-mega-toggle="caratteristiche"]');
-        var megaDropdown = document.getElementById('caratteristiche-mega');
-        if (soluzioniLink && megaDropdown) {
-          // Hide dropdown when mouse leaves the link or dropdown
-          var hideDropdown = function hideDropdown() {
-            megaDropdown.classList.add('hidden');
-          };
-          // Show dropdown on hover
-          soluzioniLink.addEventListener('mouseenter', function () {
-            megaDropdown.classList.remove('hidden');
+        // ========== MEGA DROPDOWN HOVER FUNCTIONALITY (generic) ==========
+        allMegaToggles.forEach(function (toggle) {
+          var panelId = toggle.getAttribute('data-mega-toggle');
+          var panel = document.getElementById(panelId);
+          if (!panel) return;
+          toggle.addEventListener('mouseenter', function () {
+            closeAllMegaPanels();
+            panel.classList.remove('hidden');
           });
-          soluzioniLink.addEventListener('mouseleave', function (e) {
-            // Give time to move mouse to dropdown
+          toggle.addEventListener('mouseleave', function () {
             setTimeout(function () {
-              if (!megaDropdown.matches(':hover')) {
-                hideDropdown();
+              if (!panel.matches(':hover')) {
+                panel.classList.add('hidden');
               }
             }, 100);
           });
-          megaDropdown.addEventListener('mouseleave', hideDropdown);
-
-          // Hide on click outside
-          document.addEventListener('click', function (e) {
-            if (!soluzioniLink.contains(e.target) && !megaDropdown.contains(e.target)) {
-              hideDropdown();
-            }
+          panel.addEventListener('mouseleave', function () {
+            panel.classList.add('hidden');
           });
-        }
+        });
 
         // ========== VANTAGGI TAB FUNCTIONALITY ==========
         var vantaggiTabButtons = document.querySelectorAll('.ob-tab');
