@@ -35,33 +35,68 @@
  */
 #}
 
-{# Main Content Section #}
+{# Main Content Section - Dynamic from blocco_home or static fallback #}
 <section class="py-16 lg:py-20 bg-white">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    {% if blocco_home is defined and blocco_home and blocco_home.link_edit is defined %}
+      <div class="text-right mb-4">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 text-slate-900 underline text-sm font-medium rounded-lg hover:bg-indigo-600 transition-colors shadow-lg">
+          {{ blocco_home.link_edit }}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="grid gap-12 lg:grid-cols-2 items-start">
       {# Left: Image #}
       <div class="order-2 lg:order-1">
         <div class="bg-gradient-to-br {{ gradient_colors|default('from-blue-50 to-indigo-50') }} rounded-3xl p-8 lg:p-12">
-          <img src="{{ main_image|default('/themes/custom/tailwind/images/public/img_2.png') }}" 
-               alt="{{ page_title }}" 
-               class="w-full h-auto rounded-2xl shadow-lg" />
+          {% if blocco_home is defined and blocco_home and blocco_home.immagine_url is defined and blocco_home.immagine_url %}
+            <img src="{{ blocco_home.immagine_url }}" 
+                 alt="{{ blocco_home.immagine_alt|default(blocco_home.titolo[0]['value']|default(page_title)) }}" 
+                 class="w-full h-auto rounded-2xl shadow-lg" />
+          {% else %}
+            <img src="{{ main_image|default('/themes/custom/tailwind/images/public/img_2.png') }}" 
+                 alt="{{ page_title }}" 
+                 class="w-full h-auto rounded-2xl shadow-lg" />
+          {% endif %}
         </div>
+        {% if blocco_home is defined and blocco_home and blocco_home.second_description is defined and blocco_home.second_description|length > 0 %}
+          <div class="mt-6 prose prose-base max-w-none text-slate-700 leading-relaxed">
+            {{ blocco_home.second_description[0]['value']|raw }}
+          </div>
+        {% endif %}
       </div>
 
       {# Right: Content #}
       <div class="order-1 lg:order-2 space-y-8">
         <div>
-          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">{{ page_title }}</h2>
-          {% for paragraph in paragraphs %}
-            <p class="text-base text-slate-700 leading-relaxed {{ loop.last ? '' : 'mb-6' }}">
-              {{ paragraph }}
-            </p>
-          {% endfor %}
+          {% if blocco_home is defined and blocco_home and blocco_home.titolo is defined and blocco_home.titolo|length > 0 %}
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">{{ blocco_home.titolo[0]['value'] }}</h2>
+          {% else %}
+            <h2 class="text-3xl sm:text-4xl font-bold text-slate-900 mb-4">{{ page_title }}</h2>
+          {% endif %}
+
+          {% if blocco_home is defined and blocco_home and blocco_home.sub_title is defined and blocco_home.sub_title|length > 0 %}
+            <p class="text-lg text-blue-600 font-semibold mb-6">{{ blocco_home.sub_title[0]['value'] }}</p>
+          {% endif %}
+
+          {% if blocco_home is defined and blocco_home and blocco_home.body is defined and blocco_home.body|length > 0 %}
+            <div class="prose prose-base max-w-none text-slate-700 leading-relaxed">
+              {{ blocco_home.body[0]['value']|raw }}
+            </div>
+          {% else %}
+            {% for paragraph in paragraphs %}
+              <p class="text-base text-slate-700 leading-relaxed {{ loop.last ? '' : 'mb-6' }}">
+                {{ paragraph }}
+              </p>
+            {% endfor %}
+          {% endif %}
         </div>
 
         <div class="pt-4">
           <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
-            Inizia ora
+            Prenota una domanda
             <span aria-hidden="true" class="ml-2">→</span>
           </a>
         </div>
@@ -78,40 +113,74 @@
   } %}
 {% endif %}
 
-{# Come funziona Section #}
+{# Come funziona Section - Dynamic from blocco_home_funziona or static fallback #}
 <section class="py-16 lg:py-20 bg-white">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    {% if blocco_home_funziona is defined and blocco_home_funziona and blocco_home_funziona.link_edit is defined %}
+      <div class="text-right mb-4">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 text-slate-900 underline text-sm font-medium rounded-lg hover:bg-indigo-600 transition-colors shadow-lg">
+          {{ blocco_home_funziona.link_edit }}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="grid gap-12 lg:grid-cols-2 items-center">
       {# Left: Image #}
       <div>
         <div class="relative">
-          <img src="{{ how_it_works_image|default('/themes/custom/tailwind/images/public/open-badge.eu-img3.png') }}" 
-               alt="Come funziona" 
-               class="w-full h-auto rounded-2xl shadow-lg" />
+          {% if blocco_home_funziona is defined and blocco_home_funziona and blocco_home_funziona.immagine_url is defined and blocco_home_funziona.immagine_url %}
+            <img src="{{ blocco_home_funziona.immagine_url }}" 
+                 alt="{{ blocco_home_funziona.immagine_alt|default('Come funziona') }}" 
+                 class="w-full h-auto rounded-2xl shadow-lg" />
+          {% else %}
+            <img src="{{ how_it_works_image|default('/themes/custom/tailwind/images/public/open-badge.eu-img3.png') }}" 
+                 alt="Come funziona" 
+                 class="w-full h-auto rounded-2xl shadow-lg" />
+          {% endif %}
         </div>
       </div>
 
       {# Right: Content #}
       <div class="space-y-6">
-        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">Come funziona</h2>
-        
-        <div class="space-y-4">
-          {% set default_steps = [
-            { title: 'Creazione', description: "L'ente o l'organizzazione crea un badge digitale inserendo i metadati rilevanti (competenze, corso, ente, data)." },
-            { title: 'Assegnazione', description: 'Il badge viene assegnato agli utenti che hanno completato un corso, una formazione o un evento.' },
-            { title: 'Condivisione', description: 'Gli utenti possono salvare i badge in un portafoglio digitale e condividerli su social network o piattaforme professionali come LinkedIn.' },
-            { title: 'Verifica', description: 'Chiunque può cliccare sul badge per verificarne la validità, visualizzare le informazioni e accertarsi dell\'autenticità, grazie al collegamento con lo standard 1EDTECH.' }
-          ] %}
-          
-          {% for step in how_it_works_steps|default(default_steps) %}
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-1">{{ step.title }}:</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                {{ step.description }}
-              </p>
-            </div>
-          {% endfor %}
-        </div>
+        {% if blocco_home_funziona is defined and blocco_home_funziona and blocco_home_funziona.titolo is defined and blocco_home_funziona.titolo|length > 0 %}
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">{{ blocco_home_funziona.titolo[0]['value'] }}</h2>
+        {% else %}
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">Come funziona</h2>
+        {% endif %}
+
+        {% if blocco_home_funziona is defined and blocco_home_funziona and blocco_home_funziona.sub_title is defined and blocco_home_funziona.sub_title|length > 0 %}
+          <p class="text-lg text-blue-600 font-semibold">{{ blocco_home_funziona.sub_title[0]['value'] }}</p>
+        {% endif %}
+
+        {% if blocco_home_funziona is defined and blocco_home_funziona and blocco_home_funziona.body is defined and blocco_home_funziona.body|length > 0 %}
+          <div class="prose prose-base max-w-none text-slate-700 leading-relaxed">
+            {{ blocco_home_funziona.body[0]['value']|raw }}
+          </div>
+        {% else %}
+          <div class="space-y-4">
+            {% set default_steps = [
+              { title: 'Creazione', description: "L'ente o l'organizzazione crea un badge digitale inserendo i metadati rilevanti (competenze, corso, ente, data)." },
+              { title: 'Assegnazione', description: 'Il badge viene assegnato agli utenti che hanno completato un corso, una formazione o un evento.' },
+              { title: 'Condivisione', description: 'Gli utenti possono salvare i badge in un portafoglio digitale e condividerli su social network o piattaforme professionali come LinkedIn.' },
+              { title: 'Verifica', description: 'Chiunque può cliccare sul badge per verificarne la validità, visualizzare le informazioni e accertarsi dell\'autenticità, grazie al collegamento con lo standard 1EDTECH.' }
+            ] %}
+            {% for step in how_it_works_steps|default(default_steps) %}
+              <div>
+                <h3 class="text-base font-bold text-slate-900 mb-1">{{ step.title }}:</h3>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                  {{ step.description }}
+                </p>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        {% if blocco_home_funziona is defined and blocco_home_funziona and blocco_home_funziona.second_description is defined and blocco_home_funziona.second_description|length > 0 %}
+          <div class="prose prose-base max-w-none text-slate-700 leading-relaxed">
+            {{ blocco_home_funziona.second_description[0]['value']|raw }}
+          </div>
+        {% endif %}
 
         <div class="pt-4">
           <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
@@ -136,86 +205,118 @@
       </a>
     </div>
 
+    {% if casi_studio_edit is defined and casi_studio_edit %}
+      <div class="text-right mb-4">
+        <span class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          {{ casi_studio_edit }}
+        </span>
+      </div>
+    {% endif %}
+
     <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mt-12">
-      {# Case Study 1 #}
-      <article class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200">
-        <div class="space-y-3">
-          <span class="text-xs font-semibold tracking-widest uppercase text-slate-400">CASE STUDY</span>
-          <h3 class="text-lg font-bold text-slate-900 leading-tight min-h-[3rem]">Skillon e open badge</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">Skillon e open badge</p>
-          <div class="pt-2">
-            <a href="#" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
-              Approfondisci
-              <span aria-hidden="true" class="ml-1">→</span>
-            </a>
-          </div>
+      {% if casi_studio is defined and casi_studio|length > 0 %}
+        {% for caso in casi_studio %}
+          <article class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200">
+            <div class="space-y-3">
+              <span class="text-xs font-semibold tracking-widest uppercase text-slate-400">CASO STUDIO</span>
+              {% if caso.organizzazione %}
+                <span class="text-xs text-slate-400 ml-2">{{ caso.organizzazione }}</span>
+              {% endif %}
+              {% if caso.image.path %}
+                <img class="rounded-lg w-full object-contain" style="height: 120px;" src="{{ caso.image.path }}" alt="{{ caso.image.alt ?: caso.title }}" loading="lazy">
+              {% endif %}
+              <h3 class="text-lg font-bold text-slate-900 leading-tight min-h-[3rem]">{{ caso.field_titolo ?: caso.title }}</h3>
+              {% if caso.descrizione_breve %}
+                <p class="text-sm text-slate-600 leading-relaxed">{{ caso.descrizione_breve }}</p>
+              {% elseif caso.teaser %}
+                <p class="text-sm text-slate-600 leading-relaxed">{{ caso.teaser }}</p>
+              {% endif %}
+              <div class="pt-2">
+                <a href="{{ caso.url_object }}" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
+                  Approfondisci
+                  <span aria-hidden="true" class="ml-1">→</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        {% endfor %}
+      {% else %}
+        <div class="col-span-full text-center py-8">
+          <p class="text-slate-500">Nessun caso studio disponibile.</p>
         </div>
-      </article>
-
-      {# Case Study 2 #}
-      <article class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200">
-        <div class="space-y-3">
-          <span class="text-xs font-semibold tracking-widest uppercase text-slate-400">CASE STUDY</span>
-          <h3 class="text-lg font-bold text-slate-900 leading-tight min-h-[3rem]">Edumoby utilizza gli Open Badge</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">Edumoby utilizza gli Open Badge!</p>
-          <div class="pt-2">
-            <a href="#" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
-              Approfondisci
-              <span aria-hidden="true" class="ml-1">→</span>
-            </a>
-          </div>
-        </div>
-      </article>
-
-      {# Case Study 3 #}
-      <article class="bg-white rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-slate-200">
-        <div class="space-y-3">
-          <span class="text-xs font-semibold tracking-widest uppercase text-slate-400">CASE STUDY</span>
-          <h3 class="text-lg font-bold text-slate-900 leading-tight min-h-[3rem]">Eurodesk Italy, i benefici nell'utilizzo degli Open Badge.</h3>
-          <p class="text-sm text-slate-600 leading-relaxed">Valorizzazione delle competenze tramite gli Open Badge</p>
-          <div class="pt-2">
-            <a href="#" class="inline-flex items-center text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors">
-              Approfondisci
-              <span aria-hidden="true" class="ml-1">→</span>
-            </a>
-          </div>
-        </div>
-      </article>
+      {% endif %}
     </div>
   </div>
 </section>
 
-{# Cosa puoi fare con Obv Section #}
+{# Cosa puoi fare con Obv Section - Dynamic from blocco_home_obv or static fallback #}
 <section class="py-16 lg:py-20 bg-white">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
+
+    {% if blocco_home_obv is defined and blocco_home_obv and blocco_home_obv.link_edit is defined %}
+      <div class="text-right mb-4">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 text-slate-900 underline text-sm font-medium rounded-lg hover:bg-indigo-600 transition-colors shadow-lg">
+          {{ blocco_home_obv.link_edit }}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="grid gap-12 lg:grid-cols-2 items-center">
       {# Left: Content #}
       <div class="space-y-8">
-        <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">Cosa puoi fare con Obv</h2>
-        
-        <div class="space-y-6">
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Per Aziende e Pubbliche Amministrazioni</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">
-              {{ obv_description_org|default('Con OBV puoi creare e gestire badge digitali per certificare le competenze e le partecipazioni dei tuoi dipendenti o utenti. Automatizza l\'assegnazione dei certificati al completamento di corsi, congressi o attività formative, e utilizza l\'integrazione API per collegare i tuoi sistemi esistenti. Personalizza i percorsi di apprendimento e monitora i progressi con una gestione centralizzata e semplice, migliorando la valorizzazione e la condivisione delle competenze.') }}
-            </p>
-          </div>
+        {% if blocco_home_obv is defined and blocco_home_obv and blocco_home_obv.titolo is defined and blocco_home_obv.titolo|length > 0 %}
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">{{ blocco_home_obv.titolo[0]['value'] }}</h2>
+        {% else %}
+          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">Cosa puoi fare con Obv</h2>
+        {% endif %}
 
-          <div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">Per l'Utente Finale</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">
-              {{ obv_description_user|default('Con OBV puoi collezionare e gestire i tuoi badge digitali in modo semplice. Ogni certificato è verificabile e condivisibile su social network, come LinkedIn, o nelle candidature di lavoro. Traccia i tuoi progressi formativi, mostra le tue competenze e condividi i risultati dei tuoi percorsi di apprendimento, tutto dalla tua dashboard personale.') }}
-            </p>
+        {% if blocco_home_obv is defined and blocco_home_obv and blocco_home_obv.sub_title is defined and blocco_home_obv.sub_title|length > 0 %}
+          <p class="text-lg text-blue-600 font-semibold">{{ blocco_home_obv.sub_title[0]['value'] }}</p>
+        {% endif %}
+
+        {% if blocco_home_obv is defined and blocco_home_obv and blocco_home_obv.body is defined and blocco_home_obv.body|length > 0 %}
+          <div class="prose prose-base max-w-none text-slate-700 leading-relaxed">
+            {{ blocco_home_obv.body[0]['value']|raw }}
           </div>
-        </div>
+        {% else %}
+          <div class="space-y-6">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">Per Aziende e Pubbliche Amministrazioni</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                {{ obv_description_org|default('Con OBV puoi creare e gestire badge digitali per certificare le competenze e le partecipazioni dei tuoi dipendenti o utenti. Automatizza l\'assegnazione dei certificati al completamento di corsi, congressi o attività formative, e utilizza l\'integrazione API per collegare i tuoi sistemi esistenti. Personalizza i percorsi di apprendimento e monitora i progressi con una gestione centralizzata e semplice, migliorando la valorizzazione e la condivisione delle competenze.') }}
+              </p>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">Per l'Utente Finale</h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                {{ obv_description_user|default('Con OBV puoi collezionare e gestire i tuoi badge digitali in modo semplice. Ogni certificato è verificabile e condivisibile su social network, come LinkedIn, o nelle candidature di lavoro. Traccia i tuoi progressi formativi, mostra le tue competenze e condividi i risultati dei tuoi percorsi di apprendimento, tutto dalla tua dashboard personale.') }}
+              </p>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if blocco_home_obv is defined and blocco_home_obv and blocco_home_obv.second_description is defined and blocco_home_obv.second_description|length > 0 %}
+          <div class="prose prose-base max-w-none text-slate-700 leading-relaxed">
+            {{ blocco_home_obv.second_description[0]['value']|raw }}
+          </div>
+        {% endif %}
       </div>
 
       {# Right: Image #}
       <div>
         <div class="relative">
-          <img src="{{ obv_image|default('/themes/custom/tailwind/images/public/open-badge.eu-img2.png') }}" 
-               alt="Cosa puoi fare con Obv" 
-               class="w-full h-auto rounded-2xl shadow-lg" />
+          {% if blocco_home_obv is defined and blocco_home_obv and blocco_home_obv.immagine_url is defined and blocco_home_obv.immagine_url %}
+            <img src="{{ blocco_home_obv.immagine_url }}" 
+                 alt="{{ blocco_home_obv.immagine_alt|default('Cosa puoi fare con Obv') }}" 
+                 class="w-full h-auto rounded-2xl shadow-lg" />
+          {% else %}
+            <img src="{{ obv_image|default('/themes/custom/tailwind/images/public/open-badge.eu-img2.png') }}" 
+                 alt="Cosa puoi fare con Obv" 
+                 class="w-full h-auto rounded-2xl shadow-lg" />
+          {% endif %}
         </div>
       </div>
     </div>

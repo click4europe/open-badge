@@ -1,0 +1,90 @@
+{#
+/**
+ * @file
+ * Theme implementation to display a caso studio (case study) node.
+ */
+#}
+
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: label,
+  description: content.field_descrizione_breve.0['#context'].value|default('')
+} %}
+
+<article class="bg-white py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Article Header -->
+                <header class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-slate-500 mb-4">
+                        <time datetime="{{ node.created.value|date('Y-m-d') }}">{{ node.created.value|format_date('short') }}</time>
+                        <span>•</span>
+                        <span>Caso Studio</span>
+                    </div>
+
+                    {% if content.field_titolo.0 %}
+                        <h2 class="text-2xl font-bold text-slate-900 mb-4">{{ content.field_titolo.0 }}</h2>
+                    {% endif %}
+
+                    {% if content.field_organizzazione.0 %}
+                        <p class="text-sm text-slate-500 mb-4">
+                            <span class="font-semibold">Organizzazione:</span> {{ content.field_organizzazione.0 }}
+                        </p>
+                    {% endif %}
+
+                    {% if content.field_descrizione_breve.0 %}
+                        <p class="text-xl text-slate-600 font-medium mb-6">{{ content.field_descrizione_breve.0 }}</p>
+                    {% endif %}
+                </header>
+
+                <!-- Featured Image -->
+                {% if content.field_immagine|render|trim is not empty %}
+                    <div class="mb-8 rounded-2xl overflow-hidden shadow-lg bg-gray-100">
+                        <div class="aspect-[16/9] relative w-full">
+                            {{ content.field_immagine }}
+                        </div>
+                    </div>
+                {% elseif content.field_image|render|trim is not empty %}
+                    <div class="mb-8 rounded-2xl overflow-hidden shadow-lg bg-gray-100">
+                        <div class="aspect-[16/9] relative w-full">
+                            {{ content.field_image }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Descrizione (formatted long) -->
+                {% if content.field_descrizione|render|trim is not empty %}
+                    <div class="prose prose-lg prose-slate max-w-none mb-8">
+                        {{ content.field_descrizione }}
+                    </div>
+                {% endif %}
+
+                <!-- Body Content -->
+                {% if content.body|render|trim is not empty %}
+                    <div class="prose prose-lg prose-slate max-w-none">
+                        {{ content.body }}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                <div class="sticky top-8">
+                    <h3 class="text-lg font-bold text-slate-900 mb-4">Altri Casi Studio</h3>
+                    <div class="space-y-4">
+                        <p class="text-slate-600 text-sm">Scopri altri progetti di successo dei nostri partner.</p>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="/casi-studio" class="block w-full text-center px-4 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+                            Vedi tutti i casi studio
+                        </a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
+
+{{ content|without('field_titolo', 'field_organizzazione', 'field_descrizione_breve', 'field_descrizione', 'field_immagine', 'field_image', 'body') }}

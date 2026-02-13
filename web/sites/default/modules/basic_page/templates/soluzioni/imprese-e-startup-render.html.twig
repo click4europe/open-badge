@@ -1,11 +1,9 @@
 {# imprese-e-startup-render.html.twig #}
 
 {# Hero Section using reusable component #}
-{% include '@tailwind/components/component--page-hero.html.twig' with {
-  title: 'Imprese e Startup',
-  description: 'Certifica le competenze del team con Open Badge digitali verificabili',
-  image: '/themes/custom/tailwind/images/public/IMG_openbadge/photo-1577896851231-70ef18881754.jpg'
-} %}
+{% set hero_block = drupal_entity('block_content', 30) %}
+{{ hero_block|render }}
+
 
 {# All repeated sections in one component #}
 {% include '@tailwind/components/component--solution-page-sections.html.twig' with {
@@ -20,5 +18,10 @@
   cta_button_text: 'Abbonamenti Business',
   contact_placeholder: 'Descrivi le tue esigenze aziendali...',
   steps: data.steps,
-  steps_edit: data.steps_edit
+  steps_edit: data.steps_edit,
+  casi_studio: data.casi_studio,
+  casi_studio_edit: data.casi_studio_edit,
+  blocco_home: data.blocco_home,
+  blocco_home_obv: data.blocco_home_obv,
+  blocco_home_funziona: data.blocco_home_funziona
 } %}

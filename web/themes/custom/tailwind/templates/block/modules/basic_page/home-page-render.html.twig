@@ -62,12 +62,12 @@
 
   <section id="certificati-riconosciuti" class="bg-[#e4f4f7] py-16 lg:py-20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
-          {# Admin edit link #}
+          {# Admin edit link 
           {% if data.home_edit %}
             <div class="mb-4">
               {{ data.home_edit }}
             </div>
-          {% endif %}
+          {% endif %} #}
           
           {# Dynamic content from Blocco Home #}
           {% if data.home_section %}
@@ -75,7 +75,8 @@
               {# Edit button in corner #}
               {% if data.home_section.link_edit %}
                 <div class="absolute -top-2 -right-2 z-50">
-                  <div class="bg-red-500 text-slate-900 underline px-3 py-1 rounded text-xs font-bold shadow-lg hover:bg-red-600 transition-colors">
+                  <div class="bg-indigo-500 p-2 shadow-lg text-slate-900 underline px-3 py-1 rounded text-xs font-bold shadow-lg hover:bg-indigo-600 transition-colors">
+                  
                     {{ data.home_section.link_edit }}
                   </div>
                 </div>

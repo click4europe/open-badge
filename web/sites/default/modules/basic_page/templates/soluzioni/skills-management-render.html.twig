@@ -1,12 +1,10 @@
 {# skills-management-render.html.twig #}
 
 {# Hero Section using reusable component #}
-{% include '@tailwind/components/component--page-hero.html.twig' with {
-  title: 'Skills Management',
-  description: 'Gestestione e monitoraggio delle competenze per migliorare la crescita professionale',
-  image: '/themes/custom/tailwind/images/public/IMG_openbadge/digital-credentials.jpg'
-} %}
+{% set hero_block = drupal_entity('block_content', 32) %}
+{{ hero_block|render }}
 
+ 
 {# All repeated sections in one component #}
 {% include '@tailwind/components/component--solution-page-sections.html.twig' with {
   page_title: 'Skills Management',
@@ -23,5 +21,10 @@
   cta_button_text: 'Abbonamenti Skills',
   contact_placeholder: 'Descrivi le tue esigenze di skill management...',
   steps: data.steps,
-  steps_edit: data.steps_edit
+  steps_edit: data.steps_edit,
+  casi_studio: data.casi_studio,
+  casi_studio_edit: data.casi_studio_edit,
+  blocco_home: data.blocco_home,
+  blocco_home_obv: data.blocco_home_obv,
+  blocco_home_funziona: data.blocco_home_funziona
 } %}

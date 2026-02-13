@@ -196,12 +196,21 @@ function basic_page_theme() {
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
 
-    // Case Studies page render.
+    // Case Studies page render (listing).
     'case_studies_render' => [
       'variables' => [
         'data' => NULL,
       ],
       'template' => 'case-studies-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Caso Studio single page render.
+    'caso_studio_page_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'caso-studio-page-render',
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
 

@@ -1,85 +1,105 @@
 {# case-studies-render.html.twig #}
 
-{# Hero Section using reusable component #}
 {% include '@tailwind/components/component--page-hero.html.twig' with {
   title: 'Casi studio',
   description: 'Progetti di successo con i nostri partner',
   image: '/themes/custom/tailwind/images/public/IMG_openbadge/casi-studio.jpg'
 } %}
 
-{# Case Studies Cards Section #}
 <section class="py-16 lg:py-20 bg-[#E9F5F6]">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
-    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-      
-      <!-- Card 1 -->
-      <a href="#" class="group flex flex-col bg-gray-50 p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-2 hover:bg-white transition-all duration-300 ease-out">
-        <div class="mb-3">
-          <span class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">CASO STUDIO</span>
-        </div>
-        <img class="rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300 casi-studio-image" style="width: 100%; height: 160px;" src="/themes/custom/tailwind/images/public/IMG_openbadge/logo_skillon_claim.jpg" alt="Skillon e open badge">
-        <div class="flex flex-col justify-between leading-normal flex-1">
-          <div>
-            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-900">Skillon e open badge</h5>
-            <p class="mb-6 text-slate-800 text-sm">Skillon e open badge</p>
-          </div>
-          <div>
-            <button type="button" class="inline-flex items-center w-auto text-slate-700 bg-white border border-slate-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 hover:translate-x-1 focus:ring-4 focus:ring-slate-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-300">
-              Approfondisci
-              <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </a>
 
-      <!-- Card 2 -->
-      <a href="#" class="group flex flex-col bg-gray-50 p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-2 hover:bg-white transition-all duration-300 ease-out">
-        <div class="mb-3">
-          <span class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">CASO STUDIO</span>
+    {# Search #}
+    <div class="mb-10">
+      <form method="get" action="{{ data.path }}" class="flex flex-col sm:flex-row gap-3 sm:items-end">
+        <div class="w-full sm:flex-1">
+          <label for="search" class="block text-sm font-medium text-slate-900 mb-2">Cerca casi studio</label>
+          <input
+            type="text"
+            id="search"
+            name="name"
+            value="{{ data.titolo }}"
+            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
+            placeholder="Cerca casi studio...">
         </div>
-        <img class="rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300" style="width: 100%; height: 160px; object-fit: none;" src="/themes/custom/tailwind/images/public/IMG_openbadge/edumobylogo.png" alt="Edumoby utilizza gli Open Badge">
-        <div class="flex flex-col justify-between leading-normal flex-1">
-          <div>
-            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-900">Edumoby utilizza gli Open Badge</h5>
-            <p class="mb-6 text-slate-800 text-sm">Edumoby utilizza gli Open Badge!</p>
-          </div>
-          <div>
-            <button type="button" class="inline-flex items-center w-auto text-slate-700 bg-white border border-slate-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 hover:translate-x-1 focus:ring-4 focus:ring-slate-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-300">
-              Approfondisci
-              <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-              </svg>
-            </button>
-          </div>
+        <div class="flex gap-3">
+          <button type="submit" class="px-6 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+            Cerca
+          </button>
+          <button type="button" onclick="window.location.href='{{ data.path }}'" class="px-6 py-1.5 bg-white text-slate-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+            Reset
+          </button>
         </div>
-      </a>
-
-      <!-- Card 3 -->
-      <a href="#" class="group flex flex-col bg-gray-50 p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-2 hover:bg-white transition-all duration-300 ease-out">
-        <div class="mb-3">
-          <span class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">CASO STUDIO</span>
-        </div>
-        <img class=" rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300 casi-studio-image" style="width: 100%; height: 160px;" src="/themes/custom/tailwind/images/public/IMG_openbadge/marchio_eurodesk + logo_colore.png" alt="Eurodesk Italy, i benefici nell'utilizzo degli Open Badge">
-        <div class="flex flex-col justify-between leading-normal flex-1">
-          <div>
-            <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-900">Eurodesk Italy, i benefici nell'utilizzo degli Open Badge.</h5>
-            <p class="mb-6 text-slate-800 text-sm">Valorizzazione delle competenze tramite gli Open Badge</p>
-          </div>
-          <div>
-            <button type="button" class="inline-flex items-center w-auto text-slate-700 bg-white border border-slate-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 hover:translate-x-1 focus:ring-4 focus:ring-slate-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 focus:outline-none transition-all duration-300">
-              Approfondisci
-              <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </a>
-
+      </form>
     </div>
+
+    {# Admin edit link #}
+    {% if data.casi_studio_edit %}
+      <div class="text-right mb-4">
+        <span class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors">
+          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+          </svg>
+          {{ data.casi_studio_edit }}
+        </span>
+      </div>
+    {% endif %}
+
+    {# Dynamic Cards #}
+    {% if data.casi_studio.row %}
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-10">
+        {% for caso in data.casi_studio.row %}
+          <a href="{{ caso.url_object }}" class="group flex flex-col bg-gray-50 p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-xl hover:-translate-y-2 hover:bg-white transition-all duration-300 ease-out">
+            <div class="mb-3">
+              <span class="text-xs font-semibold tracking-[0.25em] uppercase text-slate-500">CASO STUDIO</span>
+              {% if caso.organizzazione %}
+                <span class="text-xs text-slate-400 ml-2">{{ caso.organizzazione }}</span>
+              {% endif %}
+            </div>
+            {% if caso.image.path %}
+              <img class="rounded-lg mb-4 group-hover:scale-105 transition-transform duration-300 object-contain" style="width: 100%; height: 160px;" src="{{ caso.image.path }}" alt="{{ caso.image.alt ?: caso.title }}" loading="lazy">
+            {% else %}
+              <div class="rounded-lg mb-4 bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center group-hover:scale-105 transition-transform duration-300" style="width: 100%; height: 160px;">
+                <svg class="w-12 h-12 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+            {% endif %}
+            <div class="flex flex-col justify-between leading-normal flex-1">
+              <div>
+                <h5 class="mb-2 text-xl font-bold tracking-tight text-slate-900">{{ caso.field_titolo ?: caso.title }}</h5>
+                {% if caso.descrizione_breve %}
+                  <p class="mb-6 text-slate-800 text-sm">{{ caso.descrizione_breve }}</p>
+                {% elseif caso.teaser %}
+                  <p class="mb-6 text-slate-800 text-sm">{{ caso.teaser }}</p>
+                {% endif %}
+              </div>
+              <div>
+                <span class="inline-flex items-center w-auto text-slate-700 bg-white border border-slate-300 group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 focus:ring-4 focus:ring-slate-200 shadow-xs font-medium leading-5 rounded-lg text-sm px-4 py-2.5 transition-all duration-300">
+                  Approfondisci
+                  <svg class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 group-hover:translate-x-1 transition-transform duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
+                  </svg>
+                </span>
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+      {# Pagination #}
+      {% if data.pagination %}
+        <div class="mt-8">
+          {{ data.pagination|raw }}
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="text-center py-12">
+        <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <p class="text-slate-600 text-lg">Nessun caso studio trovato.</p>
+      </div>
+    {% endif %}
   </div>
 </section>
-
-

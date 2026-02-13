@@ -1,0 +1,118 @@
+{% include '@tailwind/components/component--page-hero.html.twig' with {
+  title: data.scheda.field_titolo ?: data.scheda.title,
+  description: data.scheda.descrizione_breve|default('')
+} %}
+
+<article class="bg-slate-50 py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <!-- Article Header -->
+                <header class="mb-8">
+                    <div class="flex items-center gap-3 text-sm mb-4">
+                        <span class="px-3 py-1 rounded-full font-semibold text-xs" style="background-color: #dbeafe; color: #1d4ed8;">Caso Studio</span>
+                        <time datetime="{{ data.scheda.created }}" class="text-slate-600 font-medium">{{ data.scheda.created }}</time>
+                    </div>
+
+                    {% if data.scheda.organizzazione %}
+                        <p class="text-sm text-slate-600 mb-4">
+                            <span class="font-semibold text-slate-900">Organizzazione:</span> {{ data.scheda.organizzazione }}
+                        </p>
+                    {% endif %}
+
+                    {% if data.scheda.descrizione_breve %}
+                        <p class="text-xl text-slate-900 font-semibold mb-6 leading-relaxed">{{ data.scheda.descrizione_breve }}</p>
+                    {% endif %}
+                </header>
+
+                <!-- Featured Image -->
+                {% if data.scheda.image.path %}
+                    <div class="mb-8">
+                        <div class="rounded-xl overflow-hidden shadow-md bg-slate-100" style="max-width: 200px;">
+                            <img src="{{ data.scheda.image.path }}" alt="{{ data.scheda.image.alt }}" class="w-full h-auto object-contain">
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Descrizione -->
+                {% if data.scheda.descrizione %}
+                    <div class="bg-white rounded-xl shadow-sm p-8 mb-6">
+                        <div class="prose prose-lg max-w-none text-slate-900">
+                            {{ data.scheda.descrizione|raw }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Body Content -->
+                {% if data.scheda.body %}
+                    <div class="bg-white rounded-xl shadow-sm p-8">
+                        <div class="prose prose-lg max-w-none text-slate-900">
+                            {{ data.scheda.body|raw }}
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="lg:col-span-1">
+                {% if data.related %}
+                    <div class="sticky top-8">
+                        <div class="bg-white rounded-xl shadow-sm p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-5">Altri Casi Studio</h3>
+                            <div class="space-y-4">
+                            {% for caso in data.related %}
+                                <article class="border border-slate-200 rounded-lg overflow-hidden hover:border-blue-300 transition-all duration-300">
+                                    {% if caso.image.path %}
+                                        <div class="aspect-[4/3] overflow-hidden bg-white relative">
+                                            <img src="{{ caso.image.path }}" alt="{{ caso.image.alt }}" class="absolute inset-0 w-full h-full object-contain p-2 hover:scale-105 transition-transform duration-300">
+                                        </div>
+                                    {% else %}
+                                        <div class="aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center">
+                                            <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                        </div>
+                                    {% endif %}
+                                    <div class="p-4 bg-white">
+                                        <div class="flex items-center gap-2 text-xs text-slate-600 mb-2 font-medium">
+                                            <span>{{ caso.created }}</span>
+                                        </div>
+                                        <h4 class="font-bold text-slate-900 line-clamp-2 mb-2 text-sm leading-snug">
+                                            <a href="{{ caso.url_object }}" class="hover:text-blue-600 transition-colors">
+                                                {{ caso.field_titolo ?: caso.title }}
+                                            </a>
+                                        </h4>
+                                        {% if caso.descrizione_breve %}
+                                            <p class="text-xs text-slate-700 line-clamp-2 leading-relaxed">{{ caso.descrizione_breve }}</p>
+                                        {% elseif caso.teaser %}
+                                            <p class="text-xs text-slate-700 line-clamp-2 leading-relaxed">{{ caso.teaser }}</p>
+                                        {% endif %}
+                                    </div>
+                                </article>
+                            {% endfor %}
+                            </div>
+
+                            <!-- View All Case Studies Button -->
+                            <div class="mt-6 pt-6 border-t border-slate-200">
+                                <a href="/casi-studio" class="block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm shadow-sm">
+                                    Vedi tutti i casi studio
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="sticky top-8">
+                        <div class="bg-white rounded-xl shadow-sm p-6">
+                            <h3 class="text-lg font-bold text-slate-900 mb-5">Casi Studio</h3>
+                            <p class="text-slate-600 text-sm mb-4">Scopri altri progetti di successo dei nostri partner.</p>
+                            <a href="/casi-studio" class="block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold text-sm shadow-sm">
+                                Vedi tutti i casi studio
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </aside>
+        </div>
+    </div>
+</article>

@@ -1,11 +1,8 @@
 {# pubbliche-amministrazioni-render.html.twig #}
 
 {# Hero Section using reusable component #}
-{% include '@tailwind/components/component--page-hero.html.twig' with {
-  title: 'Pubbliche Amministrazioni',
-  description: 'Verifica, condividi e valorizza le tue qualifiche con credenziali digitali',
-  image: '/themes/custom/tailwind/images/public/IMG_openbadge/1000-depositphotos_357639784_xl.png'
-} %}
+{% set hero_block = drupal_entity('block_content', 25) %}
+{{ hero_block|render }}
 
 {# All repeated sections in one component #}
 {% include '@tailwind/components/component--solution-page-sections.html.twig' with {
@@ -20,5 +17,10 @@
   cta_button_text: 'Abbonamenti PA',
   contact_placeholder: 'Descrivi le tue esigenze per la PA...',
   steps: data.steps,
-  steps_edit: data.steps_edit
+  steps_edit: data.steps_edit,
+  casi_studio: data.casi_studio,
+  casi_studio_edit: data.casi_studio_edit,
+  blocco_home: data.blocco_home,
+  blocco_home_obv: data.blocco_home_obv,
+  blocco_home_funziona: data.blocco_home_funziona
 } %}
