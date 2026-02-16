@@ -86,11 +86,13 @@ class TwigRenderBlocco extends AbstractExtension
         }
 
         // Get field_secondary_link
-       /* if ($block->hasField('field_secondary_link') && !$block->get('field_secondary_link')->isEmpty()) {
+        if ($block->hasField('field_secondary_link') && !$block->get('field_secondary_link')->isEmpty()) {
             $value = $block->get('field_secondary_link')->getValue();
-            $data['secondary_link_url'] = isset($value[0]['uri']) ? Url::fromUri($value[0]['uri'])->toString() : '';
+            $raw_uri = isset($value[0]['uri']) ? $value[0]['uri'] : '';
+            // Keep raw URI for checking if it's / or # (for video modal trigger)
+            $data['secondary_link_url'] = str_replace('internal:', '', $raw_uri);
             $data['secondary_link_title'] = isset($value[0]['title']) ? $value[0]['title'] : '';
-        }*/
+        }
 
         // Get field_illustration (image)
         if ($block->hasField('field_illustration') && !$block->get('field_illustration')->isEmpty()) {
