@@ -2,17 +2,18 @@
 
 namespace Drupal\basic_page\Traits;
 
-use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\blocchi\Utils\Blocchi;
 use Drupal\basic_page\Utils\CasiStudio;
-use Drupal\block_content\Entity\BlockContent;
 use Drupal\file\Entity\File;
 
 /**
  * Trait for fetching and processing step data.
  */
 trait StepDataTrait {
+
+  use BloccoHomeTrait;
 
   /**
    * Fetch and process step data.
@@ -76,62 +77,16 @@ trait StepDataTrait {
       $data['casi_studio_edit'] = Link::fromTextAndUrl('Configura Casi Studio', $url);
     }
 
-    // Fetch blocco_home sections by name
+    // Fetch blocco_home sections by name using BloccoHomeTrait
     $blocco_home_map = [
       'blocco_home' => 'Credenziali digitali',
       'blocco_home_funziona' => 'Come funziona',
       'blocco_home_obv' => 'Cosa puoi fare con Obv',
+      'blocco_inizia_ora' => 'Inizia Ora',
     ];
-    foreach ($blocco_home_map as $key => $info_name) {
-      $ids = \Drupal::entityQuery('block_content')
-        ->condition('type', 'blocco_home')
-        ->condition('info', $info_name)
-        ->range(0, 1)
-        ->accessCheck(FALSE)
-        ->execute();
-      if (!empty($ids)) {
-        $data[$key] = $this->makePrintBlock(reset($ids), $account);
-      }
-    }
+    $data = array_merge($data, $this->fetchMultipleBloccoHome($blocco_home_map, $account));
 
     return $data;
-  }
-
-  /**
-   * Load and format a block content entity for rendering.
-   */
-  protected function makePrintBlock($id, $account = NULL) {
-    $rend = [];
-    $block = BlockContent::load($id);
-    if (!$block) {
-      return $rend;
-    }
-
-    $rend['titolo'] = $block->get('field_titolo')->getValue();
-    $rend['sub_title'] = $block->get('field_sotto_titolo')->getValue();
-    $rend['body'] = $block->get('body')->getValue();
-    $rend['immagine'] = $block->get('field_immagine')->getValue();
-
-    if (!empty($rend['immagine'][0]['target_id'])) {
-      $file = File::load($rend['immagine'][0]['target_id']);
-      if ($file) {
-        $fileUrlGenerator = \Drupal::service('file_url_generator');
-        $rend['immagine_url'] = $fileUrlGenerator->generateAbsoluteString($file->getFileUri());
-        $rend['immagine_alt'] = $rend['immagine'][0]['alt'] ?? '';
-      }
-    }
-
-    if ($block->hasField('field_second_description') && !$block->get('field_second_description')->isEmpty()) {
-      $rend['second_description'] = $block->get('field_second_description')->getValue();
-    }
-
-    if ($account && $account->id() == 1) {
-      $options = ['absolute' => TRUE, 'query' => ['destination' => 'home'], 'attributes' => ['class' => ['button']]];
-      $url = Url::fromUri('internal:/admin/content/block/' . $id, $options);
-      $rend['link_edit'] = Link::fromTextAndUrl('Configura Blocco Home', $url);
-    }
-
-    return $rend;
   }
 
 }

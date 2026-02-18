@@ -32,6 +32,63 @@
     {% endembed %}
 
     <!-- ========================================= -->
+    <!-- SECTION: INTEGRAZIONI DYNAMIC BLOCK       -->
+    <!-- ========================================= -->
+    {% if data.integrazione %}
+      {% embed '@tailwind/components/component--section.html.twig' with {
+        id: 'integrazioni-ob',
+        background: 'dark',
+        padding: 'py-16 lg:py-20',
+        class: 'bg-gradient-to-br from-[#0d5568] to-[#0a3d4a]',
+      } %}
+        {% block section_inner %}
+          {% if data.integrazione.link_edit %}
+            <div class="text-right mb-4">
+              <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 text-slate-900 underline text-sm font-medium rounded-lg hover:bg-indigo-600 transition-colors shadow-lg">
+                {{ data.integrazione.link_edit }}
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="max-w-4xl mx-auto text-center">
+            {% if data.integrazione.sub_title and data.integrazione.sub_title|length > 0 %}
+              <p class="text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase text-cyan-300 mb-4">
+                {{ data.integrazione.sub_title[0]['value'] }}
+              </p>
+            {% endif %}
+
+            {% if data.integrazione.titolo and data.integrazione.titolo|length > 0 %}
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">
+                {{ data.integrazione.titolo[0]['value'] }}
+              </h2>
+            {% endif %}
+
+            {% if data.integrazione.body and data.integrazione.body|length > 0 %}
+              <div class="text-base sm:text-lg text-slate-200 mb-8 max-w-3xl mx-auto">
+                {{ data.integrazione.body[0]['value']|raw }}
+              </div>
+            {% endif %}
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+              <a href="https://api-docs.open-badge.eu/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-[#0d5568] font-semibold text-sm hover:bg-slate-100 transition-colors shadow-lg">
+                Documentazione API
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+              <a href="https://meetings.hubspot.com/dbrothers/openbadge" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500 text-white font-semibold text-sm hover:bg-cyan-600 transition-colors shadow-lg">
+                Prenota una call
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        {% endblock %}
+      {% endembed %}
+    {% endif %}
+
+    <!-- ========================================= -->
     <!-- SECTION: INTEGRAZIONI / API (REUSABLE)    -->
     <!-- ========================================= -->
     {% embed '@tailwind/components/component--section.html.twig' with {

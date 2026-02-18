@@ -222,5 +222,14 @@ function basic_page_theme() {
       'template' => 'contatti-render',
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
+
+    // Vantaggi Open Badge page render.
+    'vantaggi_open_badge_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'vantaggi-open-badge-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
   ];
 }

@@ -7,6 +7,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\blocchi\Utils\Blocchi;
 use Drupal\basic_page\Traits\StepDataTrait;
+use Drupal\basic_page\Traits\BloccoHomeTrait;
 use Drupal\basic_page\Utils\Notizie;
 
 
@@ -23,6 +24,7 @@ use Drupal\basic_page\Utils\Notizie;
 class HomePage extends BlockBase
 {
     use StepDataTrait;
+    use BloccoHomeTrait;
 
     /**
      * {@inheritdoc}
@@ -46,7 +48,7 @@ class HomePage extends BlockBase
         // fetch Blocco Home (home section1)
         $home_blocks = Blocchi::make_query_blocchi('blocco_home', $lang, TRUE, 'ASC', 0, 1);
         if (!empty($home_blocks)) {
-            $data['home_section'] = $this->make__print_block($home_blocks[0]->id, $account);
+            $data['home_section'] = $this->makePrintBlock($home_blocks[0]->id, $account);
         }
         // Add edit link for home section
         if ($account->id() == 1 && !empty($home_blocks)) {
@@ -55,9 +57,21 @@ class HomePage extends BlockBase
             $data['home_edit'] = Link::fromTextAndUrl('Configura Blocco Home', $url);
         }
 
+        // Fetch CTA ACCOUNT blocco_home by name using BloccoHomeTrait
+        $cta_data = $this->fetchBloccoHome('CTA ACCOUNT', $account);
+        if ($cta_data) {
+            $data['cta_account'] = $cta_data;
+        }
+
         // Fetch step data using trait
         $stepData = $this->getStepData($lang, 6);
         $data = array_merge($data, $stepData);
+
+        // Fetch Integrare gli ob blocco_home by name using BloccoHomeTrait
+        $integrazione_data = $this->fetchBloccoHome('Integrare gli ob', $account);
+        if ($integrazione_data) {
+            $data['integrazione'] = $integrazione_data;
+        }
 
         // Fetch latest 6 notizie for the homepage
         $notizie_data = Notizie::notizie_list(0, 'DESC', 0, 6, '', '');
@@ -116,44 +130,6 @@ class HomePage extends BlockBase
 
         return $results;
     }
-
-
-    public function make__print_block($id = '', $account = NULL)
-    {
-
-        $rend = [];
-        $block = \Drupal\block_content\Entity\BlockContent::load($id);
-        $rend['titolo'] = $block->get('field_titolo')->getValue();
-        $rend['sub_title'] = $block->get('field_sotto_titolo')->getValue();
-        $rend['body'] = $block->get('body')->getValue();
-        $rend['immagine'] = $block->get('field_immagine')->getValue();
-        if (strcmp('1', $account->id()) === 0) {
-            $options = ['absolute' => TRUE, 'query' => ['destination' => 'home'], 'attributes' => ['class' => ['button']]];
-            $url = Url::fromUri('internal:/admin/content/block/' . $id, $options);
-            $rend['link_edit'] = Link::fromTextAndUrl('Configura Blocco', $url);
-        }
-
-        return $rend;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * {@inheritdoc}

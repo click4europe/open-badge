@@ -3,6 +3,7 @@
 namespace Drupal\basic_page\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\basic_page\Traits\BloccoHomeTrait;
 
 /**
  * Provides a 'Servizi Avanzati' Block.
@@ -15,6 +16,8 @@ use Drupal\Core\Block\BlockBase;
  */
 class ServiziAvanzati extends BlockBase {
 
+  use BloccoHomeTrait;
+
   /**
    * {@inheritdoc}
    */
@@ -22,6 +25,20 @@ class ServiziAvanzati extends BlockBase {
     $data = [];
     $data['title'] = 'Servizi avanzati';
     $data['theme'] = 'servizi_avanzati_render';
+
+    $account = \Drupal::currentUser();
+
+    // Fetch Servizi Avanzati block
+    $blocco_servizi_avanzati = $this->fetchBloccoHome('Servizi Avanzati', $account);
+    if ($blocco_servizi_avanzati) {
+      $data['blocco_servizi_avanzati'] = $blocco_servizi_avanzati;
+    }
+
+    // Fetch Inizia Ora block
+    $blocco_inizia_ora = $this->fetchBloccoHome('Inizia Ora', $account);
+    if ($blocco_inizia_ora) {
+      $data['blocco_inizia_ora'] = $blocco_inizia_ora;
+    }
 
     $build = [];
     $build['#theme'] = $data['theme'];

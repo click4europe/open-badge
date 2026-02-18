@@ -112,53 +112,6 @@
   </div>
 </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  var modal = document.getElementById('video-modal');
-  var openBtn = document.getElementById('open-video-modal');
-  var closeBtn = document.getElementById('close-video-modal');
-  var backdrop = document.getElementById('video-modal-backdrop');
-  var iframe = document.getElementById('vimeo-player');
-
-  if (!modal || !openBtn || !closeBtn || !backdrop || !iframe) {
-    console.error('Video modal elements not found');
-    return;
-  }
-
-  function openModal(e) {
-    e.preventDefault();
-    var videoUrl = openBtn.getAttribute('data-video-url');
-    if (videoUrl) {
-      // Add autoplay parameter if it's a Vimeo URL
-      if (videoUrl.includes('vimeo.com') && !videoUrl.includes('autoplay=')) {
-        videoUrl += (videoUrl.includes('?') ? '&' : '?') + 'autoplay=1';
-      }
-      iframe.src = videoUrl;
-    }
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-    iframe.src = '';
-    document.body.style.overflow = '';
-  }
-
-  openBtn.addEventListener('click', openModal);
-  closeBtn.addEventListener('click', closeModal);
-  backdrop.addEventListener('click', closeModal);
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-      closeModal();
-    }
-  });
-});
-</script>
-
 <div class="home-page-render">
      <!-- ========================================= -->
 
@@ -177,8 +130,10 @@ document.addEventListener('DOMContentLoaded', function() {
               {# Edit button in corner #}
               {% if data.home_section.link_edit %}
                 <div class="absolute -top-2 -right-2 z-50">
-                  <div class="bg-indigo-500 p-2 shadow-lg text-slate-900 underline px-3 py-1 rounded text-xs font-bold shadow-lg hover:bg-indigo-600 transition-colors">
-                  
+                  <div class="bg-indigo-500 p-2 shadow-lg text-slate-900 underline px-3 py-1 rounded text-xs font-bold shadow-lg hover:bg-indigo-600 transition-colors inline-flex items-center gap-1">
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                    </svg>
                     {{ data.home_section.link_edit }}
                   </div>
                 </div>
@@ -205,6 +160,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         </div>
       </section>
+
     {# ========================================= #}
     {# SECTION: VANTAGGI (DYNAMIC TABS FROM CMS) #}
     {# ========================================= #}
@@ -263,6 +219,60 @@ document.addEventListener('DOMContentLoaded', function() {
       </section>
     {% endif %}
 
+ <!-- ========================================= -->
+    <!-- SECTION: INTEGRAZIONI DYNAMIC BLOCK       -->
+    <!-- ========================================= -->
+    {% if data.integrazione %}
+      <section id="integrazioni-ob" class="py-16 lg:py-20 bg-gradient-to-br from-[#0d5568] to-[#0a3d4a]">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+          {% if data.integrazione.link_edit %}
+            <div class="text-right mb-4">
+              <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 text-slate-900 underline text-sm font-medium rounded-lg hover:bg-indigo-600 transition-colors shadow-lg">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+                {{ data.integrazione.link_edit }}
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="text-center">
+            {% if data.integrazione.sub_title and data.integrazione.sub_title|length > 0 %}
+              <p class="text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase text-cyan-300 mb-4">
+                {{ data.integrazione.sub_title[0]['value'] }}
+              </p>
+            {% endif %}
+
+            {% if data.integrazione.titolo and data.integrazione.titolo|length > 0 %}
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">
+                {{ data.integrazione.titolo[0]['value'] }}
+              </h2>
+            {% endif %}
+
+            {% if data.integrazione.body and data.integrazione.body|length > 0 %}
+              <div class="text-base sm:text-lg text-slate-200 mb-8 max-w-3xl mx-auto">
+                {{ data.integrazione.body[0]['value']|raw }}
+              </div>
+            {% endif %}
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+              <a href="https://api-docs.open-badge.eu/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-[#0d5568] font-semibold text-sm hover:bg-slate-100 transition-colors shadow-lg">
+                Documentazione API
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+              <a href="https://meetings.hubspot.com/dbrothers/openbadge" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500 text-white font-semibold text-sm hover:bg-cyan-600 transition-colors shadow-lg">
+                Prenota una call
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endif %}
     <!-- ========================================= -->
     <!-- SECTION: ULTIME NOTIZIE                   -->
     <!-- ========================================= -->
@@ -333,22 +343,59 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- ========================================= -->
     <section id="cta-account" class="py-20 lg:py-28 bg-white">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        {# Admin edit link #}
+        {% if data.cta_account and data.cta_account.link_edit %}
+          <div class="mb-4 flex justify-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500 text-slate-900 underline text-sm font-medium rounded-lg hover:bg-indigo-600 transition-colors shadow-lg">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+              </svg>
+              {{ data.cta_account.link_edit }}
+            </div>
+          </div>
+        {% endif %}
+
         <div class="space-y-6">
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
-            Inizia oggi a certificare le competenze
-          </h2>
-          <p class="text-lg sm:text-xl text-slate-700 max-w-2xl mx-auto">
-            Crea il tuo account gratuito e scopri come Open Badge può trasformare il modo in cui riconosci e condividi le competenze.
-          </p>
+          {# Dynamic Title from field_titolo or static fallback #}
+          {% if data.cta_account and data.cta_account.titolo and data.cta_account.titolo|length > 0 %}
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+              {{ data.cta_account.titolo[0]['value'] }}
+            </h2>
+          {% else %}
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 leading-tight">
+              Inizia oggi a certificare le competenze
+            </h2>
+          {% endif %}
+
+          {# Dynamic Subtitle from field_sotto_titolo or static fallback #}
+          {% if data.cta_account and data.cta_account.sub_title and data.cta_account.sub_title|length > 0 %}
+            <p class="text-lg sm:text-xl text-slate-700 max-w-2xl mx-auto">
+              {{ data.cta_account.sub_title[0]['value'] }}
+            </p>
+          {% else %}
+            <p class="text-lg sm:text-xl text-slate-700 max-w-2xl mx-auto">
+              Crea il tuo account gratuito e scopri come Open Badge può trasformare il modo in cui riconosci e condividi le competenze.
+            </p>
+          {% endif %}
+
+          {# Static Button #}
           <div class="pt-4">
             <a href="/register" class="inline-flex items-center justify-center px-10 py-4 rounded-full bg-blue-600 text-white text-base sm:text-l font-bold hover:bg-blue-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105">
               CREA UN ACCOUNT Gratuito
               <span aria-hidden="true" class="ml-2">→</span>
             </a>
           </div>
-          <p class="text-sm text-slate-600 pt-2">
-            Nessuna carta di credito richiesta • Attivazione immediata
-          </p>
+
+          {# Dynamic second description or static fallback #}
+          {% if data.cta_account and data.cta_account.second_description and data.cta_account.second_description|length > 0 %}
+            <div class="text-sm text-slate-600 pt-2">
+              {{ data.cta_account.second_description[0]['value']|raw }}
+            </div>
+          {% else %}
+            <p class="text-sm text-slate-600 pt-2">
+              Nessuna carta di credito richiesta • Attivazione immediata
+            </p>
+          {% endif %}
         </div>
       </div>
     </section>

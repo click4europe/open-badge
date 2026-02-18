@@ -1,0 +1,141 @@
+{# vantaggi-open-badge-render.html.twig #}
+
+{# Hero Section using reusable component #}
+{% set hero_block = drupal_entity('block_content', 37) %}
+{{ hero_block|render }}
+
+{# Benefits Grid Section #}
+<section class="py-16 lg:py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">
+        I vantaggi della certificazione digitale
+      </h2>
+      <p class="text-base sm:text-lg text-slate-600 max-w-3xl mx-auto">
+        Fornire e richiedere un Open Badge offre vantaggi unici, che cambiano il modo in cui le competenze vengono riconosciute e condivise online.
+      </p>
+    </div>
+
+    {# Static Benefits Grid - 6 cards with new design #}
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {# Card 1 #}
+      <div class="bg-slate-100 rounded-xl p-6 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <svg class="w-6 h-6 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            <span class="text-blue-700 font-medium">Per rendere maggiormente spendibili e verificabili le competenze acquisite</span>
+          </p>
+        </div>
+      </div>
+
+      {# Card 2 #}
+      <div class="bg-slate-100 rounded-xl p-6 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <svg class="w-6 h-6 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            <span class="text-blue-700 font-medium">Più facile da condividere:</span> gli Open Badge si possono pubblicare sui social network e nelle piattaforme online
+          </p>
+        </div>
+      </div>
+
+      {# Card 3 #}
+      <div class="bg-slate-100 rounded-xl p-6 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <svg class="w-6 h-6 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            <span class="text-blue-700 font-medium">Più facile da verificare:</span> tutte le informazioni sulle competenze acquisite sono integrate nel badge
+          </p>
+        </div>
+      </div>
+
+      {# Card 4 #}
+      <div class="bg-slate-100 rounded-xl p-6 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <svg class="w-6 h-6 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            <span class="text-blue-700 font-medium">Sicuri e protetti:</span> i certificati digitali sono crittografati e impossibili da falsificare
+          </p>
+        </div>
+      </div>
+
+      {# Card 5 #}
+      <div class="bg-slate-100 rounded-xl p-6 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <svg class="w-6 h-6 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            <span class="text-blue-700 font-medium">Tracciabili:</span> è possibile monitorare quando e dove un badge viene visualizzato e condiviso
+          </p>
+        </div>
+      </div>
+
+      {# Card 6 #}
+      <div class="bg-slate-100 rounded-xl p-6 hover:shadow-md transition-shadow duration-300">
+        <div class="flex items-start gap-4">
+          <div class="flex-shrink-0 mt-1">
+            <svg class="w-6 h-6 text-slate-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <p class="text-sm text-slate-700 leading-relaxed">
+            <span class="text-blue-700 font-medium">Motivanti:</span> gli Open Badge incentivano l'apprendimento continuo e il raggiungimento di nuovi obiettivi
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Information Section #}
+<section class="py-16 lg:py-20 bg-slate-50">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      {# Text Content #}
+      <div class="space-y-6">
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900">
+          Informazioni sugli Open Badge
+        </h2>
+        <div class="text-sm sm:text-base text-slate-700 leading-relaxed space-y-4">
+          <p>
+            <strong>Open Badge</strong> è uno standard aperto sviluppato per la creazione, gestione e condivisione di certificazioni digitali verificabili. Questi badge digitali contengono metadati che descrivono le competenze acquisite e le credenziali dell'emittente.
+          </p>
+          <p>
+            Nati dall'iniziativa della <strong>Mozilla Foundation</strong> nel 2011, gli Open Badge sono oggi riconosciuti a livello internazionale come strumento per documentare l'apprendimento formale, non formale e informale. Sono utilizzati da istituzioni educative, aziende e organizzazioni in tutto il mondo.
+          </p>
+          <p>
+            Gli Open Badge si basano su uno <strong>standard aperto</strong> che garantisce l'interoperabilità tra diverse piattaforme e sistemi. Questo significa che un badge rilasciato da una piattaforma può essere visualizzato e verificato su qualsiasi altra piattaforma che supporti lo standard.
+          </p>
+        </div>
+      </div>
+
+      {# Image #}
+      <div class="relative">
+        <div class="rounded-xl overflow-hidden shadow-lg">
+          <img src="/themes/custom/tailwind/images/open-badge-certificate.jpg" 
+               alt="Persone che mostrano certificati Open Badge" 
+               class="w-full h-auto object-cover"
+               onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%23e2e8f0%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2224%22 fill=%22%2394a3b8%22%3EOpen Badge Certificate%3C/text%3E%3C/svg%3E'" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -627,6 +627,42 @@ __webpack_require__.r(__webpack_exports__);
             faqItems[0].click();
           }
         }
+
+        // ========== VIDEO MODAL ==========
+        var modal = document.getElementById('video-modal');
+        var openBtn = document.getElementById('open-video-modal');
+        var closeBtn = document.getElementById('close-video-modal');
+        var backdrop = document.getElementById('video-modal-backdrop');
+        var iframe = document.getElementById('vimeo-player');
+        if (modal && openBtn && closeBtn && backdrop && iframe) {
+          var openModal = function openModal(e) {
+            e.preventDefault();
+            var videoUrl = openBtn.getAttribute('data-video-url');
+            if (videoUrl) {
+              // Add autoplay parameter if it's a Vimeo URL
+              var separator = videoUrl.includes('?') ? '&' : '?';
+              var finalUrl = videoUrl.includes('autoplay=') ? videoUrl : videoUrl + separator + 'autoplay=1';
+              iframe.src = finalUrl;
+            }
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+          };
+          var closeModal = function closeModal() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            iframe.src = '';
+            document.body.style.overflow = '';
+          };
+          openBtn.addEventListener('click', openModal);
+          closeBtn.addEventListener('click', closeModal);
+          backdrop.addEventListener('click', closeModal);
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+              closeModal();
+            }
+          });
+        }
       });
     }
   };
