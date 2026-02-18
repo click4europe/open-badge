@@ -145,7 +145,7 @@ img[data-src] {
 }
 
 .pricing-dropdown-content.show {
-  max-height: 500px;
+  max-height: 2000px;
   opacity: 1;
 }
 
