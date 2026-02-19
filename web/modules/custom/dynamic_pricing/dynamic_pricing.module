@@ -33,22 +33,103 @@ function dynamic_pricing_theme($existing, $type, $theme, $path) {
  */
 function dynamic_pricing_preprocess_paragraph__pricing_card(&$variables) {
   $paragraph = $variables['paragraph'];
+  $features = [];
+  $has_features = FALSE;
+  $feature_set_edit_url = NULL;
   
-  // Make features accessible to all users
-  if ($paragraph->hasField('field_features_list') && !$paragraph->get('field_features_list')->isEmpty()) {
-    $variables['has_features'] = TRUE;
-    $features = [];
-    foreach ($paragraph->get('field_features_list')->referencedEntities() as $feature_paragraph) {
-      $features[] = [
-        'enabled' => $feature_paragraph->get('field_feature_enabled')->value,
-        'label' => $feature_paragraph->get('field_feature_label')->value,
-      ];
+  // Priority 1: Use new nested structure: field_feature_set -> Feature Set -> Pricing Features
+  if ($paragraph->hasField('field_feature_set') && !$paragraph->get('field_feature_set')->isEmpty()) {
+    // Get the Feature Set paragraph(s) - handles both direct and library paragraphs
+    foreach ($paragraph->get('field_feature_set') as $index => $item) {
+      $feature_set = $item->entity;
+      
+      // Skip if entity is null
+      if (!$feature_set) {
+        continue;
+      }
+      
+      // Handle "from_library" paragraph type - it references the actual reusable paragraph
+      if ($feature_set->bundle() === 'from_library' && $feature_set->hasField('field_reusable_paragraph')) {
+        if (!$feature_set->get('field_reusable_paragraph')->isEmpty()) {
+          $library_item = $feature_set->get('field_reusable_paragraph')->entity;
+          
+          // Skip if the library item is null
+          if (!$library_item) {
+            continue;
+          }
+          
+          // Create edit URL for the library item
+          $current_user = \Drupal::currentUser();
+          if ($current_user->hasPermission('administer paragraphs library') || $current_user->hasPermission('edit paragraph library item')) {
+            $feature_set_edit_url = \Drupal\Core\Url::fromRoute('entity.paragraphs_library_item.edit_form', [
+              'paragraphs_library_item' => $library_item->id(),
+            ]);
+          }
+          
+          // The library item (paragraphs_library_item) has field_paragraphs that contains the actual paragraph
+          if ($library_item->bundle() === 'paragraphs_library_item' && $library_item->hasField('paragraphs')) {
+            if (!$library_item->get('paragraphs')->isEmpty()) {
+              $feature_set = $library_item->get('paragraphs')->entity;
+              
+              // Skip if the actual paragraph is null
+              if (!$feature_set) {
+                continue;
+              }
+            }
+          } else {
+            // If it's not a library item, use it directly
+            $feature_set = $library_item;
+          }
+        }
+      }
+      
+      // Get the set name if available
+      $set_name = '';
+      if ($feature_set->hasField('field_set_name') && !$feature_set->get('field_set_name')->isEmpty()) {
+        $set_name = $feature_set->get('field_set_name')->value;
+      }
+      
+      // Check if Feature Set has field_features
+      if ($feature_set->hasField('field_features') && !$feature_set->get('field_features')->isEmpty()) {
+        foreach ($feature_set->get('field_features') as $f_index => $feature_item) {
+          $feature_paragraph = $feature_item->entity;
+          
+          // Skip if entity is null
+          if (!$feature_paragraph) {
+            continue;
+          }
+          
+          if ($feature_paragraph->hasField('field_feature_enabled') && $feature_paragraph->hasField('field_feature_label')) {
+            $enabled = $feature_paragraph->get('field_feature_enabled')->value;
+            $label = $feature_paragraph->get('field_feature_label')->value;
+            
+            $features[] = [
+              'enabled' => $enabled,
+              'label' => $label,
+              'set_name' => $set_name,
+            ];
+            $has_features = TRUE;
+          }
+        }
+      }
     }
-    $variables['features'] = $features;
-  } else {
-    $variables['has_features'] = FALSE;
-    $variables['features'] = [];
   }
+  // Priority 2: Fallback to old structure ONLY if no features found from feature_set
+  elseif ($paragraph->hasField('field_features_list') && !$paragraph->get('field_features_list')->isEmpty()) {
+    foreach ($paragraph->get('field_features_list')->referencedEntities() as $feature_paragraph) {
+      if ($feature_paragraph->hasField('field_feature_enabled') && $feature_paragraph->hasField('field_feature_label')) {
+        $features[] = [
+          'enabled' => $feature_paragraph->get('field_feature_enabled')->value,
+          'label' => $feature_paragraph->get('field_feature_label')->value,
+        ];
+        $has_features = TRUE;
+      }
+    }
+  }
+  
+  $variables['features'] = $features;
+  $variables['has_features'] = $has_features;
+  $variables['feature_set_edit_url'] = $feature_set_edit_url;
 }
 
 /**
