@@ -596,15 +596,13 @@ __webpack_require__.r(__webpack_exports__);
         var faqItems = document.querySelectorAll('.faq-item');
         var faqImage = document.getElementById('faq-image');
         if (faqItems.length > 0 && faqImage) {
-          var imageMap = {
-            'mybadges': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-1.png',
-            'learning': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-2.webp',
-            'earners': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-3.webp'
-          };
           faqItems.forEach(function (item) {
             item.addEventListener('click', function () {
-              var faqType = this.getAttribute('data-faq');
               var content = this.querySelector('.faq-content');
+              var faqImageUrl = this.getAttribute('data-faq-image');
+              var faqImageAlt = this.getAttribute('data-faq-alt');
+
+              // Close all other FAQ items
               faqItems.forEach(function (otherItem) {
                 if (otherItem !== item) {
                   var otherContent = otherItem.querySelector('.faq-content');
@@ -613,11 +611,18 @@ __webpack_require__.r(__webpack_exports__);
                   if (otherH3) otherH3.classList.remove('text-blue-600');
                 }
               });
+
+              // Toggle current FAQ item
               if (content) content.classList.toggle('hidden');
               var h3 = this.querySelector('h3');
               if (h3) h3.classList.toggle('text-blue-600');
-              if (content && !content.classList.contains('hidden') && imageMap[faqType]) {
-                faqImage.src = imageMap[faqType];
+
+              // Update image if FAQ is open and has an image URL
+              if (content && !content.classList.contains('hidden') && faqImageUrl) {
+                faqImage.src = faqImageUrl;
+                if (faqImageAlt) {
+                  faqImage.alt = faqImageAlt;
+                }
               }
             });
           });

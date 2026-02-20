@@ -639,17 +639,13 @@
         const faqImage = document.getElementById('faq-image');
         
         if (faqItems.length > 0 && faqImage) {
-          const imageMap = {
-            'mybadges': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-1.png',
-            'learning': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-2.webp',
-            'earners': '/themes/custom/tailwind/images/public/IMG_openbadge/faq-3.webp'
-          };
-          
           faqItems.forEach(item => {
             item.addEventListener('click', function() {
-              const faqType = this.getAttribute('data-faq');
               const content = this.querySelector('.faq-content');
+              const faqImageUrl = this.getAttribute('data-faq-image');
+              const faqImageAlt = this.getAttribute('data-faq-alt');
               
+              // Close all other FAQ items
               faqItems.forEach(otherItem => {
                 if (otherItem !== item) {
                   const otherContent = otherItem.querySelector('.faq-content');
@@ -659,12 +655,17 @@
                 }
               });
               
+              // Toggle current FAQ item
               if (content) content.classList.toggle('hidden');
               const h3 = this.querySelector('h3');
               if (h3) h3.classList.toggle('text-blue-600');
               
-              if (content && !content.classList.contains('hidden') && imageMap[faqType]) {
-                faqImage.src = imageMap[faqType];
+              // Update image if FAQ is open and has an image URL
+              if (content && !content.classList.contains('hidden') && faqImageUrl) {
+                faqImage.src = faqImageUrl;
+                if (faqImageAlt) {
+                  faqImage.alt = faqImageAlt;
+                }
               }
             });
           });
