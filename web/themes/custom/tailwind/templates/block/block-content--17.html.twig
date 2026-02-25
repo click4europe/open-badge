@@ -8,7 +8,7 @@
 %}
 <section {{ attributes.addClass(classes) }}>
    <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
-    <div class="max-w-4xl">
+    <div class="text-center">
      {% if elements['#block_content'] and user.hasPermission('administer blocks') %}
     <div>
       <a href="/admin/content/block/{{ elements['#block_content'].id.value }}?destination=/prezzi-e-abbonamenti" class="inline-flex items-center gap-1 bg-white/95 hover:bg-white text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-full shadow-lg border border-slate-200 text-xs font-medium transition-all duration-200">

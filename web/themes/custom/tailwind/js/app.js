@@ -781,4 +781,35 @@
     }
   };
 
+  // FAQ Page - Accordion functionality
+  Drupal.behaviors.faqPage = {
+    attach: function (context, settings) {
+      once('faq-page', '.faq-item', context).forEach(function (item) {
+        const questionBtn = item.querySelector('.faq-question');
+        const answerDiv = item.querySelector('.faq-answer');
+        const icon = item.querySelector('.faq-icon');
+
+        if (questionBtn && answerDiv) {
+          questionBtn.addEventListener('click', function() {
+            const isExpanded = questionBtn.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+              // Close
+              answerDiv.classList.remove('block');
+              answerDiv.classList.add('hidden');
+              questionBtn.setAttribute('aria-expanded', 'false');
+              icon.style.transform = '';
+            } else {
+              // Open
+              answerDiv.classList.remove('hidden');
+              answerDiv.classList.add('block');
+              questionBtn.setAttribute('aria-expanded', 'true');
+              icon.style.transform = 'rotate(180deg)';
+            }
+          });
+        }
+      });
+    }
+  };
+
 })(once, Drupal, drupalSettings);

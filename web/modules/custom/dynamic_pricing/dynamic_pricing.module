@@ -6,6 +6,32 @@
  */
 
 /**
+ * Implements hook_ENTITY_TYPE_presave() for block_content.
+ *
+ * Prevents pricing section blocks from creating new revisions on save.
+ */
+function dynamic_pricing_block_content_presave(\Drupal\block_content\BlockContentInterface $block) {
+  if ($block->bundle() !== 'pricing_section') {
+    return;
+  }
+  $block->setNewRevision(FALSE);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for paragraph.
+ *
+ * Prevents pricing_card and from_library paragraphs from creating new
+ * revisions, avoiding orphaned paragraph references.
+ */
+function dynamic_pricing_paragraph_presave(\Drupal\paragraphs\ParagraphInterface $paragraph) {
+  if (!in_array($paragraph->bundle(), ['pricing_card', 'feature_set', 'from_library'])) {
+    return;
+  }
+  $paragraph->setNewRevision(FALSE);
+}
+
+
+/**
  * Implements hook_theme().
  */
 function dynamic_pricing_theme($existing, $type, $theme, $path) {

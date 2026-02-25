@@ -231,5 +231,14 @@ function basic_page_theme() {
       'template' => 'vantaggi-open-badge-render',
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
+
+    // FAQ page render.
+    'faq_page_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'faq-page-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
   ];
 }

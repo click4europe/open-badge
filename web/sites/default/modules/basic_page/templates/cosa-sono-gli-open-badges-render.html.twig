@@ -23,10 +23,7 @@
             <img src="{{ data.blocco_tecnologia.immagine_url }}" 
                  alt="{{ data.blocco_tecnologia.immagine_alt|default('La tecnologia Open Badge') }}" 
                  class="w-full h-auto object-cover">
-          {% else %}
-            <img src="/themes/custom/tailwind/images/public/img_2.png" 
-                 alt="La tecnologia Open Badge" 
-                 class="w-full h-auto object-cover">
+        
           {% endif %}
         </div>
       </div>
@@ -35,8 +32,6 @@
       <div class="order-1 lg:order-2">
         {% if data.blocco_tecnologia and data.blocco_tecnologia.titolo and data.blocco_tecnologia.titolo|length > 0 %}
           <h2 class="font-heading text-3xl lg:text-4xl text-slate-900 mb-6">{{ data.blocco_tecnologia.titolo[0]['value'] }}</h2>
-        {% else %}
-          <h2 class="font-heading text-3xl lg:text-4xl text-slate-900 mb-6">La tecnologia Open Badge</h2>
         {% endif %}
 
         {% if data.blocco_tecnologia and data.blocco_tecnologia.sub_title and data.blocco_tecnologia.sub_title|length > 0 %}
@@ -48,18 +43,6 @@
             <div class="prose prose-base max-w-none">
               {{ data.blocco_tecnologia.body[0]['value']|raw }}
             </div>
-          {% else %}
-            <p>
-              La tecnologia OpenBadge è stata introdotta per la prima volta nel 2011 dalla <strong>Mozilla Foundation</strong> come uno standard aperto per la creazione, il rilascio e la condivisione di certificati digitali, detti badge.
-            </p>
-            
-            <p>
-              Successivamente, la gestione dello standard è stata affidata a <strong>1EDTECH Consortium</strong> (precedentemente conosciuta come IMS Global Learning Consortium), un'organizzazione internazionale no-profit (con sede negli USA) che sviluppa e mantiene standard tecnologici per l'educazione e la formazione digitale.
-            </p>
-
-            <p>
-              Un Open Badge è un'immagine digitale contenente metadati che certificano competenze, traguardi o partecipazioni. Questi metadati includono informazioni come l'ente emittente, la descrizione del percorso formativo, le competenze acquisite, la data di emissione e un link verificabile che permette a chiunque di convalidare l'autenticità del badge.
-            </p>
           {% endif %}
 
           {% if data.blocco_tecnologia and data.blocco_tecnologia.second_description and data.blocco_tecnologia.second_description|length > 0 %}
@@ -98,8 +81,7 @@
       <div class="order-1 lg:order-1 space-y-8">
         {% if data.blocco_home_obv and data.blocco_home_obv.titolo and data.blocco_home_obv.titolo|length > 0 %}
           <h2 class="font-heading text-3xl lg:text-4xl text-slate-900">{{ data.blocco_home_obv.titolo[0]['value'] }}</h2>
-        {% else %}
-          <h2 class="font-heading text-3xl lg:text-4xl text-slate-900">Cosa puoi fare con Open-badge.eu</h2>
+
         {% endif %}
 
         {% if data.blocco_home_obv and data.blocco_home_obv.sub_title and data.blocco_home_obv.sub_title|length > 0 %}
@@ -110,22 +92,7 @@
           <div class="prose prose-base max-w-none text-slate-700 leading-relaxed">
             {{ data.blocco_home_obv.body[0]['value']|raw }}
           </div>
-        {% else %}
-          <div class="space-y-6">
-            <div>
-              <h3 class="font-title-medium text-slate-900 mb-3">Per Aziende e Pubbliche Amministrazioni</h3>
-              <p class="font-body text-slate-700 leading-relaxed">
-                Con open-badge.eu puoi creare e gestire badge digitali per certificare le competenze e le partecipazioni a percorsi di apprendimento dei tuoi dipendenti o utenti. Automatizza l'assegnazione dei certificati al completamento di corsi, congressi o attività formative, e utilizza l'integrazione API per collegare i tuoi sistemi esistenti. Personalizza i percorsi di apprendimento e monitora i progressi con una gestione centralizzata e semplice, migliorando la valorizzazione e la condivisione delle competenze.
-              </p>
-            </div>
 
-            <div>
-              <h3 class="font-title-medium text-slate-900 mb-3">Per l'Utente Finale</h3>
-              <p class="font-body text-slate-700 leading-relaxed">
-                Con open-badge.eu puoi collezionare e gestire i tuoi badge digitali in modo semplice. Ogni certificato è verificabile e condivisibile su social network, come LinkedIn, o nelle candidature di lavoro. Traccia i tuoi progressi formativi, mostra le tue competenze e condividi i risultati dei tuoi percorsi di apprendimento, tutto dalla tua dashboard personale.
-              </p>
-            </div>
-          </div>
         {% endif %}
 
         {% if data.blocco_home_obv and data.blocco_home_obv.second_description and data.blocco_home_obv.second_description|length > 0 %}
@@ -142,10 +109,7 @@
             <img src="{{ data.blocco_home_obv.immagine_url }}" 
                  alt="{{ data.blocco_home_obv.immagine_alt|default('Cosa puoi fare con Open-badge.eu') }}" 
                  class="w-full h-auto object-cover">
-          {% else %}
-            <img src="/themes/custom/tailwind/images/public/open-badge.eu-img2.png" 
-                 alt="Cosa puoi fare con Open-badge.eu" 
-                 class="w-full h-auto object-cover">
+         
           {% endif %}
         </div>
       </div>
@@ -173,10 +137,7 @@
             <img src="{{ data.blocco_home_funziona.immagine_url }}" 
                  alt="{{ data.blocco_home_funziona.immagine_alt|default('Come funziona') }}" 
                  class="w-full h-auto rounded-2xl shadow-lg" />
-          {% else %}
-            <img src="/themes/custom/tailwind/images/public/open-badge.eu-img3.png" 
-                 alt="Come funziona" 
-                 class="w-full h-auto rounded-2xl shadow-lg" />
+         
           {% endif %}
         </div>
       </div>
@@ -185,8 +146,7 @@
       <div class="space-y-6">
         {% if data.blocco_home_funziona and data.blocco_home_funziona.titolo and data.blocco_home_funziona.titolo|length > 0 %}
           <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">{{ data.blocco_home_funziona.titolo[0]['value'] }}</h2>
-        {% else %}
-          <h2 class="text-3xl sm:text-4xl font-bold text-slate-900">Come funziona</h2>
+       
         {% endif %}
 
         {% if data.blocco_home_funziona and data.blocco_home_funziona.sub_title and data.blocco_home_funziona.sub_title|length > 0 %}
@@ -196,36 +156,6 @@
         {% if data.blocco_home_funziona and data.blocco_home_funziona.body and data.blocco_home_funziona.body|length > 0 %}
           <div class="prose prose-base max-w-none text-slate-700 leading-relaxed">
             {{ data.blocco_home_funziona.body[0]['value']|raw }}
-          </div>
-        {% else %}
-          <div class="space-y-4">
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-1">Creazione:</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                L'ente o l'organizzazione crea un badge digitale inserendo i metadati rilevanti (competenze, corso, ente, data).
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-1">Assegnazione:</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Il badge viene assegnato agli utenti che hanno completato un corso, una formazione o un evento.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-1">Condivisione:</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Gli utenti possono salvare i badge in un portafoglio digitale e condividerli su social network o piattaforme professionali come LinkedIn.
-              </p>
-            </div>
-
-            <div>
-              <h3 class="text-base font-bold text-slate-900 mb-1">Verifica:</h3>
-              <p class="text-sm text-slate-600 leading-relaxed">
-                Chiunque può cliccare sul badge per verificarne la validità, visualizzare le informazioni e accertarsi dell'autenticità, grazie al collegamento con lo standard 1EDTECH.
-              </p>
-            </div>
           </div>
         {% endif %}
 
@@ -269,10 +199,7 @@
           <h2 class="font-title-large text-3xl lg:text-4xl xl:text-5xl text-slate-900 mb-8 lg:mb-12 leading-tight">
             {{ data.faq_section.section_title }}
           </h2>
-        {% else %}
-          <h2 class="font-title-large text-3xl lg:text-4xl xl:text-5xl text-slate-900 mb-8 lg:mb-12 leading-tight">
-            La piattaforma open-badge.eu per gli studenti ed i formatori
-          </h2>
+     
         {% endif %}
         
         <div class="space-y-2">
@@ -295,19 +222,7 @@
                 </div>
               </div>
             {% endfor %}
-          {% else %}
-            {# Fallback to static content if no dynamic FAQs #}
-            <div class="faq-item cursor-pointer py-6 lg:py-7 border-b border-slate-300 transition-all duration-200 hover:bg-blue-50/50 rounded-lg px-4" data-faq="mybadges">
-              <div class="flex items-center gap-6">
-                <span class="font-title-small text-2xl text-slate-400 flex-shrink-0 w-8 text-center">1</span>
-                <div class="flex-1 min-w-0">
-                  <h3 class="font-title text-lg lg:text-xl text-slate-900 hover:text-[#5299D8] transition-colors mb-3 font-semibold">My Badges</h3>
-                  <div class="faq-content hidden font-body text-base text-slate-600 leading-relaxed space-y-3 pt-1">
-                    In questa sezione l'utente finale può visualizzare, gestire e condividere tutti i tuoi badge digitali.
-                  </div>
-                </div>
-              </div>
-            </div>
+
           {% endif %}
         </div>
       </div>
@@ -320,9 +235,7 @@
                  src="{{ data.faq_section.faq_items[0].image_url }}" 
                  alt="{{ data.faq_section.faq_items[0].image_alt }}" 
                  class="w-full h-auto object-cover transition-opacity duration-300">
-          {% else %}
-            <img id="faq-image" src="/themes/custom/tailwind/images/public/IMG_openbadge/faq-1.png" alt="Dashboard" class="w-full h-auto object-cover transition-opacity duration-300">
-          {% endif %}
+            {% endif %}
         </div>
       </div>
     </div>
