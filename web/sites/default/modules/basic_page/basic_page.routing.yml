@@ -37,3 +37,26 @@ basic_page.import_notizie_template:
     _controller: '\Drupal\basic_page\Controller\ImportNotizieController::downloadTemplate'
   requirements:
     _permission: 'administer nodes'
+
+basic_page.company_logos_manager:
+  path: '/admin/content/company-logos'
+  defaults:
+    _controller: '\Drupal\basic_page\Controller\CompanyLogosController::managePage'
+    _title: 'Manage Company Logos'
+  requirements:
+    _permission: 'administer content'
+
+basic_page.company_logos_get:
+  path: '/admin/content/company-logos/get'
+  defaults:
+    _controller: '\Drupal\basic_page\Controller\CompanyLogosController::getCompanies'
+  requirements:
+    _permission: 'administer content'
+
+basic_page.company_logos_save:
+  path: '/admin/content/company-logos/save'
+  defaults:
+    _controller: '\Drupal\basic_page\Controller\CompanyLogosController::saveCompany'
+  requirements:
+    _permission: 'administer content'
+  methods: [POST]

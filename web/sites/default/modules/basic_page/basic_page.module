@@ -240,5 +240,49 @@ function basic_page_theme() {
       'template' => 'faq-page-render',
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
+    'company_logos_manager' => [
+      'variables' => [
+        'section_title' => NULL,
+        'logos_per_page' => NULL,
+        'companies' => NULL,
+      ],
+      'template' => 'company-logos-manager',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
   ];
 }
+
+/**
+ * Implements hook_preprocess_HOOK() for prezzi_e_abbonamenti_render.
+ */
+function basic_page_preprocess_prezzi_e_abbonamenti_render(&$variables) {
+  // Load company logos from JSON file
+  $company_logos_data = [];
+  
+  $json_file_path = \Drupal::service('extension.list.module')->getPath('basic_page') . '/src/Data/company-logos.json';
+  
+  if (file_exists($json_file_path)) {
+    $json_content = file_get_contents($json_file_path);
+    $data = json_decode($json_content, true);
+    
+    if ($data && isset($data['companies'])) {
+      $logos = $data['companies'];
+      $logos_per_page = $data['logos_per_page'] ?? 25;
+      $section_title = $data['section_title'] ?? 'Unisciti alle organizzazioni che utilizzano la certificazione digitale Open Badges.';
+      
+      // Split logos into pages
+      $pages = array_chunk($logos, $logos_per_page);
+      
+      $company_logos_data = [
+        'section_title' => $section_title,
+        'logos_per_page' => $logos_per_page,
+        'pages' => $pages,
+        'total_pages' => count($pages),
+        'edit_url' => '/admin/content/company-logos', // Table-based manager
+      ];
+    }
+  }
+  
+  $variables['company_logos'] = $company_logos_data;
+}
+

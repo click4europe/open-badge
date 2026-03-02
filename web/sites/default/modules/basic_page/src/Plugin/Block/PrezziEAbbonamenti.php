@@ -1,7 +1,9 @@
 <?php
 
 namespace Drupal\basic_page\Plugin\Block;
+
 use Drupal\Core\Block\BlockBase;
+use Drupal\basic_page\Traits\BloccoHomeTrait;
 
 /**
  * Provides a 'PrezziEAbbonamentiRender' block.
@@ -13,12 +15,18 @@ use Drupal\Core\Block\BlockBase;
  */
 class PrezziEAbbonamenti extends BlockBase
 {
+    use BloccoHomeTrait;
+
     /**
      * {@inheritdoc}
      */
     public function build()
     {
         $data = [];
+        $account = \Drupal::currentUser();
+
+        // Fetch the pricing section block
+        $data['pricing_section'] = $this->fetchBloccoHome('prezzi-e-abbonamenti', $account);
         
         $build = [];
         $build['#theme'] = 'prezzi_e_abbonamenti_render';
