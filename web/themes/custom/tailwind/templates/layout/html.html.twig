@@ -42,8 +42,10 @@
   </head>
   <body {{ attributes.addClass(body_classes) }}>
     {{ page_top }}
-    {{ page }}
-    {{ page_bottom }}
+    <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
+      {{ page }}
+      {{ page_bottom }}
+    </div>
 
     <js-bottom-placeholder token="{{ placeholder_token }}">
   </body>
