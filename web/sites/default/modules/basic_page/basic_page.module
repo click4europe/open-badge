@@ -240,6 +240,24 @@ function basic_page_theme() {
       'template' => 'faq-page-render',
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
+
+    // Privacy page render.
+    'privacy_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'privacy-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
+    // Terms page render.
+    'terms_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'terms-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
     'company_logos_manager' => [
       'variables' => [
         'section_title' => NULL,
