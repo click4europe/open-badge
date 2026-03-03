@@ -118,6 +118,16 @@ trait BloccoHomeTrait {
       $rend['second_description'] = $block->get('field_second_description')->getValue();
     }
 
+    // Add first_link field if it exists
+    if ($block->hasField('field_first_link') && !$block->get('field_first_link')->isEmpty()) {
+      $rend['first_link'] = $block->get('field_first_link')->getValue();
+    }
+
+    // Add second_link field if it exists
+    if ($block->hasField('field_second_link') && !$block->get('field_second_link')->isEmpty()) {
+      $rend['second_link'] = $block->get('field_second_link')->getValue();
+    }
+
     // Add edit link for admin users
     if ($account && $account->id() == 1) {
       $current_path = \Drupal::service('path.current')->getPath();

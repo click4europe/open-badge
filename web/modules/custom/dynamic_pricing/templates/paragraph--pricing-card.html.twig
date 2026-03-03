@@ -50,12 +50,15 @@
       {% endif %}
     </div>
     
-    {# Badge Count #}
-    {% set badge_count = content.field_badge_count.0|render|striptags|trim %}
-    {% if badge_count and badge_count != '0' %}
-      <p class="text-slate-600 text-sm mb-4 text-center">{{ badge_count }} badge inclusi</p>
+    {# Badge Count or Custom Description #}
+    {% set abbonamenti_description = content.field_abbonamenti_description.0|render|striptags|trim %}
+    {% if abbonamenti_description %}
+      <p class="text-slate-600 text-sm mb-4 text-center">{{ abbonamenti_description }}</p>
     {% else %}
-      <p class="text-slate-600 text-sm mb-4 text-center">Un piano calibrato sulle esigenze di pubbliche amministrazioni e grande azienda</p>
+      {% set badge_count = content.field_badge_count.0|render|striptags|trim %}
+      {% if badge_count and badge_count != '0' %}
+        <p class="text-slate-600 text-sm mb-4 text-center">{{ badge_count }} badge inclusi</p>
+      {% endif %}
     {% endif %}
 
     {# Features List #}
