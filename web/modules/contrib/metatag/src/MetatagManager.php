@@ -4,6 +4,7 @@ namespace Drupal\metatag;
 
 use Drupal\Component\Render\PlainTextOutput;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Database\Database;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Language\LanguageInterface;
@@ -22,7 +23,8 @@ use Symfony\Component\HttpFoundation\RequestStack;
  *
  * @package Drupal\metatag
  */
-class MetatagManager implements MetatagManagerInterface {
+class MetatagManager implements MetatagManagerInterface
+{
 
   use StringTranslationTrait;
   use MetatagSeparator;
@@ -158,7 +160,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   The protected defaults.
    */
-  public static function protectedDefaults(): array {
+  public static function protectedDefaults(): array
+  {
     return [
       'global',
       '403',
@@ -173,7 +176,8 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function tagsFromEntity(ContentEntityInterface $entity): array {
+  public function tagsFromEntity(ContentEntityInterface $entity): array
+  {
     $tags = [];
 
     $fields = $this->getFields($entity);
@@ -190,14 +194,16 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function tagsFromEntityWithDefaults(ContentEntityInterface $entity): array {
+  public function tagsFromEntityWithDefaults(ContentEntityInterface $entity): array
+  {
     return $this->tagsFromEntity($entity) + $this->defaultTagsFromEntity($entity);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function defaultTagsFromEntity(ContentEntityInterface $entity): array {
+  public function defaultTagsFromEntity(ContentEntityInterface $entity): array
+  {
     /** @var \Drupal\metatag\Entity\MetatagDefaults $metatags */
     $metatags = $this->metatagDefaults->load('global');
     if (!$metatags || !$metatags->status()) {
@@ -224,7 +230,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   Group definitions.
    */
-  protected function groupDefinitions(): array {
+  protected function groupDefinitions(): array
+  {
     return $this->groupPluginManager->getDefinitions();
   }
 
@@ -234,14 +241,16 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   Tag definitions
    */
-  protected function tagDefinitions(): array {
+  protected function tagDefinitions(): array
+  {
     return $this->tagPluginManager->getDefinitions();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function sortedGroups(): array {
+  public function sortedGroups(): array
+  {
     $metatag_groups = $this->groupDefinitions();
 
     // Pull the data from the definitions into a new array.
@@ -264,7 +273,8 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function sortedTags(): array {
+  public function sortedTags(): array
+  {
     $metatag_tags = $this->tagDefinitions();
 
     // Pull the data from the definitions into a new array.
@@ -305,7 +315,8 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function sortedGroupsWithTags(): array {
+  public function sortedGroupsWithTags(): array
+  {
     $groups = $this->sortedGroups();
     $tags = $this->sortedTags();
 
@@ -332,7 +343,8 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function form(array $values, array $element, array $token_types = [], ?array $included_groups = NULL, ?array $included_tags = NULL, $verbose_help = FALSE): array {
+  public function form(array $values, array $element, array $token_types = [], ?array $included_groups = NULL, ?array $included_tags = NULL, $verbose_help = FALSE): array
+  {
     // Add the outer fieldset.
     $element += [
       '#type' => 'details',
@@ -392,7 +404,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   The fields from the entity which are Metatag fields.
    */
-  protected function getFields(ContentEntityInterface $entity): array {
+  protected function getFields(ContentEntityInterface $entity): array
+  {
     $field_list = [];
 
     if ($entity instanceof ContentEntityInterface) {
@@ -428,7 +441,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   Array of field tags.
    */
-  protected function getFieldTags(ContentEntityInterface $entity, $field_name): array {
+  protected function getFieldTags(ContentEntityInterface $entity, $field_name): array
+  {
     $tags = [];
     foreach ($entity->{$field_name} as $item) {
       // Get serialized value and break it into an array of tags with values.
@@ -439,13 +453,11 @@ class MetatagManager implements MetatagManagerInterface {
           if (!empty($new_tags)) {
             if (is_array($new_tags)) {
               $tags += $new_tags;
-            }
-            else {
+            } else {
               $this->logger->error("This was expected to be an array but it is not: \n%value", ['%value' => print_r($new_tags, TRUE)]);
             }
           }
-        }
-        else {
+        } else {
           $this->logger->error("This could not be unserialized: \n%value", ['%value' => print_r($serialized_value, TRUE)]);
         }
       }
@@ -463,7 +475,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   The default meta tags appropriate for this entity.
    */
-  public function getDefaultMetatags(?ContentEntityInterface $entity = NULL): array {
+  public function getDefaultMetatags(?ContentEntityInterface $entity = NULL): array
+  {
     // Get general global metatags.
     $metatags = $this->getGlobalMetatags();
     // If that is empty something went wrong.
@@ -504,7 +517,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return \Drupal\metatag\Entity\MetatagDefaults|null
    *   The global meta tags or NULL.
    */
-  public function getGlobalMetatags(): MetatagDefaults|NULL {
+  public function getGlobalMetatags(): MetatagDefaults|NULL
+  {
     $metatags = $this->metatagDefaults->load('global');
     return (!empty($metatags) && $metatags->status()) ? $metatags : NULL;
   }
@@ -515,17 +529,33 @@ class MetatagManager implements MetatagManagerInterface {
    * @return \Drupal\metatag\Entity\MetatagDefaults|null
    *   The defaults for this page, if it's a special page.
    */
-  public function getSpecialMetatags(): MetatagDefaults|NULL {
+  public function getSpecialMetatags(): MetatagDefaults|NULL
+  {
     $metatags = NULL;
 
     if ($this->pathMatcher->isFrontPage()) {
       $metatags = $this->metatagDefaults->load('front');
-    }
-    elseif ($this->routeMatch->getRouteName() == 'system.403') {
+    } elseif ($this->routeMatch->getRouteName() == 'system.403') {
       $metatags = $this->metatagDefaults->load('403');
-    }
-    elseif ($this->routeMatch->getRouteName() == 'system.404') {
+    } elseif ($this->routeMatch->getRouteName() == 'system.404') {
       $metatags = $this->metatagDefaults->load('404');
+    } elseif ($this->routeMatch->getRouteName() == 'profile_reg_path.profile_registration_page') {
+      $metatags = $this->metatagDefaults->load('profile_reg_path.profile_registration_page9fe9399df3a9f5e6589deffa9505686b');
+    } else if (\Drupal::service('path.matcher')->matchPath($this->routeMatch->getRouteName(), 'page_manager.page_view*')) {
+      $route_name = $this->routeMatch->getRouteName();
+      $database = Database::getConnection();
+      $query = $database->query("SELECT path FROM {router} r WHERE name = :name", [':name' => $route_name]);
+      $router_path = $query->fetchField();
+      $PathValidator = \Drupal::service('path.validator');
+      $url_object = $PathValidator->getUrlIfValid($router_path);
+      if ($url_object instanceof \Drupal\Core\Url) {
+        $params = $url_object->getRouteParameters();
+        if (count($params) > 0) {
+          $custom_routes = \Drupal::service('metatag_routes.helper');
+          $route_name = $custom_routes->createMetatagRouteId($route_name, $params);
+        }
+        $metatags = $this->metatagDefaults->load($route_name);
+      }
     }
 
     if ($metatags && !$metatags->status()) {
@@ -545,7 +575,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   The appropriate default meta tags.
    */
-  public function getEntityDefaultMetatags(ContentEntityInterface $entity): array {
+  public function getEntityDefaultMetatags(ContentEntityInterface $entity): array
+  {
     /** @var \Drupal\metatag\Entity\MetatagDefaults $entity_metatags */
     $entity_metatags = $this->metatagDefaults->load($entity->getEntityTypeId());
     $metatags = [];
@@ -568,7 +599,8 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateElements(array $tags, $entity = NULL): array {
+  public function generateElements(array $tags, $entity = NULL): array
+  {
     $elements = [];
     $tags = $this->generateRawElements($tags, $entity);
 
@@ -587,7 +619,8 @@ class MetatagManager implements MetatagManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateRawElements(array $tags, $entity = NULL, ?BubbleableMetadata $cache = NULL): array {
+  public function generateRawElements(array $tags, $entity = NULL, ?BubbleableMetadata $cache = NULL): array
+  {
     // Ignore the update.php path.
     $request = $this->requestStack->getCurrentRequest();
     if ($request->getBaseUrl() == '/update.php') {
@@ -605,8 +638,7 @@ class MetatagManager implements MetatagManagerInterface {
         // Views tokens require the ViewExecutable, not the config entity.
         // @todo Can we move this into metatag_views somehow?
         $token_replacements = ['view' => $entity->getExecutable()];
-      }
-      elseif ($entity instanceof ContentEntityInterface) {
+      } elseif ($entity instanceof ContentEntityInterface) {
         $token_replacements = [$entity->getEntityTypeId() => $entity];
       }
     }
@@ -670,7 +702,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   Array of MetatagTag plugin instances.
    */
-  public function generateTokenValues(array $tags, $entity = NULL): array {
+  public function generateTokenValues(array $tags, $entity = NULL): array
+  {
     // Ignore the update.php path.
     $request = $this->requestStack->getCurrentRequest();
     if ($request->getBaseUrl() == '/update.php') {
@@ -704,8 +737,7 @@ class MetatagManager implements MetatagManagerInterface {
               // Views tokens require the ViewExecutable, not the config entity.
               // @todo Can we move this into metatag_views somehow?
               $token_replacements = ['view' => $entity->getExecutable()];
-            }
-            elseif ($entity instanceof ContentEntityInterface) {
+            } elseif ($entity instanceof ContentEntityInterface) {
               $token_replacements = [$entity->getEntityTypeId() => $entity];
             }
           }
@@ -724,7 +756,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array
    *   A list of supported field types.
    */
-  protected function fieldTypes(): array {
+  protected function fieldTypes(): array
+  {
     // @todo Either get this dynamically from field plugins or forget it and
     // just hardcode metatag where this is called.
     return ['metatag'];
@@ -749,7 +782,8 @@ class MetatagManager implements MetatagManagerInterface {
    * @return array|string
    *   Processed value.
    */
-  protected function processTagValue($tag, $value, array $token_replacements, bool $plain_text = FALSE, $langcode = ''): array|string {
+  protected function processTagValue($tag, $value, array $token_replacements, bool $plain_text = FALSE, $langcode = ''): array|string
+  {
     // Set the value as sometimes the data needs massaging, such as when
     // field defaults are used for the Robots field, which come as an array
     // that needs to be filtered and converted to a string.
@@ -803,5 +837,4 @@ class MetatagManager implements MetatagManagerInterface {
     // otherwise return the first item from the array.
     return $is_array ? $value : reset($value);
   }
-
 }
