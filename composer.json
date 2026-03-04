@@ -48,7 +48,7 @@
         "drupal/jquery_ui_tooltip": "^2.0",
         "drupal/legal": "^3.0",
         "drupal/mail_login": "^4.0@alpha",
-        "drupal/metatag": "2.1.1",
+        "drupal/metatag": "2.2.0",
         "drupal/page_manager": "^4.0@beta",
         "drupal/panels": "^4.6",
         "drupal/paragraphs": "^1.20",

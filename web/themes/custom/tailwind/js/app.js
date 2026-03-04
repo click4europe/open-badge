@@ -385,7 +385,7 @@
             
             // Check if tray is open (horizontal)
             if (body.classList.contains('toolbar-horizontal') && body.classList.contains('toolbar-tray-open')) {
-              toolbarHeight = 79; // Toolbar + tray height
+              toolbarHeight = 80; // Toolbar + tray height
             }
           }
           

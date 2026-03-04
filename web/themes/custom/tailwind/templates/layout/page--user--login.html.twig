@@ -1,0 +1,55 @@
+{#
+/**
+ * @file
+ * Advanced layout badge template.
+ *
+ * Available variables:
+ * - content: An array of content, each item in the array is keyed to one
+ *   region of the layout.
+ * - settings: Configuration settings for the layout.
+ *
+ * Regions:
+ * - head: Head content (header, navigation)
+ * - badge: Badge/Featured content
+ * - main: Main content area
+ * - sidebar: Sidebar content
+ * - foot: Footer content
+ */
+#}
+
+{%
+  set container_classes = [
+    settings.container_width|default('container'),
+    settings.extra_classes|default('')
+  ]
+%}
+
+{%
+  set badge_classes = [
+    'layout-badge',
+    'layout-badge--' ~ settings.badge_style|default('default'),
+    settings.badge_bg_color|default('bg-gray-50'),
+    settings.show_badge_border ? 'border border-gray-200' : ''
+  ]
+%}
+
+{# Head region #}
+{% if content.head %}
+  <header class="layout-region layout-region--head">
+    {{ content.head }}
+  </header>
+{% endif %}
+{# Main wrapper with container #}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-10">
+     {% block content %}
+         <main class="mx-5"></main>
+          {{ page.content }}
+         </main>
+     {% endblock %}
+</div>
+{# Footer region #}
+{% if content.foot %}
+  <footer class="layout-region layout-region--foot mt-12">
+    {{ content.foot }}
+  </footer>
+{% endif %}

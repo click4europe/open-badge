@@ -1,0 +1,256 @@
+/* Responsive adjustments for slider */
+@media (max-width: 768px) {
+  #edit-multistep {
+    .steps-indicator {
+      .progress-row {
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+.checkout-multistep-form {
+  fieldset {
+    legend {
+      padding: 5px 10px 8px 10px;
+      border-radius: 5px;
+      background-color: var(--primary);
+      color: #ffffff;
+      margin-bottom: 1rem;
+      span {
+        color: #ffffff;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+form {
+  .half-colum {
+    width: 47%;
+    float: left;
+    margin-right: 2%;
+  }
+  fieldset {
+    width: 100%;
+    margin-top: 2rem !important;
+  }
+  .description {
+    font-size: 13px;
+    line-height: 18px;
+    font-style: italic;
+    margin-left: 0px !important;
+    font-weight: 400;
+  }
+  details {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  legend,
+  summary {
+    padding: 5px 10px 8px 10px;
+    border-radius: 5px;
+    background-color: var(--primary);
+    color: #ffffff;
+    width: 100%;
+    display: inline-block !important;
+    color: #ffffff;
+    font-weight: bold;
+    span {
+      color: #ffffff;
+      font-weight: bold;
+    }
+  }
+
+  fieldset.unica-colum {
+    .form-radios {
+      display: flex;
+      flex-direction: row;
+      .form-type-radio {
+        padding: 10px 20px 0px 20px;
+        margin-bottom: 0rem !important;
+      }
+    }
+  }
+
+  label,
+  .form-item label {
+    font-weight: bold;
+    color: var(--dark);
+    cursor: text;
+    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .js-form-type-checkbox {
+    label {
+      display: inline-block;
+      position: relative;
+      top: -1px;
+      left: 4px;
+    }
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="email"],
+  input[type="url"],
+  input[type="password"],
+  input[type="search"],
+  select {
+    color: var(--color-ob-blue);
+    background: var(--color-ob-bg);
+    border: 1px solid var(--primary);
+    width: 100%;
+    height: 3rem;
+    padding: 0px 5px;
+    border-radius: 5px;
+  }
+
+  textarea {
+    color: var(--color-ob-blue);
+    background: var(--color-ob-bg);
+    border: 1px solid var(--primary);
+    width: 100%;
+    padding: 0px 5px;
+    border-radius: 5px;
+  }
+
+  input[type="file"] {
+    color: var(--color-ob-blue);
+    background: var(--color-ob-bg);
+    border: 1px solid var(--primary);
+    height: 3rem;
+    padding: 0px 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 25%;
+    margin-bottom: 1rem;
+  }
+
+  a.button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    background-color: var(--primary);
+    color: white;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-weight: 600;
+    -webkit-transition: all 0.4s linear;
+    -o-transition: all 0.4s linear;
+    transition: all 0.4s linear;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .form-actions {
+    padding-top: 1rem;
+  }
+
+  #edit-wrap {
+    legend {
+      width: 100%;
+    }
+  }
+
+  #edit-cancel {
+    color: #ffffff !important;
+  }
+
+  #edit-categories--wrapper,
+  #edit-categorie-categories--wrapper,
+  #edit-field-settore-di-riferimento--wrapper,
+  #edit-entity-azienda-field-settore-di-riferimento--wrapper {
+    margin-top: 0.5rem !important;
+    border: none;
+    legend {
+      background-color: transparent !important;
+      span {
+        color: black;
+      }
+    }
+  }
+
+  /* questi vanno insieme */
+  #edit-online {
+    margin-bottom: 0px !important;
+  }
+  #edit-description-web {
+    margin-top: 0px !important;
+  }
+
+  .js-hide {
+    display: none !important;
+  }
+
+  #edit-contact,
+  #edit-language,
+  #edit-google-analytics,
+  #edit-timezone,
+  #edit-delete {
+    display: none !important;
+  }
+}
+
+.crea-sconto-form-body {
+  form {
+    #loc-fieldset-wrapper {
+      .fieldset-wrapper {
+        fieldset {
+          border: 1px solid var(--primary);
+          margin-left: 2%;
+          margin-right: 2%;
+          width: 96% !important;
+          padding: 15px;
+          border-radius: 5px;
+          legend {
+            box-sizing: border-box;
+            color: #000000;
+
+            width: auto;
+            padding: 0;
+            white-space: normal;
+            background-color: transparent;
+            span {
+              color: #000000;
+            }
+          }
+        }
+      }
+      .form-actions {
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-top: 0px !important;
+        padding-top: 0px !important;
+      }
+    }
+  }
+}
+
+/* Richiedi la Carta: tighten and shrink stepper title + steps on mobile using Tailwind utilities */
+.richiedi-steps-typography {
+  #edit-multistep {
+    .steps-indicator {
+      /* Smaller vertical spacing on mobile, restore larger on bigger screens */
+      @apply mt-4 mb-4 sm:mt-10 sm:mb-10;
+
+      .progress-row {
+        .dot {
+          /* Numbers and step labels: smaller on mobile, original-ish on larger screens */
+          span,
+          div {
+            @apply text-base leading-snug sm:text-2xl sm:leading-tight;
+          }
+        }
+      }
+    }
+
+    /* Title above steps (if rendered as heading) - smaller on mobile */
+    h2,
+    h3 {
+      @apply text-base leading-snug sm:text-2xl sm:leading-tight;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+:root {
+  --primary: rgb(0, 79, 89);
+  --secondary: #ffc805;
+  --dark: #000000;
+  --color-ob-blue: #0f172a;
+  --color-ob-light-blue: #1d4ed8;
+  --color-ob-yellow: #facc15;
+  --color-ob-bg: #f9fafb;
+  --body-font: "Titillium Web", sans-serif;
+  --heading-font: "Amsi Pro Condensed Bold", "Titillium Web", sans-serif;
+}

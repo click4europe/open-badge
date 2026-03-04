@@ -94,3 +94,4 @@ yarn-error.log*
 # Temporary test files
 # ===================
 check_blocks.php
+.vscode/launch.json
