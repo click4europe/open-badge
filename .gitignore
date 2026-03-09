@@ -2,18 +2,6 @@
 # Drupal .gitignore
 # ===================
 
-# Drupal core (installed via Composer)
-/web/core/
-
-# Contrib modules/themes/profiles (installed via Composer)
-/web/modules/contrib/
-/web/themes/contrib/
-/web/profiles/contrib/
-/web/libraries/
-
-# Vendor directory (Composer dependencies)
-/vendor/
-
 # Drupal files directory (user uploads, generated files)
 /web/sites/*/files/
 /web/sites/*/private/
@@ -94,3 +82,4 @@ yarn-error.log*
 # Temporary test files
 # ===================
 check_blocks.php
+.vscode/launch.json
