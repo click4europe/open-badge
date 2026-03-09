@@ -123,13 +123,7 @@
           <div class="companies-page{% if page_index > 0 %} hidden{% endif %}" data-page="{{ page_index + 1 }}">
             <div class="image-logo-showcase">
               {% for logo in page_logos %}
-                {% set link_url = logo.company_url ?: logo.badge_url %}
-                {% if link_url %}
-                  <a target="_blank" title="{{ logo.name }}" href="{{ logo.badge_url }}">
-                    <img class="logo-customer" src="{{ logo.logo_url }}" alt="{{ logo.name }}" loading="lazy" decoding="async" />
-                  </a>
-                
-                {% endif %}
+                <img class="logo-customer" src="{{ logo.logo_url }}" alt="{{ logo.name }}" loading="lazy" decoding="async" />
               {% endfor %}
             </div>
           </div>

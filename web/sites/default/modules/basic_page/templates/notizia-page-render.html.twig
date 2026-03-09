@@ -1,10 +1,25 @@
 {% include '@tailwind/components/component--page-hero.html.twig' with {
   title: data.scheda.title,
-  description: data.scheda.sotto_titolo.0.value|default('')
+  description: data.scheda.sotto_titolo.0.value|default(''),
+  full_title: true,
+  no_image: true
 } %}
 
 <article class="bg-slate-50 py-12">
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        {# Admin Edit Button #}
+        {% if data.edit_url %}
+            <div class="mb-6 flex justify-end">
+                <a href="{{ data.edit_url }}" 
+                   class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                    Modifica Notizia
+                </a>
+            </div>
+        {% endif %}
+        
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- Main Content -->
             <div class="lg:col-span-2">
@@ -23,7 +38,7 @@
                 <!-- Featured Image with Fixed Smaller Dimensions -->
                 {% if data.scheda.image.path %}
                     <div class="mb-8">
-                        <div class="rounded-xl overflow-hidden shadow-md bg-slate-100" style="max-width: 600px; height: 400px;">
+                        <div class="rounded-xl overflow-hidden shadow-md bg-slate-100" style="max-width: 100%; height: 400px;">
                             <img src="{{ data.scheda.image.path }}" alt="{{ data.scheda.image.alt }}" class="w-full h-full object-cover">
                         </div>
                     </div>

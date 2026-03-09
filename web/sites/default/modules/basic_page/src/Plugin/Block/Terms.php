@@ -33,6 +33,24 @@ class Terms extends BlockBase
         // Fetch terms block content (Terms Block - type: blocco_home)
         $data['terms_block'] = $this->fetchBloccoHome('Terms Block', $account);
 
+        // Query for recent Notizie nodes and process them
+        $query = \Drupal::entityQuery('node')
+            ->condition('type', 'notizie')
+            ->condition('status', 1)
+            ->sort('created', 'DESC')
+            ->range(0, 2)
+            ->accessCheck(TRUE);
+        $nids = $query->execute();
+        
+        if (!empty($nids)) {
+            $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+            $nodes = $node_storage->loadMultiple($nids);
+            $data['notizie_sidebar'] = [];
+            foreach ($nodes as $node) {
+                $data['notizie_sidebar'][] = \Drupal\basic_page\Utils\Notizie::document($node);
+            }
+        }
+
         $build = [];
         $build['#theme'] = 'terms_render';
         $build['#data'] = $data;

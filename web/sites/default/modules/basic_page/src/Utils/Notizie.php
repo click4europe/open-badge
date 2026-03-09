@@ -125,10 +125,10 @@ class Notizie
         $data['bundle'] = $node->getType();
         
         $created = $node->getCreatedTime();
-        $data['created'] = \Drupal::service('date.formatter')->format($created, 'short');
+        $data['created'] = \Drupal::service('date.formatter')->format($created, 'custom', 'd/m/Y');
         
         $changed = $node->getChangedTime();
-        $data['changed'] = \Drupal::service('date.formatter')->format($changed, 'short');
+        $data['changed'] = \Drupal::service('date.formatter')->format($changed, 'custom', 'd/m/Y');
         
         $options = ['absolute' => TRUE];
         $data['url_object'] = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()], $options);
