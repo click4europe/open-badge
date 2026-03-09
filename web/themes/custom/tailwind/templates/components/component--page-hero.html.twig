@@ -44,7 +44,7 @@
         {% endif %}
         {% if description %}
           <div class="font-body-large text-sm sm:text-base text-slate-200 {{ no_image ? 'max-w-3xl mx-auto' : 'max-w-xl' }}">
-            {{ description|raw }}
+            {{ description|striptags|raw }}
           </div>
         {% endif %}
       </div>

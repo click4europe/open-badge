@@ -90,8 +90,14 @@ class Page {
 
     // Notizie Sidebar (sidebar news content) - entity references
     if ($node->hasField('field_notizie_sidebar') && !$node->get('field_notizie_sidebar')->isEmpty()) {
-      $data['notizie_sidebar'] = $node->get('field_notizie_sidebar')->getValue();
-      // Returns array like: [{target_id: 5}, {target_id: 8}]
+      $notizie_refs = $node->get('field_notizie_sidebar')->getValue();
+      $data['notizie_sidebar'] = [];
+      foreach ($notizie_refs as $ref) {
+        $notizia_node = \Drupal\node\Entity\Node::load($ref['target_id']);
+        if ($notizia_node) {
+          $data['notizie_sidebar'][] = \Drupal\basic_page\Utils\Notizie::document($notizia_node);
+        }
+      }
     }
 
     return $data;
