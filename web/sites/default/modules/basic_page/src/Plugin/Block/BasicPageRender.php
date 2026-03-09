@@ -5,7 +5,7 @@ namespace Drupal\basic_page\Plugin\Block;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\Core\Block\BlockBase;
-use Drupal\basic_page\Utils\Notizie;
+use Drupal\basic_page\Utility\Page;
 use Drupal\node\Entity\Node;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -67,7 +67,7 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
 
         $data = array();
         $node = \Drupal::routeMatch()->getParameter('node');
-        $data['scheda'] = Notizie::document($node);
+        $data['scheda'] = Page::document($node);
         $data['host'] = \Drupal::request()->getSchemeAndHttpHost();
 
         $params = array();
@@ -75,7 +75,20 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
         $params['id'] = $node->id();
         //$data['pdf_data'] = $base_url . '/pdf-data?'. UrlHelper::buildQuery($params);
 
-
+        // Get header and footer blocks
+        $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+        
+        // Fetch header block (blocco_header_pagina_interne)
+        $header_blocks = \Drupal\blocchi\Utils\Blocchi::make_query_blocchi('blocco_header_pagina_interne', $lang, TRUE, 'ASC', 0, 1);
+        if (!empty($header_blocks)) {
+            $data['header_id'] = $header_blocks[0]->id;
+        }
+        
+        // Fetch footer block
+        $footer_blocks = \Drupal\blocchi\Utils\Blocchi::make_query_blocchi('blocco_footer', $lang, TRUE, 'ASC', 0, 1);
+        if (!empty($footer_blocks)) {
+            $data['footer_id'] = $footer_blocks[0]->id;
+        }
 
         $build = [];
         $build['#theme'] = 'basic_page_render';

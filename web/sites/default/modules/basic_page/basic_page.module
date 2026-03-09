@@ -303,4 +303,3 @@ function basic_page_preprocess_prezzi_e_abbonamenti_render(&$variables) {
   
   $variables['company_logos'] = $company_logos_data;
 }
-

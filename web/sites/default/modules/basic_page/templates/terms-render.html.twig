@@ -21,32 +21,104 @@
         </div>
       {% endif %}
 
-      {# Image #}
-      {% if data.terms_block.immagine_url %}
-        <div class="mb-8 rounded-2xl overflow-hidden shadow-lg">
-          <img 
-            src="{{ data.terms_block.immagine_url }}" 
-            alt="{{ data.terms_block.immagine_alt|default('Terms and Conditions') }}" 
-            class="w-full h-auto object-cover"
-          />
-        </div>
-      {% endif %}
+      {# Main Content Grid: Content + Sidebar #}
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        {# Main Content Column (2/3 width) #}
+        <div class="lg:col-span-2 space-y-6">
+          
+          {# Image - Smaller #}
+          {% if data.terms_block.immagine_url %}
+            <div class="rounded-2xl overflow-hidden shadow-lg max-w-2xl">
+              <img 
+                src="{{ data.terms_block.immagine_url }}" 
+                alt="{{ data.terms_block.immagine_alt|default('Terms and Conditions') }}" 
+                class="w-full h-auto object-cover max-h-[300px]"
+              />
+            </div>
+          {% endif %}
 
-      {# Title #}
-      {% if data.terms_block.titolo and data.terms_block.titolo|length > 0 %}
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">
-          {{ data.terms_block.titolo[0]['value'] }}
-        </h1>
-      {% endif %}
+          {# Title #}
+          {% if data.terms_block.titolo and data.terms_block.titolo|length > 0 %}
+            <h1 class="text-3xl sm:text-4xl font-bold text-slate-900">
+              {{ data.terms_block.titolo[0]['value'] }}
+            </h1>
+          {% endif %}
 
-      {# Body Content #}
-      {% if data.terms_block.body and data.terms_block.body|length > 0 %}
-        <div class="prose prose-slate prose-lg max-w-none">
-          <div class="text-slate-700 leading-relaxed">
-            {{ data.terms_block.body[0]['value']|raw }}
-          </div>
+          {# Body Content #}
+          {% if data.terms_block.body and data.terms_block.body|length > 0 %}
+            <div class="prose prose-slate prose-sm max-w-none">
+              <div class="text-slate-700 leading-relaxed">
+                {{ data.terms_block.body[0]['value']|raw }}
+              </div>
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
+
+        {# Sidebar Column (1/3 width) - Notizie #}
+        <!-- DEBUG: notizie_sidebar exists? {{ data.notizie_sidebar is defined ? 'YES' : 'NO' }} -->
+        <!-- DEBUG: notizie_sidebar count: {{ data.notizie_sidebar|length|default(0) }} -->
+        <aside class="lg:col-span-1">
+          {% if data.notizie_sidebar %}
+            {% for notizia in data.notizie_sidebar %}
+              
+              {# Separator line between cards (not before first) #}
+              {% if not loop.first %}
+                <hr class="my-6 border-slate-200">
+              {% endif %}
+              
+              <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 mb-6">
+                {# Notizia Image #}
+                {% if notizia.image.path %}
+                  <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                    <img src="{{ notizia.image.path }}" 
+                         alt="{{ notizia.image.alt }}" 
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                         loading="lazy" />
+                  </div>
+                {% else %}
+                  <div class="aspect-[4/3] bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                    </svg>
+                  </div>
+                {% endif %}
+                
+                {# Notizia Content #}
+                <div class="p-6 space-y-3">
+                  {# Date and Category #}
+                  <div class="flex items-center gap-2 text-xs text-slate-500">
+                    <span>{{ notizia.created }}</span>
+                    <span>•</span>
+                    <span>Notizie</span>
+                  </div>
+                  
+                  {# Title #}
+                  <h3 class="text-lg font-bold text-slate-900 line-clamp-2">
+                    <a href="{{ path('entity.node.canonical', {'node': notizia.id}) }}" class="hover:text-blue-600 transition-colors">
+                      {{ notizia.title }}
+                    </a>
+                  </h3>
+                  
+                  {# Teaser/Summary #}
+                  {% if notizia.teaser %}
+                    <p class="text-sm text-slate-600 line-clamp-3">
+                      {{ notizia.teaser }}
+                    </p>
+                  {% endif %}
+                  
+                  {# Read More Link #}
+                  <a href="{{ path('entity.node.canonical', {'node': notizia.id}) }}" 
+                     class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                    Leggi di più <span aria-hidden="true" class="ml-1">→</span>
+                  </a>
+                </div>
+              </article>
+            {% endfor %}
+          {% endif %}
+        </aside>
+
+      </div>
 
     {% endif %}
   </div>

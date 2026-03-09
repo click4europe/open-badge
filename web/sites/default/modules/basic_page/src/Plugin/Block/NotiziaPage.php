@@ -64,6 +64,11 @@ class NotiziaPage extends BlockBase implements ContainerFactoryPluginInterface
         $data['scheda'] = Notizie::document($node);
         $data['host'] = \Drupal::request()->getSchemeAndHttpHost();
 
+        // Add edit URL for admin users
+        if ($node && $node->access('update', $this->account)) {
+            $data['edit_url'] = Url::fromRoute('entity.node.edit_form', ['node' => $node->id()])->toString();
+        }
+
         // Get related news (latest 2 news, excluding current one)
         $related_news = Notizie::notizie_list(0, 'DESC', 0, 2, '', '');
         if (!empty($related_news['row'])) {

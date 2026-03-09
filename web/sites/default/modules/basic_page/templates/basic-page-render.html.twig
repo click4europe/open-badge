@@ -1,69 +1,173 @@
 {#
 /**
-* @file
-* Default theme implementation to display a block.
-*
-* @see template_preprocess_block()
-*
-* @ingroup themeable
-*/
+ * @file
+ * Template for Basic Page content type.
+ * 
+ * Two-column layout: main content (70%) + sidebar blocks (30%)
+ * Uses data.scheda array from Page::document()
+ */
 #}
-{%
-  set classes = [
-    'main-wrapper',
-    'clear',
-  ]
-%}
-<div {{ attributes.addClass(classes) }}>
-  <div class="container">
-    <div class="main-container">
-      <main id="main" class="main-content">
-        <div class="node-content">
-        <div class="block-region region-content">
-    	<div id="block-ruhi-content" class="block">
-  		<div class="block-content">
-        <article data-history-node-id="8" role="article" about="" typeof="schema:WebPage" class="node node-view-mode-full">
-            	<span property="schema:name" content="Right Sidebar" class="hidden"></span>
-          		<div class="node-content clear">
-            		{% if data.scheda.sotto_titolo.0.value  %}
-            			<h1 class="e-margin-t-20 block-title-size-22">{{ data.scheda.sotto_titolo.0.value }}</h1>
-            		{% endif %}
-            		{% if data.scheda.image.path %}
-                    <div class="field field--name-field-image field--type-image field--label-hidden field-item">  
-                    <img src="{{ data.scheda.image.path }}" alt="{{ data.scheda.image.alt }}" title="{{ data.scheda.image.title }}" typeof="foaf:Image" class="image-field">
-        			</div>
-              		{% endif %}
-                    <div property="schema:text" class="field field--name-body field--type-text-with-summary field--label-hidden field-item">
-                    {{ data.scheda.body | raw }}
-        			</div>
-        			<div class="scheda-faq mt-2">
-                       	{% if data.scheda.field_faq %}
-                    	<div class="accordion-list">
-                    	{% for key, faq in data.scheda.field_faq %}
-                    			<div class="single-accordion">
-                    		    <h3>{{ faq.question }}</h3>
-                    			<div class="answer edk-basic-page-content">{{ faq.answer | raw }}</div>
-                    			</div>
-                    	{% endfor %}
-                    	</div>
-                    	{% endif %}
-                    </div>
-          		</div>
-        </article>
-    	</div>
-		</div>
-  		</div>
-        </div>
-      </main>
-    <aside id="sidebar-right" class="sidebar block-section" role="complementary">
-     <div class="block-region region-sidebar-second">
-        {% if data.scheda.personalizzati %}
-           {% for key, value in data.scheda.personalizzati  %}
-		   		{{ drupal_entity('block_content', value.target_id) }}
-           {% endfor %}
+
+{# Navbar - Render header block #}
+{% if data.header_id %}
+  {{ drupal_entity('block_content', data.header_id) }}
+{% endif %}
+
+{# Hero Section #}
+{% if data.scheda.hero_title or data.scheda.hero_description %}
+  {# Define styling variants based on compact mode #}
+  {% set is_compact = data.scheda.hero_compact %}
+  {% set hero_padding = is_compact ? 'py-8 lg:py-10' : 'py-12 lg:py-16' %}
+  {% set hero_min_height = is_compact ? 'min-h-[240px]' : 'min-h-[320px]' %}
+  {% set hero_gap = is_compact ? 'gap-8' : 'gap-12' %}
+  {% set image_aspect = is_compact ? 'aspect-[16/9]' : 'aspect-[4/3]' %}
+  {% set title_size = is_compact ? 'text-2xl sm:text-3xl lg:text-4xl' : 'text-3xl sm:text-4xl lg:text-5xl' %}
+  {% set image_max_size = is_compact ? 'max-w-[300px] lg:max-w-[400px]' : 'max-w-full' %}
+
+<section class="bg-[#050322]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 {{ hero_padding }} {{ hero_min_height }} flex items-center pt-32">
+    <div class="grid {{ hero_gap }} lg:grid-cols-2 items-center w-full text-center lg:text-left">
+      
+      <!-- Text -->
+      <div class="space-y-4 text-white">
+        {% if data.scheda.hero_title %}
+          <h1 class="{{ title_size }} font-extrabold leading-tight">
+            {{ data.scheda.hero_title }}
+          </h1>
+        {% endif %}
+        
+        {% if data.scheda.hero_description %}
+          <div class="font-body-large text-sm sm:text-base text-slate-200 max-w-xl">
+            {{ data.scheda.hero_description }}
+          </div>
         {% endif %}
       </div>
-    </aside>        
-</div>
-</div>
-</div>
+
+      <!-- Image -->
+      {% if data.scheda.hero_image.path %}
+        <div class="relative {{ image_max_size }} justify-self-center">
+          <div class="rounded-3xl overflow-hidden shadow-2xl {{ image_aspect }}">
+            <img src="{{ data.scheda.hero_image.path }}" 
+                 alt="{{ data.scheda.hero_image.alt|default('Hero image') }}" 
+                 class="w-full h-full object-cover" />
+          </div>
+        </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{# Main Content Section with Sidebar #}
+{% if data.scheda.sotto_titolo.0.value or data.scheda.image.path or data.scheda.body or data.scheda.notizie_sidebar %}
+<section class="py-12 lg:py-16 bg-slate-900">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+      
+      {# Left Column - Main Content (2/3 = 66%) #}
+      <div class="main-content lg:col-span-2">
+        
+        {# Main Image at Top (if exists) #}
+        {% if data.scheda.image.path %}
+          <div class="mb-8 bg-slate-100 rounded-2xl overflow-hidden">
+            <img src="{{ data.scheda.image.path }}" 
+                 alt="{{ data.scheda.image.alt|default('') }}" 
+                 class="w-full h-auto object-cover" />
+          </div>
+        {% endif %}
+        
+        {# Sotto Titolo (Title) - Below Image #}
+        {% if data.scheda.sotto_titolo.0.value %}
+          <h2 class="text-2xl lg:text-3xl font-bold text-white mb-6">
+            {{ data.scheda.sotto_titolo.0.value }}
+          </h2>
+        {% endif %}
+        
+        {# Body Content - Below Title #}
+        {% if data.scheda.body %}
+          <div class="prose prose-sm prose-invert max-w-none text-slate-300 leading-relaxed">
+            {{ data.scheda.body | raw }}
+          </div>
+        {% endif %}
+        
+      </div>
+      
+      {# Right Column - Notizie Sidebar (1/3 = 33%) #}
+      <aside class="sidebar-notizie space-y-6 lg:col-span-1">
+        {% if data.scheda.notizie_sidebar %}
+          {% for value in data.scheda.notizie_sidebar %}
+            {% set notizia_node = drupal_entity('node', value.target_id) %}
+            {% set notizia = notizia_node['#node'] %}
+            
+            <article class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
+              {# Notizia Image #}
+              <!-- DEBUG: Has field_immagine? {{ notizia.hasField('field_immagine') ? 'YES' : 'NO' }} -->
+              {% set has_image = false %}
+              {% if notizia.hasField('field_immagine') and not notizia.get('field_immagine').isEmpty() %}
+                {% set image_field = notizia.get('field_immagine').first() %}
+                {% if image_field and image_field.entity %}
+                  {% set has_image = true %}
+                  {% set image_uri = image_field.entity.getFileUri() %}
+                  <div class="aspect-[4/3] overflow-hidden bg-gray-100">
+                    <img src="{{ file_url(image_uri) }}" 
+                         alt="{{ image_field.alt|default(notizia.getTitle()) }}" 
+                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" 
+                         loading="lazy" />
+                  </div>
+                {% endif %}
+              {% endif %}
+              
+              {% if not has_image %}
+                <div class="aspect-[4/3] bg-gradient-to-br from-blue-100 to-blue-50 overflow-hidden relative flex items-center justify-center">
+                  <svg class="w-16 h-16 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                  </svg>
+                </div>
+              {% endif %}
+              
+              {# Notizia Content #}
+              <div class="p-6 space-y-3">
+                {# Date and Category #}
+                <div class="flex items-center gap-2 text-xs text-slate-500">
+                  <span>{{ notizia.getCreatedTime()|date('d/m/Y') }}</span>
+                  <span>•</span>
+                  <span>Notizie</span>
+                </div>
+                
+                {# Title #}
+                <h3 class="text-lg font-bold text-slate-900 line-clamp-2">
+                  {{ notizia.getTitle() }}
+                </h3>
+                
+                {# Teaser/Summary #}
+                {% if notizia.hasField('body') and not notizia.get('body').isEmpty() %}
+                  {% set body_field = notizia.get('body') %}
+                  <p class="text-sm text-slate-600 line-clamp-3">
+                    {{ body_field.summary|default(body_field.value|striptags|slice(0, 150)) }}
+                  </p>
+                {% endif %}
+                
+                {# Read More Link #}
+                <a href="{{ path('entity.node.canonical', {'node': notizia.id()}) }}" 
+                   class="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors">
+                  Leggi di più <span aria-hidden="true" class="ml-1">→</span>
+                </a>
+              </div>
+            </article>
+          {% endfor %}
+        {% endif %}
+      </aside>
+      
+    </div>
+    
+  </div>
+</section>
+{% endif %}
+
+
+{# Footer - Render footer block #}
+{% if data.footer_id %}
+  {{ drupal_entity('block_content', data.footer_id) }}
+{% endif %}
