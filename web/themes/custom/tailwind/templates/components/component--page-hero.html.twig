@@ -11,6 +11,7 @@
    - compact: Boolean - if true, reduces height/padding (defaults to false)
    - full_title: Boolean - if true, allows full title display with better spacing (defaults to false)
    - no_image: Boolean - if true, title takes full width without image column (defaults to false)
+   - title_left: Boolean - if true, keeps title on left with full width even with image (defaults to false)
    
    Usage:
    {% include '@tailwind/components/component--page-hero.html.twig' with {
@@ -31,32 +32,64 @@
 
 <section style="background-color: {{ background_color|default('#050322') }};">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 {{ hero_padding }} {{ hero_min_height }} flex items-center pt-20 lg:pt-24">
-    <div class="grid {{ hero_gap }} {{ no_image ? 'grid-cols-1' : 'lg:grid-cols-2' }} items-center w-full {{ no_image ? 'text-center' : 'text-center lg:text-left' }}">
-      <!-- Text -->
-      <div class="space-y-4 text-white {{ no_image ? 'max-w-4xl mx-auto' : '' }}">
-        {% if eyebrow %}
-          <p class="font-ui text-obYellow">{{ eyebrow }}</p>
-        {% endif %}
-        {% if title %}
-          <h1 class="{{ title_size }} font-extrabold {{ full_title ? 'leading-normal' : 'leading-tight' }}">
-            {{ title }}
-          </h1>
-        {% endif %}
-        {% if description %}
-          <div class="font-body-large text-sm sm:text-base text-slate-200 {{ no_image ? 'max-w-3xl mx-auto' : 'max-w-xl' }}">
-            {{ description|striptags|raw }}
+    {% if title_left %}
+      {# Layout with title on left, full width, and image below #}
+      <div class="space-y-8 w-full text-left">
+        <!-- Text Full Width -->
+        <div class="space-y-4 text-white max-w-4xl">
+          {% if eyebrow %}
+            <p class="font-ui text-obYellow">{{ eyebrow }}</p>
+          {% endif %}
+          {% if title %}
+            <h1 class="{{ title_size }} font-extrabold {{ full_title ? 'leading-normal' : 'leading-tight' }}">
+              {{ title }}
+            </h1>
+          {% endif %}
+          {% if description %}
+            <div class="font-body-large text-sm sm:text-base text-slate-200 max-w-3xl">
+              {{ description|striptags|raw }}
+            </div>
+          {% endif %}
+        </div>
+
+        <!-- Image Below Title (if exists) -->
+        {% if image %}
+          <div class="relative {{ image_max_size }}">
+            <div class="rounded-3xl overflow-hidden shadow-2xl {{ image_aspect }}">
+              <img src="{{ image }}" alt="{{ image_alt|default(title) }}" class="w-full h-full object-cover" />
+            </div>
           </div>
         {% endif %}
       </div>
-
-      <!-- Image -->
-      {% if image and not no_image %}
-        <div class="relative {{ image_max_size }} justify-self-center">
-          <div class="rounded-3xl overflow-hidden shadow-2xl {{ image_aspect }}">
-            <img src="{{ image }}" alt="{{ image_alt|default(title) }}" class="w-full h-full object-cover" />
-          </div>
+    {% else %}
+      {# Original Grid Layout #}
+      <div class="grid {{ hero_gap }} {{ no_image ? 'grid-cols-1' : 'lg:grid-cols-2' }} items-center w-full {{ no_image ? 'text-center' : 'text-center lg:text-left' }}">
+        <!-- Text -->
+        <div class="space-y-4 text-white {{ no_image ? 'max-w-4xl mx-auto' : '' }}">
+          {% if eyebrow %}
+            <p class="font-ui text-obYellow">{{ eyebrow }}</p>
+          {% endif %}
+          {% if title %}
+            <h1 class="{{ title_size }} font-extrabold {{ full_title ? 'leading-normal' : 'leading-tight' }}">
+              {{ title }}
+            </h1>
+          {% endif %}
+          {% if description %}
+            <div class="font-body-large text-sm sm:text-base text-slate-200 {{ no_image ? 'max-w-3xl mx-auto' : 'max-w-xl' }}">
+              {{ description|striptags|raw }}
+            </div>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
+
+        <!-- Image -->
+        {% if image and not no_image %}
+          <div class="relative {{ image_max_size }} justify-self-center">
+            <div class="rounded-3xl overflow-hidden shadow-2xl {{ image_aspect }}">
+              <img src="{{ image }}" alt="{{ image_alt|default(title) }}" class="w-full h-full object-cover" />
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 </section>

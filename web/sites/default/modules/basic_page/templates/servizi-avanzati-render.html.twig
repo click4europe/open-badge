@@ -33,6 +33,12 @@
             <img src="/themes/custom/tailwind/images/public/img_2.png" alt="Servizi avanzati" class="w-full h-auto object-cover">
           {% endif %}
         </div>
+        
+        {% if data.blocco_servizi_avanzati and data.blocco_servizi_avanzati.second_description and data.blocco_servizi_avanzati.second_description|length > 0 %}
+          <div class="prose prose-lg text-slate-700 mt-6">
+            {{ data.blocco_servizi_avanzati.second_description[0]['value']|raw }}
+          </div>
+        {% endif %}
       </div>
 
       {# Right Column - Content #}
@@ -51,12 +57,25 @@
           </div>
         {% endif %}
 
-        <div class="pt-6">
-          <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
-            Inizia ora
-            <span aria-hidden="true" class="ml-2">→</span>
-          </a>
-        </div>
+        {% if data.blocco_servizi_avanzati and data.blocco_servizi_avanzati.first_link and data.blocco_servizi_avanzati.first_link|length > 0 %}
+          <div class="mt-6">
+            <a href="{{ data.blocco_servizi_avanzati.first_link[0]['uri'] }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-slate-900 text-white text-sm font-semibold hover:bg-white hover:text-slate-900 transition-colors">
+              {{ data.blocco_servizi_avanzati.first_link[0]['title']|default('Scopri di più') }}
+              <span aria-hidden="true" class="ml-2">→</span>
+            </a>
+          </div>
+        {% endif %}
+
+        {% if data.blocco_servizi_avanzati and data.blocco_servizi_avanzati.second_link and data.blocco_servizi_avanzati.second_link|length > 0 %}
+          <div class="mt-4">
+            <a href="{{ data.blocco_servizi_avanzati.second_link[0]['uri'] }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
+              {{ data.blocco_servizi_avanzati.second_link[0]['title']|default('Altro') }}
+              <span aria-hidden="true" class="ml-2">→</span>
+            </a>
+          </div>
+        {% endif %}
+
+       
       </div>
     </div>
   </div>
@@ -93,6 +112,12 @@
       {% if data.blocco_inizia_ora and data.blocco_inizia_ora.body and data.blocco_inizia_ora.body|length > 0 %}
         <div class="prose prose-lg prose-invert max-w-2xl mx-auto">
           {{ data.blocco_inizia_ora.body[0]['value']|raw }}
+        </div>
+      {% endif %}
+
+      {% if data.blocco_inizia_ora and data.blocco_inizia_ora.second_description and data.blocco_inizia_ora.second_description|length > 0 %}
+        <div class="prose prose-lg prose-invert max-w-2xl mx-auto">
+          {{ data.blocco_inizia_ora.second_description[0]['value']|raw }}
         </div>
       {% endif %}
 
