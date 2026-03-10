@@ -1,7 +1,8 @@
-{% include '@tailwind/components/component--page-hero.html.twig' with {
-  title: 'Notizie',
-  description: 'Ultime notizie e aggiornamenti dal nostro progetto'
-} %}
+
+{# Hero Section using reusable component #}
+{% set hero_block = drupal_entity('block_content', 58) %}
+{{ hero_block|render }}
+
 
 <!-- News Grid - Same style as homepage -->
 <section class="py-16 lg:py-20 bg-[#E9F5F6]">
