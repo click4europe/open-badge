@@ -1913,6 +1913,9 @@
   .h-full {
     height: 100%;
   }
+  .max-h-\[200px\] {
+    max-height: 200px;
+  }
   .min-h-\[3rem\] {
     min-height: 3rem;
   }
