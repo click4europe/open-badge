@@ -88,16 +88,9 @@ class Page {
       $data['hero_id'] = $node->get('field_hero_section')->target_id;
     }
 
-    // Notizie Sidebar (sidebar news content) - entity references
-    if ($node->hasField('field_notizie_sidebar') && !$node->get('field_notizie_sidebar')->isEmpty()) {
-      $notizie_refs = $node->get('field_notizie_sidebar')->getValue();
-      $data['notizie_sidebar'] = [];
-      foreach ($notizie_refs as $ref) {
-        $notizia_node = \Drupal\node\Entity\Node::load($ref['target_id']);
-        if ($notizia_node) {
-          $data['notizie_sidebar'][] = \Drupal\basic_page\Utils\Notizie::document($notizia_node);
-        }
-      }
+    // Sidebar blocks (blocchi spalla)
+    if ($node->hasField('field_blocchi_spalla') && !$node->get('field_blocchi_spalla')->isEmpty()) {
+      $data['personalizzati'] = $node->get('field_blocchi_spalla')->getValue();
     }
 
     return $data;

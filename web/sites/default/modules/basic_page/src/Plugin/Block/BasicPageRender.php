@@ -74,6 +74,17 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
         $params['type'] = 'nodo';
         $params['id'] = $node->id();
         //$data['pdf_data'] = $base_url . '/pdf-data?'. UrlHelper::buildQuery($params);
+        
+        // Add admin action URLs for logged-in users with permissions
+        $current_user = \Drupal::currentUser();
+        if ($current_user->isAuthenticated() && $node->access('update', $current_user)) {
+            $data['admin_actions'] = [
+                'view' => Url::fromRoute('entity.node.canonical', ['node' => $node->id()])->toString(),
+                'edit' => Url::fromRoute('entity.node.edit_form', ['node' => $node->id()])->toString(),
+                'delete' => Url::fromRoute('entity.node.delete_form', ['node' => $node->id()])->toString(),
+                'revisions' => Url::fromRoute('entity.node.version_history', ['node' => $node->id()])->toString(),
+            ];
+        }
 
         // Get header and footer blocks
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();

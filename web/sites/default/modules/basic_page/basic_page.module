@@ -303,3 +303,92 @@ function basic_page_preprocess_prezzi_e_abbonamenti_render(&$variables) {
   
   $variables['company_logos'] = $company_logos_data;
 }
+
+/**
+ * Implements hook_form_alter().
+ * Restrict "Add new" to only Blocco Spalla for field_blocchi_spalla.
+ */
+function basic_page_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+  // Target the node edit form for pages
+  if ($form_id == 'node_page_form' || $form_id == 'node_page_edit_form') {
+    // Check if field_blocchi_spalla exists in the form
+    if (isset($form['field_blocchi_spalla'])) {
+      // Get the field widget
+      $widget = &$form['field_blocchi_spalla']['widget'];
+      
+      // Loop through all field items
+      foreach (\Drupal\Core\Render\Element::children($widget) as $delta) {
+        if (isset($widget[$delta]['actions'])) {
+          // Modify the "Add new" button to only allow blocco_spalla
+          if (isset($widget[$delta]['actions']['bundle'])) {
+            // Set default value to blocco_spalla
+            $widget[$delta]['actions']['bundle']['#default_value'] = 'blocco_spalla';
+            
+            // Limit options to only blocco_spalla
+            $widget[$delta]['actions']['bundle']['#options'] = [
+              'blocco_spalla' => t('Blocco Spalla'),
+            ];
+          }
+        }
+      }
+      
+      // Also check the main actions (for the first "Add" button)
+      if (isset($widget['actions']['bundle'])) {
+        $widget['actions']['bundle']['#default_value'] = 'blocco_spalla';
+        $widget['actions']['bundle']['#options'] = [
+          'blocco_spalla' => t('Blocco Spalla'),
+        ];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_inline_entity_form_entity_form_alter().
+ * Force bundle to blocco_spalla for new entities in field_blocchi_spalla.
+ * Also reorder fields to put body above the submit button.
+ */
+function basic_page_inline_entity_form_entity_form_alter(&$entity_form, &$form_state) {
+  // Get the parent field name from the form array parents
+  $parents = $entity_form['#parents'] ?? [];
+  
+  // Check if we're in the blocchi_spalla field
+  if (in_array('field_blocchi_spalla', $parents)) {
+    // Get the entity being edited
+    $entity = $entity_form['#entity'] ?? NULL;
+    
+    // If this is a new entity and not blocco_spalla, force it
+    if ($entity && $entity->isNew()) {
+      // Get the bundle from form state or entity
+      $bundle = $entity->bundle();
+      
+      // If it's not blocco_spalla, change it
+      if ($bundle != 'blocco_spalla') {
+        // Try to change the bundle
+        if (method_exists($entity, 'set')) {
+          $entity->set('type', 'blocco_spalla');
+        }
+      }
+    }
+    
+    // Reorder fields: body should appear above the submit button
+    // Set weights to control field order
+    if (isset($entity_form['field_titolo'])) {
+      $entity_form['field_titolo']['#weight'] = 0;
+    }
+    if (isset($entity_form['field_immagine'])) {
+      $entity_form['field_immagine']['#weight'] = 10;
+    }
+    if (isset($entity_form['body'])) {
+      $entity_form['body']['#weight'] = 20;
+    }
+    if (isset($entity_form['field_first_link'])) {
+      $entity_form['field_first_link']['#weight'] = 30;
+    }
+    // Actions (submit button) typically have weight 100 by default
+    // So body at weight 20 will appear before it
+    if (isset($entity_form['actions'])) {
+      $entity_form['actions']['#weight'] = 100;
+    }
+  }
+}
