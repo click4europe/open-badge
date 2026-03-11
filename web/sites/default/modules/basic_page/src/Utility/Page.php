@@ -93,6 +93,11 @@ class Page {
       $data['personalizzati'] = $node->get('field_blocchi_spalla')->getValue();
     }
 
+    // Notizie sidebar (manual selection)
+    if ($node->hasField('field_notizie_sidebar') && !$node->get('field_notizie_sidebar')->isEmpty()) {
+      $data['notizie_sidebar_refs'] = $node->get('field_notizie_sidebar')->getValue();
+    }
+
     return $data;
   }
 
