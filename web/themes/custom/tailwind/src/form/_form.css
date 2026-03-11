@@ -129,7 +129,7 @@ form {
   select {
     color: var(--color-ob-blue);
     background: var(--color-ob-bg);
-    border: 1px solid var(--primary);
+    border: 1px solid var(--color-ob-bt-form);
     width: 100%;
     height: 3rem;
     padding: 0px 5px;
@@ -139,7 +139,7 @@ form {
   textarea {
     color: var(--color-ob-blue);
     background: var(--color-ob-bg);
-    border: 1px solid var(--primary);
+    border: 1px solid var(--color-ob-bt-form);
     width: 100%;
     padding: 0px 5px;
     border-radius: 5px;
@@ -148,7 +148,7 @@ form {
   input[type="file"] {
     color: var(--color-ob-blue);
     background: var(--color-ob-bg);
-    border: 1px solid var(--primary);
+    border: 1px solid var(--color-ob-bt-form);
     height: 3rem;
     padding: 0px 5px;
     border-radius: 5px;
@@ -161,7 +161,7 @@ form {
   [type="button"],
   [type="reset"],
   [type="submit"] {
-    background-color: var(--primary);
+    background-color: var(--color-ob-bt-form);
     color: white;
     border-radius: 5px;
     padding: 10px 15px;
@@ -219,66 +219,5 @@ form {
   #edit-timezone,
   #edit-delete {
     display: none !important;
-  }
-}
-
-.crea-sconto-form-body {
-  form {
-    #loc-fieldset-wrapper {
-      .fieldset-wrapper {
-        fieldset {
-          border: 1px solid var(--primary);
-          margin-left: 2%;
-          margin-right: 2%;
-          width: 96% !important;
-          padding: 15px;
-          border-radius: 5px;
-          legend {
-            box-sizing: border-box;
-            color: #000000;
-
-            width: auto;
-            padding: 0;
-            white-space: normal;
-            background-color: transparent;
-            span {
-              color: #000000;
-            }
-          }
-        }
-      }
-      .form-actions {
-        margin-left: 2%;
-        margin-right: 2%;
-        margin-top: 0px !important;
-        padding-top: 0px !important;
-      }
-    }
-  }
-}
-
-/* Richiedi la Carta: tighten and shrink stepper title + steps on mobile using Tailwind utilities */
-.richiedi-steps-typography {
-  #edit-multistep {
-    .steps-indicator {
-      /* Smaller vertical spacing on mobile, restore larger on bigger screens */
-      @apply mt-4 mb-4 sm:mt-10 sm:mb-10;
-
-      .progress-row {
-        .dot {
-          /* Numbers and step labels: smaller on mobile, original-ish on larger screens */
-          span,
-          div {
-            @apply text-base leading-snug sm:text-2xl sm:leading-tight;
-          }
-        }
-      }
-    }
-
-    /* Title above steps (if rendered as heading) - smaller on mobile */
-    h2,
-    h3 {
-      @apply text-base leading-snug sm:text-2xl sm:leading-tight;
-    }
   }
 }
