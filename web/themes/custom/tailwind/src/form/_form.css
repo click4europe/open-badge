@@ -24,7 +24,7 @@
     margin: 0 0.3em;
     content: "";
     vertical-align: super;
-    background-image: url(/themes/custom/tailwind/images/icons/required.svg);
+    background-image: url(/themes/custom/tailwind/images/required.svg);
     background-repeat: no-repeat;
     background-size: 6px 6px;
   }
