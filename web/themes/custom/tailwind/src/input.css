@@ -347,4 +347,76 @@ img[data-src] {
       height: 80px;
     }
   }
+
+  /* Text alignment utilities including justify */
+  .text-justify {
+    text-align: justify;
+  }
+
+  /* Support for CKEditor text alignment classes in prose content */
+  .prose p[style*="text-align: justify"],
+  .prose p.text-align-justify,
+  .prose div[style*="text-align: justify"],
+  .prose div.text-align-justify,
+  .prose .text-justify {
+    text-align: justify;
+  }
+
+  .prose p[style*="text-align: left"],
+  .prose p.text-align-left {
+    text-align: left;
+  }
+
+  .prose p[style*="text-align: right"],
+  .prose p.text-align-right {
+    text-align: right;
+  }
+
+  .prose p[style*="text-align: center"],
+  .prose p.text-align-center {
+    text-align: center;
+  }
+
+  /* Support for bullet lists and numbered lists in prose content */
+  .prose ul,
+  .prose ol {
+    list-style-position: outside;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.625em;
+  }
+
+  .prose ul {
+    list-style-type: disc;
+  }
+
+  .prose ol {
+    list-style-type: decimal;
+  }
+
+  .prose ul ul,
+  .prose ul ol,
+  .prose ol ul,
+  .prose ol ol {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+  }
+
+  .prose ul ul {
+    list-style-type: circle;
+  }
+
+  .prose ul ul ul {
+    list-style-type: square;
+  }
+
+  .prose li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .prose li p {
+    margin-top: 0.75em;
+    margin-bottom: 0.75em;
+  }
 }
