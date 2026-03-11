@@ -1655,6 +1655,9 @@
   .mt-12 {
     margin-top: calc(var(--spacing) * 12);
   }
+  .mt-60 {
+    margin-top: calc(var(--spacing) * 60);
+  }
   .-mb-px {
     margin-bottom: -1px;
   }
@@ -1916,6 +1919,9 @@
   }
   .max-h-\[200px\] {
     max-height: 200px;
+  }
+  .min-h-80 {
+    min-height: calc(var(--spacing) * 80);
   }
   .min-h-\[3rem\] {
     min-height: 3rem;
@@ -3276,6 +3282,7 @@
   --color-ob-light-blue: #1d4ed8;
   --color-ob-yellow: #facc15;
   --color-ob-bg: #f9fafb;
+  --color-ob-bt-form: #49a0c6;
   --body-font: "Titillium Web", sans-serif;
   --heading-font: "Amsi Pro Condensed Bold", "Titillium Web", sans-serif;
 }
@@ -3283,6 +3290,21 @@
   #edit-multistep .steps-indicator .progress-row {
     flex-direction: column;
   }
+}
+.webform-submission-form .webform-actions #edit-actions-submit {
+  background-color: var(--color-ob-bt-form) !important;
+  width: 100%;
+}
+.contatti-termini-condition .form-item, .contatti-termini-condition .form-actions {
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+.contatti-termini-condition .form-item .form-checkbox, .contatti-termini-condition .form-actions .form-checkbox {
+  width: 15px;
+  height: 15px;
+}
+.contatti-termini-condition .form-item .description a, .contatti-termini-condition .form-actions .description a {
+  color: var(--color-ob-light-blue);
 }
 .checkout-multistep-form fieldset legend {
   padding: 5px 10px 8px 10px;
@@ -3706,17 +3728,6 @@ img[data-src] {
 .pricing-dropdown-content.show {
   max-height: 2000px;
   opacity: 1;
-}
-.contatti-termini-condition .form-item,
-  .contatti-termini-condition .form-actions {
-  margin-top: 0.5em !important;
-  margin-bottom: 0.5em !important;
-}
-.contatti-termini-condition .form-item .form-checkbox, .contatti-termini-condition .form-actions .form-checkbox {
-  width: 15px;
-}
-.contatti-termini-condition .form-item .description a, .contatti-termini-condition .form-actions .description a {
-  color: #1877f2;
 }
 @layer components {
   .btn {

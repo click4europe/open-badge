@@ -190,24 +190,6 @@ img[data-src] {
   opacity: 1;
 }
 
-.contatti-termini-condition {
-  .form-item,
-  .form-actions {
-    margin-top: 0.5em !important;
-    margin-bottom: 0.5em !important;
-
-    .form-checkbox {
-      width: 15px;
-    }
-
-    .description {
-      a {
-        color: #1877f2;
-      }
-    }
-  }
-}
-
 @layer components {
   /* Generic button for Open Badge UI */
   .btn {

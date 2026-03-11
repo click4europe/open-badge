@@ -9,6 +9,34 @@
   }
 }
 
+.webform-submission-form {
+  .webform-actions {
+    #edit-actions-submit {
+      background-color: var(--color-ob-bt-form) !important;
+      width: 100%;
+    }
+  }
+}
+
+.contatti-termini-condition {
+  .form-item,
+  .form-actions {
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
+
+    .form-checkbox {
+      width: 15px;
+      height: 15px;
+    }
+
+    .description {
+      a {
+        color: var(--color-ob-light-blue);
+      }
+    }
+  }
+}
+
 .checkout-multistep-form {
   fieldset {
     legend {
