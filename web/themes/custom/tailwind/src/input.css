@@ -193,8 +193,12 @@ img[data-src] {
 .contatti-termini-condition {
   .form-item,
   .form-actions {
-    margin-top: 0em !important;
-    margin-bottom: 1em !important;
+    margin-top: 0.5em !important;
+    margin-bottom: 0.5em !important;
+
+    .form-checkbox {
+      width: 15px;
+    }
 
     .description {
       a {

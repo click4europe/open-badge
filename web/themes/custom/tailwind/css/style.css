@@ -3709,8 +3709,11 @@ img[data-src] {
 }
 .contatti-termini-condition .form-item,
   .contatti-termini-condition .form-actions {
-  margin-top: 0em !important;
-  margin-bottom: 1em !important;
+  margin-top: 0.5em !important;
+  margin-bottom: 0.5em !important;
+}
+.contatti-termini-condition .form-item .form-checkbox, .contatti-termini-condition .form-actions .form-checkbox {
+  width: 15px;
 }
 .contatti-termini-condition .form-item .description a, .contatti-termini-condition .form-actions .description a {
   color: #1877f2;
