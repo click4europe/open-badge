@@ -32,6 +32,8 @@
     .description {
       a {
         color: var(--color-ob-light-blue);
+        position: relative;
+        top: -7px;
       }
     }
   }
