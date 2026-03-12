@@ -419,4 +419,71 @@ img[data-src] {
     margin-top: 0.75em;
     margin-bottom: 0.75em;
   }
+
+  /* EU Cookie Compliance - Override default button styles */
+  /* Target all button elements including the default class */
+  .eu-cookie-compliance-banner .eu-cookie-compliance-default-button,
+  .eu-cookie-compliance-banner button,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-secondary-button,
+  .eu-cookie-compliance-banner a.agree-button,
+  .eu-cookie-compliance-banner a.decline-button {
+    display: inline-block !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 0.5rem !important;
+    font-weight: 600 !important;
+    transition: all 0.2s ease !important;
+    border: 2px solid !important;
+    text-decoration: none !important;
+    text-align: center !important;
+    cursor: pointer !important;
+  }
+
+  /* Accept button - Primary style (blue button) */
+  .eu-cookie-compliance-banner .agree-button,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-default-button.agree-button,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button {
+    background-color: #2563eb !important;
+    color: white !important;
+    border-color: #2563eb !important;
+  }
+
+  .eu-cookie-compliance-banner .agree-button:hover,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-default-button.agree-button:hover,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button:hover {
+    background-color: #1d4ed8 !important;
+    border-color: #1d4ed8 !important;
+    color: white !important;
+  }
+
+  /* Decline/No thanks button - Secondary style (white button) */
+  .eu-cookie-compliance-banner .decline-button,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-default-button.decline-button,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-secondary-button {
+    background-color: white !important;
+    color: #334155 !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  .eu-cookie-compliance-banner .decline-button:hover,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-default-button.decline-button:hover,
+  .eu-cookie-compliance-banner .eu-cookie-compliance-secondary-button:hover {
+    background-color: #f8fafc !important;
+    border-color: #94a3b8 !important;
+    color: #1e293b !important;
+  }
+
+  /* Make both buttons same size and aligned */
+  .eu-cookie-compliance-buttons {
+    display: flex !important;
+    gap: 0.75rem !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+  }
+
+  .eu-cookie-compliance-buttons button,
+  .eu-cookie-compliance-buttons a {
+    flex: 1 !important;
+    min-width: 140px !important;
+  }
 }
