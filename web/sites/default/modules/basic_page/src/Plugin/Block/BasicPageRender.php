@@ -101,28 +101,9 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
             $data['footer_id'] = $footer_blocks[0]->id;
         }
 
-        // Check if manual notizie selection exists (field_notizie_sidebar)
+        // Only show notizie if manually selected (no automatic fallback)
         if (!empty($data['scheda']['notizie_sidebar_refs'])) {
-            // Use manually selected notizie
             $nids = array_column($data['scheda']['notizie_sidebar_refs'], 'target_id');
-            if (!empty($nids)) {
-                $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-                $nodes = $node_storage->loadMultiple($nids);
-                $data['notizie_sidebar'] = [];
-                foreach ($nodes as $notizia_node) {
-                    $data['notizie_sidebar'][] = \Drupal\basic_page\Utils\Notizie::document($notizia_node);
-                }
-            }
-        } else {
-            // Fallback: Query for recent Notizie nodes automatically
-            $query = \Drupal::entityQuery('node')
-                ->condition('type', 'notizie')
-                ->condition('status', 1)
-                ->sort('created', 'DESC')
-                ->range(0, 2)
-                ->accessCheck(FALSE);
-            $nids = $query->execute();
-
             if (!empty($nids)) {
                 $node_storage = \Drupal::entityTypeManager()->getStorage('node');
                 $nodes = $node_storage->loadMultiple($nids);

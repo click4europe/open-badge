@@ -38,7 +38,7 @@
         
         {% if data.scheda.hero_description %}
           <div class="font-body-large text-sm sm:text-base text-slate-200 max-w-xl">
-            {{ data.scheda.hero_description }}
+            {{ data.scheda.hero_description|raw }}
           </div>
         {% endif %}
       </div>
@@ -138,7 +138,7 @@
         {% endif %}
 
         {# Notizie Sidebar Section #}
-        {% if data.notizie_sidebar %}
+        {% if data.notizie_sidebar and data.notizie_sidebar|length > 0 %}
           <div class="notizie-sidebar-section">
             <h3 class="text-xl font-bold text-slate-900 mb-4">Ultime Notizie</h3>
             {% for notizia in data.notizie_sidebar %}
