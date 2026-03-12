@@ -15,6 +15,12 @@ class CompanyLogosController extends ControllerBase {
    * Display the company logos management page.
    */
   public function managePage() {
+    // Restrict to admin user only (user ID 1)
+    $current_user = \Drupal::currentUser();
+    if ($current_user->id() != 1) {
+      throw new \Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException('Access denied. Only admin can manage company logos.');
+    }
+
     // Load current data
     $json_file_path = \Drupal::service('extension.list.module')->getPath('basic_page') . '/src/Data/company-logos.json';
     $data = [];
@@ -41,6 +47,12 @@ class CompanyLogosController extends ControllerBase {
    * Get all companies as JSON.
    */
   public function getCompanies() {
+    // Restrict to admin user only (user ID 1)
+    $current_user = \Drupal::currentUser();
+    if ($current_user->id() != 1) {
+      return new JsonResponse(['error' => 'Access denied'], 403);
+    }
+
     $json_file_path = \Drupal::service('extension.list.module')->getPath('basic_page') . '/src/Data/company-logos.json';
     $data = [];
     
@@ -56,6 +68,12 @@ class CompanyLogosController extends ControllerBase {
    * Save company data.
    */
   public function saveCompany(Request $request) {
+    // Restrict to admin user only (user ID 1)
+    $current_user = \Drupal::currentUser();
+    if ($current_user->id() != 1) {
+      return new JsonResponse(['success' => false, 'message' => 'Access denied'], 403);
+    }
+
     $json_file_path = \Drupal::service('extension.list.module')->getPath('basic_page') . '/src/Data/company-logos.json';
     
     // Load current data

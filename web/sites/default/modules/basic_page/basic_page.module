@@ -296,8 +296,13 @@ function basic_page_preprocess_prezzi_e_abbonamenti_render(&$variables) {
         'logos_per_page' => $logos_per_page,
         'pages' => $pages,
         'total_pages' => count($pages),
-        'edit_url' => '/admin/content/company-logos', // Table-based manager
       ];
+      
+      // Only add edit URL for admin user (user ID 1)
+      $current_user = \Drupal::currentUser();
+      if ($current_user->id() == 1) {
+        $company_logos_data['edit_url'] = '/admin/content/company-logos';
+      }
     }
   }
   
