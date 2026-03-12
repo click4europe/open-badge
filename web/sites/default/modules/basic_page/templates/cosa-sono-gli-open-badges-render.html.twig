@@ -51,12 +51,14 @@
             </div>
           {% endif %}
 
-          <div class="pt-4">
-            <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
-              Inizia Ora
-              <span aria-hidden="true" class="ml-2">→</span>
-            </a>
-          </div>
+          {% if data.blocco_tecnologia and data.blocco_tecnologia.first_link is defined and data.blocco_tecnologia.first_link|length > 0 %}
+            <div class="pt-4">
+              <a href="{{ data.blocco_tecnologia.first_link[0].uri }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
+                {{ data.blocco_tecnologia.first_link[0].title|default('Inizia Ora') }}
+                <span aria-hidden="true" class="ml-2">→</span>
+              </a>
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -165,12 +167,14 @@
           </div>
         {% endif %}
 
-        <div class="pt-4">
-          <a href="#contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
-            Inizia ora
-            <span aria-hidden="true" class="ml-2">→</span>
-          </a>
-        </div>
+        {% if data.blocco_home_funziona and data.blocco_home_funziona.first_link is defined and data.blocco_home_funziona.first_link|length > 0 %}
+          <div class="pt-4">
+            <a href="{{ data.blocco_home_funziona.first_link[0].uri }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
+              {{ data.blocco_home_funziona.first_link[0].title|default('Inizia ora') }}
+              <span aria-hidden="true" class="ml-2">→</span>
+            </a>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
