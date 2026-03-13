@@ -1,7 +1,7 @@
 # ===================
 # Drupal .gitignore
 # ===================
-
+/web/.htaccess
 # Drupal files directory (user uploads, generated files)
 /web/sites/*/files/
 /web/sites/*/private/
