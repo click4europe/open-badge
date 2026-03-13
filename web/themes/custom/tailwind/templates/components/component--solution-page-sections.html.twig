@@ -87,8 +87,8 @@
 
         {% if blocco_home is defined and blocco_home and blocco_home.first_link is defined and blocco_home.first_link|length > 0 %}
           <div class="pt-4">
-            <a href="{{ blocco_home.first_link[0].uri }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
-              {{ blocco_home.first_link[0].title|default('Prenota una domanda') }}
+            <a href="{{ blocco_home.first_link[0].url }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
+              {{ blocco_home.first_link[0].title }}
               <span aria-hidden="true" class="ml-2">→</span>
             </a>
           </div>
@@ -157,7 +157,7 @@
 
         {% if blocco_home_funziona is defined and blocco_home_funziona and blocco_home_funziona.first_link is defined and blocco_home_funziona.first_link|length > 0 %}
           <div class="pt-4">
-            <a href="{{ blocco_home_funziona.first_link[0].uri }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
+            <a href="{{ blocco_home_funziona.first_link[0].url }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-slate-900 bg-white text-slate-900 text-sm font-semibold hover:bg-slate-900 hover:text-white transition-colors">
               {{ blocco_home_funziona.first_link[0].title|default('Inizia ora') }}
               <span aria-hidden="true" class="ml-2">→</span>
             </a>
@@ -315,14 +315,18 @@
       {% endif %}
 
       <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
-        <a href="/prezzi-e-abbonamenti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#050322] transition-colors">
-          {{ cta_button_text|default('Abbonamenti') }}
-          <span aria-hidden="true" class="ml-2">→</span>
-        </a>
-        <a href="/contatti" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white/80 text-sm font-semibold hover:bg-white/10 transition-colors">
-          Contattaci
-          <span aria-hidden="true" class="ml-2">→</span>
-        </a>
+        {% if blocco_inizia_ora is defined and blocco_inizia_ora and blocco_inizia_ora.first_link is defined and blocco_inizia_ora.first_link|length > 0 %}
+          <a href="{{ blocco_inizia_ora.first_link[0].url }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white text-white text-sm font-semibold hover:bg-white hover:text-[#050322] transition-colors">
+            {{ blocco_inizia_ora.first_link[0].title }}
+            <span aria-hidden="true" class="ml-2">→</span>
+          </a>
+        {% endif %}
+        {% if blocco_inizia_ora is defined and blocco_inizia_ora and blocco_inizia_ora.second_link is defined and blocco_inizia_ora.second_link|length > 0 %}
+          <a href="{{ blocco_inizia_ora.second_link[0].url }}" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white/80 text-sm font-semibold hover:bg-white/10 transition-colors">
+            {{ blocco_inizia_ora.second_link[0].title }}
+            <span aria-hidden="true" class="ml-2">→</span>
+          </a>
+        {% endif %}
       </div>
     </div>
   </div>

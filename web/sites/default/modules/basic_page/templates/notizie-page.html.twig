@@ -9,7 +9,7 @@
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <!-- Filter Section -->
         <div class="mb-10">
-            <form method="get" action="{{ data.path }}" class="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
+            <form method="get" action="{{ data.path }}" class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-end">
                 <div class="w-full sm:flex-1">
                     <label for="search" class="block text-sm font-medium text-slate-900 mb-2">Cerca notizie</label>
                     <input 
@@ -17,14 +17,14 @@
                         id="search"
                         name="name" 
                         value="{{ data.titolo }}" 
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
+                        class="w-full h-[42px] px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 placeholder:text-slate-400"
                         placeholder="Cerca notizie...">
                 </div>
-                <div class="flex gap-3">
-                    <button type="submit" class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm">
+                <div class="flex gap-3 items-end">
+                    <button type="submit" class="h-[42px] px-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm whitespace-nowrap">
                         Cerca
                     </button>
-                    <button type="button" onclick="window.location.href='{{ data.path }}'" class="px-6 py-2.5 bg-white text-slate-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm">
+                    <button type="button" onclick="window.location.href='{{ data.path }}'" class="h-[42px] px-6 bg-white text-slate-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm whitespace-nowrap">
                         Reset
                     </button>
                 </div>

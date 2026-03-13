@@ -120,12 +120,30 @@ trait BloccoHomeTrait {
 
     // Add first_link field if it exists
     if ($block->hasField('field_first_link') && !$block->get('field_first_link')->isEmpty()) {
-      $rend['first_link'] = $block->get('field_first_link')->getValue();
+      $link_field = $block->get('field_first_link')->first();
+      if ($link_field) {
+        $rend['first_link'] = [
+          [
+            'uri' => $link_field->uri,
+            'title' => $link_field->title,
+            'url' => $link_field->getUrl()->toString(),
+          ]
+        ];
+      }
     }
 
     // Add second_link field if it exists
     if ($block->hasField('field_second_link') && !$block->get('field_second_link')->isEmpty()) {
-      $rend['second_link'] = $block->get('field_second_link')->getValue();
+      $link_field = $block->get('field_second_link')->first();
+      if ($link_field) {
+        $rend['second_link'] = [
+          [
+            'uri' => $link_field->uri,
+            'title' => $link_field->title,
+            'url' => $link_field->getUrl()->toString(),
+          ]
+        ];
+      }
     }
 
     // Add edit link for admin users

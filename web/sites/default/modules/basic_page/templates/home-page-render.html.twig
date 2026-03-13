@@ -70,18 +70,22 @@
             {% endif %}
 
             <div class="flex flex-wrap items-center justify-center gap-4">
-              <a href="https://api-docs.open-badge.eu/" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-[#0d5568] font-semibold text-sm hover:bg-slate-100 transition-colors shadow-lg">
-                Documentazione API
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </a>
-              <a href="https://meetings.hubspot.com/dbrothers/openbadge" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500 text-white font-semibold text-sm hover:bg-cyan-600 transition-colors shadow-lg">
-                Prenota una call
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                </svg>
-              </a>
+              {% if data.integrazione.first_link is defined and data.integrazione.first_link|length > 0 %}
+                <a href="{{ data.integrazione.first_link[0].url }}" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-[#0d5568] font-semibold text-sm hover:bg-slate-100 transition-colors shadow-lg">
+                  {{ data.integrazione.first_link[0].title|default('Documentazione API') }}
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              {% endif %}
+              {% if data.integrazione.second_link is defined and data.integrazione.second_link|length > 0 %}
+                <a href="{{ data.integrazione.second_link[0].url }}" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500 text-white font-semibold text-sm hover:bg-cyan-600 transition-colors shadow-lg">
+                  {{ data.integrazione.second_link[0].title|default('Prenota una call') }}
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </a>
+              {% endif %}
             </div>
           </div>
         {% endblock %}
