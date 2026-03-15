@@ -22,8 +22,13 @@ class Upskilling extends BlockBase
     public function build()
     {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+        $account = \Drupal::currentUser();
         $data = $this->getStepData($lang, 6);
 
+        $upskilling = $this->fetchBloccoHome('Upskilling', $account);
+        if ($upskilling) {
+            $data['blocco_home'] = $upskilling;
+        }
         $build = [];
         $build['#theme'] = 'upskilling_render';
         $build['#data'] = $data;
