@@ -22,7 +22,7 @@ class CertificazioneLavoratori extends BlockBase
     public function build()
     {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-        $data = $this->getStepData($lang, 6);
+        $data = $this->getStepData($lang, 6, 'Gestione dei lavoratori');
 
         $build = [];
         $build['#theme'] = 'certificazione_lavoratori_render';

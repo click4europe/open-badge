@@ -22,11 +22,13 @@ trait StepDataTrait {
    *   The language code.
    * @param int $limit
    *   The number of steps to fetch (default: 6).
+   * @param string|null $custom_blocco_home
+   *   Optional custom block name for blocco_home (default: 'Credenziali digitali').
    *
    * @return array
    *   Array containing 'steps' and 'steps_edit' keys.
    */
-  protected function getStepData($lang, $limit = 6) {
+  protected function getStepData($lang, $limit = 6, $custom_blocco_home = null) {
     $data = [];
     $account = \Drupal::currentUser();
 
@@ -79,7 +81,7 @@ trait StepDataTrait {
 
     // Fetch blocco_home sections by name using BloccoHomeTrait
     $blocco_home_map = [
-      'blocco_home' => 'Credenziali digitali',
+      'blocco_home' => $custom_blocco_home ?? 'Credenziali digitali',
       'blocco_home_funziona' => 'Come funziona',
       'blocco_home_obv' => 'Cosa puoi fare con Obv',
       'blocco_inizia_ora' => 'Inizia Ora',
