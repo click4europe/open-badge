@@ -22,7 +22,7 @@ class PubblicheAmministrazioni extends BlockBase
     public function build()
     {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-        $data = $this->getStepData($lang, 6);
+        $data = $this->getStepData($lang, 6, 'Pubbliche Amministrazioni');
 
         $build = [];
         $build['#theme'] = 'pubbliche_amministrazioni_render';

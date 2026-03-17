@@ -22,7 +22,7 @@ class ScuoleECentriDiFormazione extends BlockBase
     public function build()
     {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-        $data = $this->getStepData($lang, 6);
+        $data = $this->getStepData($lang, 6, 'Scuole e centri di formazione');
 
         $build = [];
         $build['#theme'] = 'scuole_e_centri_di_formazione_render';

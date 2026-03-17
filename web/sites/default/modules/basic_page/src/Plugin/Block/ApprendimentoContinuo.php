@@ -22,7 +22,7 @@ class ApprendimentoContinuo extends BlockBase
     public function build()
     {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-        $data = $this->getStepData($lang, 6);
+        $data = $this->getStepData($lang, 6, 'Apprendimento Continuo');
 
         $build = [];
         $build['#theme'] = 'apprendimento_continuo_render';

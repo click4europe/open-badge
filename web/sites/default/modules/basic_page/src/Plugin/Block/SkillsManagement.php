@@ -22,13 +22,7 @@ class SkillsManagement extends BlockBase
     public function build()
     {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-        $account = \Drupal::currentUser();
-        $data = $this->getStepData($lang, 6);
-
-        $gestione_competenze = $this->fetchBloccoHome('Gestione delle competenze', $account);
-        if ($gestione_competenze) {
-            $data['blocco_home'] = $gestione_competenze;
-        }
+        $data = $this->getStepData($lang, 6, 'Gestione delle competenze');
 
         $build = [];
         $build['#theme'] = 'skills_management_render';

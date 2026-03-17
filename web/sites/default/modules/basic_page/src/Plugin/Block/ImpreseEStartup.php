@@ -22,7 +22,7 @@ class ImpreseEStartup extends BlockBase
     public function build()
     {
         $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
-        $data = $this->getStepData($lang, 6);
+        $data = $this->getStepData($lang, 6, 'Imprese e Startup');
 
         $build = [];
         $build['#theme'] = 'imprese_e_startup_render';
