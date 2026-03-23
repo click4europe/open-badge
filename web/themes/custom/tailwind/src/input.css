@@ -515,6 +515,20 @@ img[data-src] {
     text-align: center;
   }
 
+  /* Paragraph spacing for rich text content */
+  .prose p {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .prose p:first-child {
+    margin-top: 0;
+  }
+
+  .prose p:last-child {
+    margin-bottom: 0;
+  }
+
   /* Support for bullet lists and numbered lists in prose content */
   .prose ul,
   .prose ol {
