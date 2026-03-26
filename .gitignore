@@ -2,6 +2,7 @@
 # Drupal .gitignore
 # ===================
 /web/.htaccess
+/web/robots.txt
 # Drupal files directory (user uploads, generated files)
 /web/sites/*/files/
 /web/sites/*/private/
