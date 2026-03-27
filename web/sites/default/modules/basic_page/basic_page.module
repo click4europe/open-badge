@@ -5,7 +5,50 @@
  * Contains basic_page.module.
  */
 
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * Marks files referenced in faqfield answer columns as permanent.
+ *
+ * Drupal core's editor.module only handles standard text field types
+ * (text, text_long, text_with_summary). The faqfield contrib module stores
+ * rich text in its 'answer' column, which core does not scan. Without this
+ * hook, images pasted into FAQ answers remain temporary and are deleted by cron.
+ */
+function basic_page_entity_presave(EntityInterface $entity) {
+  if (!($entity instanceof FieldableEntityInterface)) {
+    return;
+  }
+
+  foreach ($entity->getFieldDefinitions() as $field_name => $definition) {
+    if ($definition->getType() !== 'faqfield') {
+      continue;
+    }
+
+    foreach ($entity->get($field_name) as $item) {
+      if (empty($item->answer)) {
+        continue;
+      }
+
+      $dom = Html::load($item->answer);
+      $xpath = new \DOMXPath($dom);
+      foreach ($xpath->query('//*[@data-entity-type="file" and @data-entity-uuid]') as $node) {
+        $uuid = $node->getAttribute('data-entity-uuid');
+        $file = \Drupal::service('entity.repository')->loadEntityByUuid('file', $uuid);
+        if ($file && $file->isTemporary()) {
+          $file->setPermanent();
+          $file->save();
+          \Drupal::service('file.usage')->add($file, 'editor', $entity->getEntityTypeId(), $entity->id());
+        }
+      }
+    }
+  }
+}
 
 /**
  * Implements hook_help().
