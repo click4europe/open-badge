@@ -101,7 +101,7 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
             $data['footer_id'] = $footer_blocks[0]->id;
         }
 
-        // Only show notizie if manually selected (no automatic fallback)
+        // Show manually selected notizie, or automatically fetch the latest 3
         if (!empty($data['scheda']['notizie_sidebar_refs'])) {
             $nids = array_column($data['scheda']['notizie_sidebar_refs'], 'target_id');
             if (!empty($nids)) {
@@ -111,6 +111,14 @@ class BasicPageRender extends BlockBase implements ContainerFactoryPluginInterfa
                 foreach ($nodes as $notizia_node) {
                     $data['notizie_sidebar'][] = \Drupal\basic_page\Utils\Notizie::document($notizia_node);
                 }
+            }
+        }
+        
+        // Automatic fallback: fetch latest notizie if none were manually selected
+        if (empty($data['notizie_sidebar'])) {
+            $notizie_data = \Drupal\basic_page\Utils\Notizie::notizie_list(0, 'DESC', 0, 1, '', '');
+            if (!empty($notizie_data['row'])) {
+                $data['notizie_sidebar'] = $notizie_data['row'];
             }
         }
 
