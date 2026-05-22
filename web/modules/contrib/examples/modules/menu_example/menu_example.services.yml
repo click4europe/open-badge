@@ -1,7 +1,7 @@
 services:
   menu_example.access_check.role:
     class: Drupal\menu_example\Access\RoleAccessCheck
-    arguments: ['@current_user']
+    autowire: true
     tags:
       # _menu_example_role is added to the requirements section in the
       # menu_example.routing.yml file to apply a custom access checker.

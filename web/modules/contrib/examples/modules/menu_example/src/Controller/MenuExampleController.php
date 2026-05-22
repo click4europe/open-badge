@@ -151,9 +151,12 @@ class MenuExampleController extends ControllerBase {
    * @see Drupal\menu_example\Routing\MenuExampleDynamicRoutes
    */
   public function tabsPage($path, $title) {
-    $secondary = substr_count($path, '/') > 2 ? 'secondary ' : '';
+    $secondary = substr_count($path, '/') > 1 ? 'secondary ' : '';
     return [
-      '#markup' => $this->t('This is the @secondary tab "@tab" in the "basic tabs" example.', ['@secondary' => $secondary, '@tab' => $title]),
+      '#markup' => $this->t(
+        'This is the @secondary tab "@tab" in the "basic tabs" example.',
+        ['@secondary' => $secondary, '@tab' => $title]
+      ),
     ];
   }
 

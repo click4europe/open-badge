@@ -1,5 +1,5 @@
 examples.icons:
-  version: VERSION
+  version: '4.0.2'
   css:
     theme:
       css/examples.icons.css: {}

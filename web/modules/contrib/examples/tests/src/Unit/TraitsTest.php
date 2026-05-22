@@ -40,7 +40,7 @@ class TraitsTest extends UnitTestCase {
   /**
    * Tests that RetrieveConfigFilesTrait::configFilesCallback() works.
    *
-   * @dataProvider providerConfigFilesFiles
+   * @dataProvider providerConfigFiles
    */
   public function testConfigFilesCallback(string $filename, string $path, string $pathname): void {
     $this->assertNotEquals(

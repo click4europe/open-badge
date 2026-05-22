@@ -1,0 +1,5 @@
+image_example.description:
+  title: Image Example
+  description: Using Image API
+  route_name: image_example.description
+  expanded: TRUE

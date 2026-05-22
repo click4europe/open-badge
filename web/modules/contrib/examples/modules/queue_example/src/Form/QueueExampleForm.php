@@ -388,7 +388,7 @@ class QueueExampleForm extends FormBase {
             '@item_id' => $item->item_id,
             '@string' => $item->data,
             '@seconds' => $form_state->getValue('claim_time'),
-            ]
+          ]
         )
       );
       $queue->deleteItem($item);

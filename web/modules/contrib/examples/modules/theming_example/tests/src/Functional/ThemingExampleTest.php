@@ -49,7 +49,8 @@ class ThemingExampleTest extends ExamplesBrowserTestBase {
     // Visit the list demonstration page and check that css gets loaded
     // and do some spot checks on how the two lists were themed.
     $this->drupalGet('/examples/theming_example/list');
-    // CSS should be always injected, because preprocess is set to false in *.libraries.yml.
+    // CSS should be always injected, because preprocess is set to false in
+    // .libraries.yml files.
     $this->assertSession()->responseMatches('/<link rel="stylesheet".*theming_example.css/');
     $li_list = $this->xpath('//ul[contains(@class,"render-version-list")]/li');
     $this->assertTrue($li_list[0]->getText() == 'First item');

@@ -138,7 +138,6 @@ function _examples_toolbar_routes() {
     'node_type_example' => 'config_node_type_example.description',
     'page_example' => 'page_example.description',
     'pager_example' => 'pager_example.page',
-    'phpunit_example' => 'phpunit_example.description',
     'plugin_type_example' => 'plugin_type_example.description',
     'queue_example' => 'queue_example.form',
     'render_example' => 'render_example.description',
@@ -147,7 +146,6 @@ function _examples_toolbar_routes() {
     'tabledrag_example' => 'tabledrag_example.description',
     'tablesort_example' => 'tablesort_example.description',
     'testing_example' => 'testing_example.description',
-    'tour_example' => 'tour_example.description',
   ];
 }
 

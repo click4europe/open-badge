@@ -31,7 +31,7 @@ class FileExampleReadWriteForm extends FormBase {
   public function __construct(
     protected FileExampleStateHelper $stateHelper,
     protected FileExampleSubmitHandlerHelper $submitHandlerHelper,
-    protected FileSystemInterface $fileSystem
+    protected FileSystemInterface $fileSystem,
   ) {
   }
 
@@ -184,7 +184,7 @@ class FileExampleReadWriteForm extends FormBase {
       return;
     }
 
-    $filename = $this->fileSystem->basename($destination);
+    $filename = basename($destination);
     if (!$filename) {
       $form_state->setError($form['write_file']['destination'], $this->t('The destination %destination is not valid.', ['%destination' => $destination]));
       return;

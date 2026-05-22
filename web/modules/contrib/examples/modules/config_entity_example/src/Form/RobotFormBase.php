@@ -166,16 +166,6 @@ class RobotFormBase extends EntityForm {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    parent::validateForm($form, $form_state);
-
-    // Add code here to validate your config entity's form elements.
-    // Nothing to do here.
-  }
-
-  /**
    * Overrides Drupal\Core\Entity\EntityFormController::save().
    *
    * Saves the entity. This is called after submit() has built the entity from
@@ -206,12 +196,18 @@ class RobotFormBase extends EntityForm {
     if ($status == SAVED_UPDATED) {
       // If we edited an existing entity...
       $this->messenger()->addMessage($this->t('Robot %label has been updated.', ['%label' => $robot->label()]));
-      $this->logger('contact')->notice('Robot %label has been updated.', ['%label' => $robot->label(), 'link' => $edit_link]);
+      $this->logger('contact')
+        ->notice('Robot %label has been updated.',
+          ['%label' => $robot->label(), 'link' => $edit_link]
+        );
     }
     else {
       // If we created a new entity...
       $this->messenger()->addMessage($this->t('Robot %label has been added.', ['%label' => $robot->label()]));
-      $this->logger('contact')->notice('Robot %label has been added.', ['%label' => $robot->label(), 'link' => $edit_link]);
+      $this->logger('contact')
+        ->notice('Robot %label has been added.',
+          ['%label' => $robot->label(), 'link' => $edit_link]
+        );
     }
 
     // Redirect the user back to the listing route after the save operation.

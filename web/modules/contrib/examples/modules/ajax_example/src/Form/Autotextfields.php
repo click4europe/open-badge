@@ -118,7 +118,7 @@ class AutoTextFields extends FormBase {
    * returns it as a form (renderable array).
    */
   public function textfieldsCallback($form, FormStateInterface $form_state) {
-    return $form['textfields_container'];
+    return $form['text_fields_container'];
   }
 
 }

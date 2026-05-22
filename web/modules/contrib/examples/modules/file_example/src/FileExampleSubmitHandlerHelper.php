@@ -9,6 +9,7 @@ use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\file\FileRepositoryInterface;
 use Drupal\file_example\Traits\DumperTrait;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -18,23 +19,28 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class FileExampleSubmitHandlerHelper {
 
-  use stringTranslationTrait, DumperTrait;
+  use DumperTrait;
+  use stringTranslationTrait;
+
+  //phpcs:disable Drupal.Files.LineLength.TooLong
 
   /**
-   * Constructs a new FileExampleReadWriteForm page.
+   * Constructs a new \Drupal\file_example\FileExampleSubmitHandlerHelper instance.
    *
+   * @param \Drupal\Core\StringTranslation\TranslationInterface $string_translation
+   *   The string translation service.
    * @param \Drupal\file_example\FileExampleStateHelper $stateHelper
-   *   The file example state helper.
+   *   The state helper.
    * @param \Drupal\file_example\FileExampleFileHelper $fileHelper
-   *   The file example file helper.
+   *   The helper service.
    * @param \Drupal\file_example\FileExampleSessionHelperWrapper $sessionHelperWrapper
-   *   The file example session helper wrapper.
+   *   The session helper wrapper.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
    * @param \Drupal\file\FileRepositoryInterface $fileRepository
    *   The file repository.
    * @param \Drupal\Core\File\FileSystemInterface $fileSystem
-   *   The file system.
+   *   The file system service.
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
    *   The event dispatcher.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
@@ -43,6 +49,7 @@ class FileExampleSubmitHandlerHelper {
    * @see https://php.watch/versions/8.0/constructor-property-promotion
    */
   public function __construct(
+    TranslationInterface $string_translation,
     protected FileExampleStateHelper $stateHelper,
     protected FileExampleFileHelper $fileHelper,
     protected FileExampleSessionHelperWrapper $sessionHelperWrapper,
@@ -52,7 +59,10 @@ class FileExampleSubmitHandlerHelper {
     protected EventDispatcherInterface $eventDispatcher,
     protected ModuleHandlerInterface $moduleHandler,
   ) {
+    $this->setStringTranslation($string_translation);
   }
+
+  // phpcs:enable
 
   /**
    * Submit handler to write a managed file.
@@ -84,10 +94,12 @@ class FileExampleSubmitHandlerHelper {
 
     // Managed operations work with a file object.
     $file_object = $this->fileRepository->writeData($data, $uri, FileExists::Rename);
+
     if (!empty($file_object)) {
       $url = $this->fileHelper->getExternalUrl($file_object);
       $this->stateHelper->setDefaultFile($file_object->getFileUri());
       $file_data = $file_object->toArray();
+
       if ($url) {
         $this->messenger->addMessage(
           $this->t('Saved managed file: %file to destination %destination (accessible via <a href=":url">this URL</a>, actual uri=<span id="uri">@uri</span>)', [
@@ -99,7 +111,8 @@ class FileExampleSubmitHandlerHelper {
         );
       }
       else {
-        // The stream type does not support URLs, so we cannot give a link to it.
+        // The stream type does not support URLs, so we cannot give a link to
+        // it.
         $this->messenger->addMessage(
           $this->t('Saved managed file: %file to destination %destination (no URL, since this stream type does not support it)', [
             '%file' => print_r($file_data, TRUE),
@@ -144,9 +157,11 @@ class FileExampleSubmitHandlerHelper {
 
     // With the unmanaged file we just get a filename back.
     $filename = $this->fileSystem->saveData($data, $destination, FileExists::Replace);
+
     if ($filename) {
       $url = $this->fileHelper->getExternalUrl($filename);
       $this->stateHelper->setDefaultFile($filename);
+
       if ($url) {
         $this->messenger->addMessage(
           $this->t('Saved file as %filename (accessible via <a href=":url">this URL</a>, uri=<span id="uri">@uri</span>)', [
@@ -207,16 +222,20 @@ class FileExampleSubmitHandlerHelper {
     // fwrite($fp, $data).
     $length = strlen($data);
     $write_size = 5;
+
     for ($i = 0; $i < $length; $i += $write_size) {
       $result = fwrite($fp, substr($data, $i, $write_size));
-      if ($result === FALSE) {
-        $this->messenger->addMessage($this->t('Failed writing to the file %file', ['%file' => $destination]), 'error');
+
+      if (!$result) {
+        $this->messenger->addError($this->t('Failed writing to the file %file', ['%file' => $destination]));
         fclose($fp);
         return;
       }
     }
+
     $url = $this->fileHelper->getExternalUrl($destination);
     $this->stateHelper->setDefaultFile($destination);
+
     if ($url) {
       $this->messenger->addMessage(
         $this->t('Saved file as %filename (accessible via <a href=":url">this URL</a>, uri=<span id="uri">@uri</span>)', [
@@ -250,12 +269,12 @@ class FileExampleSubmitHandlerHelper {
    * Wrapper Example, if installed, implements a custom 'session' scheme you can
    * test with this example.
    *
-   * Here we take the stream wrapper provided in the form. We grab the
-   * contents with file_get_contents(). It is that simple:
+   * Here we take the stream wrapper provided in the form. We grab the content
+   * with file_get_contents(). It is that simple:
    * file_get_contents("http://example.com") or
    * file_get_contents("public://example.txt") just works. Although not
    * necessary, we use FileSystemInterface::saveData() to save this file locally
-   * and then find a local URL for it by using file_create_url().
+   * and then find a local URL for it.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -271,30 +290,36 @@ class FileExampleSubmitHandlerHelper {
       return;
     }
 
-    $filename = $this->fileSystem->basename($uri);
+    $basename = basename($uri);
+    $event = new FileUploadSanitizeNameEvent($basename, 'txt');
 
-    // To ensure that the filename is valid, strip off any potential file
-    // portion from the stream wrapper. If the filename includes a malicious
-    // file extension, it will be neutralized by the event subscriber of the
-    // FileUploadSanitizeNameEvent. This process helps to maintain the security
-    // of the system and prevent any potential harm from malicious files.
-    $event = new FileUploadSanitizeNameEvent($filename, 'txt');
     $this->eventDispatcher->dispatch($event);
+
     $dirname = $this->fileSystem->dirname($uri);
+    $basename = $event->getFilename();
+    $file_info = pathinfo($basename);
+    $basename = $file_info['filename'];
 
-    if (str_ends_with($dirname, '/')) {
-      $filename = $dirname . $event->getFilename();
-    }
-    else {
-      $filename = $dirname . '/' . $event->getFilename();
+    // Change the extension if it is not the allowed one.
+    if (!empty($file_info['extension'])) {
+      if ($file_info['extension'] !== 'txt') {
+        $file_info['extension'] = 'txt';
+      }
+
+      $basename .= '.' . $file_info['extension'];
     }
 
+    $separator = str_ends_with($dirname, '/') ? '' : '/';
+    $filename = $dirname . $separator . $basename;
     $buffer = file_get_contents($filename);
+
     if ($buffer) {
       $source_name = $this->fileSystem->saveData($buffer, 'public://' . $event->getFilename());
+
       if ($source_name) {
         $url = $this->fileHelper->getExternalUrl($source_name);
         $this->stateHelper->setDefaultFile($source_name);
+
         if ($url) {
           $this->messenger->addMessage(
             $this->t('The file was read and copied to %filename which is accessible at <a href=":url">this URL</a>', [
@@ -322,7 +347,7 @@ class FileExampleSubmitHandlerHelper {
   }
 
   /**
-   * Submit handler to delete a file.
+   * Submission handler to delete a file.
    *
    * @param array $form
    *   An associative array containing the structure of the form.
@@ -338,43 +363,40 @@ class FileExampleSubmitHandlerHelper {
     // files, so this is not a typical situation.
     $file_object = $this->fileHelper->getManagedFile($uri);
 
-    // If a managed file, use file_delete().
     if (!empty($file_object)) {
-      // While file_delete should return FALSE on failure,
-      // it can currently throw an exception on certain cache states.
+      // While FALSE is expected to be returned on failure, an exception can be
+      // thrown on certain cache states.
       try {
-        // This no longer returns a result code.  If things go bad,
-        // it will throw an exception:
         $file_object->delete();
-        $this->messenger->addMessage($this->t('Successfully deleted managed file %uri', ['%uri' => $uri]));
+        $this->messenger->addMessage($this->t('Successfully deleted the managed file %uri', ['%uri' => $uri]));
         $this->stateHelper->setDefaultFile($uri);
       }
       catch (\Exception $e) {
-        $this->messenger->addMessage($this->t('Failed deleting managed file %uri. Result was %result', [
+        $this->messenger->addError($this->t('Failed deleting managed file %uri: @result', [
           '%uri' => $uri,
-          '%result' => print_r($e->getMessage(), TRUE),
-        ]), 'error');
+          '@result' => $e->getMessage(),
+        ]));
       }
     }
-    // Else use FileSystemInterface::delete().
     else {
       $result = $this->fileSystem->delete($uri);
-      if ($result !== TRUE) {
-        $this->messenger->addError($this->t('Failed deleting unmanaged file %uri', ['%uri' => $uri]));
-      }
-      else {
+      if ($result) {
         $this->messenger->addMessage($this->t('Successfully deleted unmanaged file %uri', ['%uri' => $uri]));
         $this->stateHelper->setDefaultFile($uri);
+      }
+      else {
+        $this->messenger->addError($this->t('Failed deleting unmanaged file %uri', ['%uri' => $uri]));
       }
     }
   }
 
   /**
-   * Submit handler to check existence of a file.
+   * Submission handler to check existence of a file.
    */
   public function handleFileExists(array &$form, FormStateInterface $form_state) {
     $form_values = $form_state->getValues();
     $uri = $form_values['file_ops_file'];
+
     if (is_file($uri)) {
       $this->messenger->addMessage($this->t('The file %uri exists.', ['%uri' => $uri]));
     }
@@ -384,9 +406,9 @@ class FileExampleSubmitHandlerHelper {
   }
 
   /**
-   * Submit handler for directory creation.
+   * Submission handler for directory creation.
    *
-   * Here we create a directory and set proper permissions on it using
+   * We create a directory and set the proper permissions on it using
    * FileSystemInterface::prepareDirectory().
    */
   public function handleDirectoryCreate(array &$form, FormStateInterface $form_state) {
@@ -394,19 +416,14 @@ class FileExampleSubmitHandlerHelper {
     $directory = $form_values['directory_name'];
 
     // The options passed to FileSystemInterface::prepareDirectory() are a
-    // bitmask, so we can specify
-    // either FileSystemInterface::MODIFY_PERMISSIONS
-    // (set permissions on the directory),
-    // FileSystemInterface::CREATE_DIRECTORY,
-    // or both together:
-    // FileSystemInterface::MODIFY_PERMISSIONS |
-    // FileSystemInterface::CREATE_DIRECTORY.
-    // FileSystemInterface::MODIFY_PERMISSIONS
-    // will set the permissions of the directory by default to 0755,
-    // or to the value of the variable
+    // bitmask, so we can specify either
+    // FileSystemInterface::MODIFY_PERMISSIONS,
+    // FileSystemInterface::CREATE_DIRECTORY, or both.
+    // FileSystemInterface::MODIFY_PERMISSIONS will set the permissions of the
+    // directory by default to 0755, or to the value of the variable
     // 'file_chmod_directory'.
     if (!$this->fileSystem->prepareDirectory($directory, FileSystemInterface::MODIFY_PERMISSIONS | FileSystemInterface::CREATE_DIRECTORY)) {
-      $this->messenger->addMessage($this->t('Failed to create %directory.', ['%directory' => $directory]), 'error');
+      $this->messenger->addError($this->t('Failed to create %directory.', ['%directory' => $directory]));
     }
     else {
       $this->messenger->addMessage($this->t('Directory %directory is ready for use.', ['%directory' => $directory]));
@@ -415,51 +432,48 @@ class FileExampleSubmitHandlerHelper {
   }
 
   /**
-   * Submit handler for directory deletion.
+   * Submission handler for directory deletion.
    *
    * @see \Drupal\Core\File\FileSystemInterface::deleteRecursive()
    */
   public function handleDirectoryDelete(array &$form, FormStateInterface $form_state) {
     $form_values = $form_state->getValues();
     $directory = $form_values['directory_name'];
-
     $result = $this->fileSystem->deleteRecursive($directory);
-    if (!$result) {
-      $this->messenger->addMessage($this->t('Failed to delete %directory.', ['%directory' => $directory]), 'error');
-    }
-    else {
+
+    if ($result) {
       $this->messenger->addMessage($this->t('Recursively deleted directory %directory.', ['%directory' => $directory]));
       $this->stateHelper->setDefaultDirectory($directory);
+    }
+    else {
+      $this->messenger->addError($this->t('Failed to delete %directory.', ['%directory' => $directory]));
     }
   }
 
   /**
-   * Submit handler to test directory existence.
+   * Submission handler to test directory existence.
    *
    * This actually just checks to see if the directory is writable.
-   *
-   * @param array $form
-   *   FormAPI form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   FormAPI form state.
    */
   public function handleDirectoryExists(array &$form, FormStateInterface $form_state) {
     $form_values = $form_state->getValues();
     $directory = $form_values['directory_name'];
     $result = is_dir($directory);
-    if (!$result) {
-      $this->messenger->addMessage($this->t('Directory %directory does not exist.', ['%directory' => $directory]));
+
+    if ($result) {
+      $this->messenger->addMessage($this->t('Directory %directory exists.', ['%directory' => $directory]));
     }
     else {
-      $this->messenger->addMessage($this->t('Directory %directory exists.', ['%directory' => $directory]));
+      $this->messenger->addError($this->t('Directory %directory does not exist.', ['%directory' => $directory]));
     }
   }
 
   /**
-   * Utility submit function to show the contents of $_SESSION.
+   * Submission handler to show the contents of $_SESSION.
    */
   public function handleShowSession(array &$form, FormStateInterface $form_state) {
     $dumper = $this->dumper();
+
     if ($this->isDevelDumper($dumper)) {
       // If the devel module is installed, use its nicer message format.
       $dumper->dump($this->sessionHelperWrapper->getStoredData(), $this->t('Entire $_SESSION["file_example"]'));
@@ -470,16 +484,12 @@ class FileExampleSubmitHandlerHelper {
   }
 
   /**
-   * Utility submit function to reset the demo.
+   * Submission handler to reset the demo.
    *
-   * @param array $form
-   *   FormAPI form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   FormAPI form state.
-   *
-   * @todo Note this does NOT clear any managed file references in Drupal's DB.
+   * @todo Note this does NOT clear any managed file references in the database.
    *   It might be a good idea to add this.
-   *   https://www.drupal.org/project/examples/issues/2985471
+   *
+   * @see https://www.drupal.org/project/examples/issues/2985471
    */
   public function handleResetSession(array &$form, FormStateInterface $form_state) {
     $this->stateHelper->deleteDefaultState();
@@ -494,8 +504,8 @@ class FileExampleSubmitHandlerHelper {
    *   The object to check.
    *
    * @return bool
-   *   Returns TRUE if the object is an instance of DevelDumperInterface,
-   *   FALSE otherwise.
+   *   TRUE if the object is an instance of DevelDumperInterface, FALSE
+   *   otherwise.
    */
   protected function isDevelDumper(object $object): bool {
     if ($this->moduleHandler->moduleExists('devel')) {

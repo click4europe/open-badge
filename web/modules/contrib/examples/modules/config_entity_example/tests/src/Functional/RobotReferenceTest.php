@@ -58,7 +58,10 @@ class RobotReferenceTest extends BrowserTestBase {
 
     // - Under "Reference" select "other".
     // - Choose a label and click continue.
-    $this->submitForm(['new_storage_type' => 'entity_reference', 'field_name' => 'robot_reference', 'label' => 'robot_reference'], 'Save and continue');
+    $this->submitForm(
+      ['new_storage_type' => 'entity_reference', 'field_name' => 'robot_reference', 'label' => 'robot_reference'],
+      'Save and continue'
+    );
     $assert->statusCodeEquals(200);
 
     // - Under configuration select "robot".

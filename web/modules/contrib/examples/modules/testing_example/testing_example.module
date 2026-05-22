@@ -15,12 +15,12 @@ use Drupal\node\NodeInterface;
  * @{
  * This example demonstrates Drupal 8 testing frameworks.
  *
- * This module creates a new node type called 'Testing Example Node Type,'
- * so that we can test it.
+ * This module creates a new node type called 'Testing Example Node Type,' so
+ * that we can test it.
  *
  * This code was originally written to accompany the tutorial at
- * http://drupal.org/node/890654. That's a Drupal 7 example, but can still
- * teach you much.
+ * http://drupal.org/node/890654. That's a Drupal 7 example, but can still teach
+ * you much.
  */
 
 /**

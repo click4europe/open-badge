@@ -6,6 +6,8 @@ use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
 use Drupal\Core\Url;
 
 /**
+ * Tests the behavior of the modal form example.
+ *
  * @group form_api_example
  *
  * @ingroup form_api_example

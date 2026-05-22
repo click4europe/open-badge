@@ -1,0 +1,60 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations for the Image Example module.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * @defgroup image_example Example: Image
+ * @ingroup examples
+ * @{
+ * Demonstrates the basic use of image API.
+ *
+ * This module demonstrates the use of new image effects including the following
+ * topics.
+ *  - Demonstrates the use of hook_ENTITY_TYPE_delete() to update module
+ *    specific variables when an image style is deleted.
+ *  - Generate a form with a field of type #managed_file that allows the user
+ *    to upload an image and choose a style to use when displaying that image.
+ *  - Demonstrates how to theme an image using an image style.
+ *
+ * @see hook_image_effect_info_alter().
+ * @see hook_ENTITY_TYPE_delete().
+ */
+
+/**
+ * Implements hook_help().
+ */
+function image_example_help($path) {
+  switch ($path) {
+    case 'image_example/effects':
+      $output = '<p>' . t(
+        'Use this form to upload an image and choose an Image Style to use when displaying the image. This demonstrates basic use of the Drupal 7 Image effects & effects system.'
+      ) . '</p>';
+      $output .= '<p>' . t(
+        'Image effects can be added/edited using the <a href=":link">Image effects UI</a>.',
+        [':link' => Url::fromRoute('entity.image_style.collection')->toString()]
+      ) . '</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_image_effect_info_alter().
+ *
+ * Allows your module to alter the information provided in
+ * \Drupal\image\Annotation\ImageEffect.
+ */
+function image_example_image_effect_info_alter(&$effects) {
+  // $effects is an array of effect arrays keyed by the effect name.
+  if (isset($effects['image_resize'])) {
+    $effects['image_resize']['description'] = t('The resize effect will resize the source image to the specified dimensions.');
+  }
+}
+
+/**
+ * @} End of "defgroup image_example".
+ */

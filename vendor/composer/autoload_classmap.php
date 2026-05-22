@@ -42,6 +42,7 @@ return array(
     'Drupal\\Core\\Installer\\InstallerRedirectTrait' => $baseDir . '/web/core/lib/Drupal/Core/Installer/InstallerRedirectTrait.php',
     'Drupal\\Core\\Site\\Settings' => $baseDir . '/web/core/lib/Drupal/Core/Site/Settings.php',
     'EllipticCurve\\Curve' => $vendorDir . '/starkbank/ecdsa/src/curve.php',
+    'EllipticCurve\\CurveFp' => $vendorDir . '/starkbank/ecdsa/src/curve.php',
     'EllipticCurve\\Ecdsa' => $vendorDir . '/starkbank/ecdsa/src/ecdsa.php',
     'EllipticCurve\\Math' => $vendorDir . '/starkbank/ecdsa/src/math.php',
     'EllipticCurve\\Point' => $vendorDir . '/starkbank/ecdsa/src/point.php',

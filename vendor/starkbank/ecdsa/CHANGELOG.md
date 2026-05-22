@@ -14,6 +14,14 @@ Given a version number MAJOR.MINOR.PATCH, increment:
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-05-05
+### Fixed
+- top-level gmp_init() running on every autoload, breaking transitive dependents without ext-gmp (#27)
+
+## [2.2.0] - 2026-04-28
+### Changed
+- Security changes
+
 ## [2.1.0] - 2023-09-06
 ### Added
 - toCompressed and fromCompressed to PublicKey resource

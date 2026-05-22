@@ -26,6 +26,8 @@ class TestingExampleController implements ContainerInjectionInterface {
    */
   protected $moduleExtensionList;
 
+  // phpcs:disable Drupal.Files.LineLength.TooLong
+
   /**
    * Constructs a new \Drupal\testing_example\Controller\TestingExampleController.
    *
@@ -35,6 +37,8 @@ class TestingExampleController implements ContainerInjectionInterface {
   public function __construct(ModuleExtensionList $module_extension) {
     $this->moduleExtensionList = $module_extension;
   }
+
+  //phpcs:enable
 
   /**
    * {@inheritdoc}
@@ -48,6 +52,24 @@ class TestingExampleController implements ContainerInjectionInterface {
    */
   protected function getModuleName() {
     return 'testing_example';
+  }
+
+  /**
+   * Generate a render array for the Simpletest description.
+   *
+   * @return array
+   *   A render array.
+   */
+  public function phpUnitDescription() {
+    $template_file = $this->moduleExtensionList->getPath('testing_example') . '/templates/phpunit.description.html.twig';
+    $build = [
+      'description' => [
+        '#type' => 'inline_template',
+        '#template' => file_get_contents($template_file),
+      ],
+    ];
+
+    return $build;
   }
 
   /**

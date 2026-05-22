@@ -2,6 +2,9 @@ testing_example.description:
   title: Testing Example
   route_name: testing_example.description
   expanded: TRUE
+testing_example.phpunit_example.description:
+  title: PHPUnit Example
+  route_name: testing_example.phpunit_example.description
 testing_example.simpletest_description:
   title: Simpletest information
   route_name: testing_example.simpletest_description

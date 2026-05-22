@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Hook implementations for the File Example module.
+ */
+
+/**
  * @defgroup file_example Example: Files
  * @ingroup examples
  * @{
@@ -37,6 +42,9 @@
  */
 
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
+
+// phpcs:disable Drupal.Commenting.HookComment.HookParamDoc
+// phpcs:disable Drupal.Commenting.HookComment.HookReturnDoc
 
 /**
  * Implements hook_file_download().

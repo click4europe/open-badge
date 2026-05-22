@@ -47,7 +47,12 @@ class ColorPickerWidgetTest extends FieldExampleBrowserTestBase {
 
     // Submit the content creation form.
     $this->submitForm($edit, 'Save');
-    $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
+    $assert->pageTextContains(
+      (string) new FormattableMarkup(
+        '@type @title has been created',
+        ['@type' => $this->contentTypeName, '@title' => $title]
+      )
+    );
 
     // Verify color.
     $assert->pageTextContains('The color code in this field is #00ff00');
@@ -91,7 +96,12 @@ class ColorPickerWidgetTest extends FieldExampleBrowserTestBase {
 
     // Submit the content creation form.
     $this->submitForm($edit, 'Save');
-    $assert->pageTextContains((string) new FormattableMarkup('@type @title has been created', ['@type' => $this->contentTypeName, '@title' => $title]));
+    $assert->pageTextContains(
+      (string) new FormattableMarkup(
+        '@type @title has been created',
+        ['@type' => $this->contentTypeName, '@title' => $title]
+      )
+    );
 
     // Verify color.
     $assert->pageTextContains('The color code in this field is #00ff00');

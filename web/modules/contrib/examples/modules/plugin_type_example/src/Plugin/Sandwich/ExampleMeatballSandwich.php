@@ -4,27 +4,22 @@ namespace Drupal\plugin_type_example\Plugin\Sandwich;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\StringTranslation\TranslationInterface;
+use Drupal\plugin_type_example\Attribute\Sandwich;
 use Drupal\plugin_type_example\SandwichBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a meatball sandwich.
  *
- * Because the plugin manager class for our plugins uses annotated class
+ * Because the plugin manager class for our plugins uses attributes for class
  * discovery, our meatball sandwich only needs to exist within the
- * Plugin\Sandwich namespace, and provide a Sandwich annotation to be declared
+ * Plugin\Sandwich namespace, and provide a Sandwich attribute to be declared
  * as a plugin. This is defined in
  * \Drupal\plugin_type_example\SandwichPluginManager::__construct().
  *
- * The following is the plugin annotation. This is parsed by Doctrine to make
- * the plugin definition. Any values defined here will be available in the
- * plugin definition.
- *
- * This should be used for metadata that is specifically required to instantiate
- * the plugin, or for example data that might be needed to display a list of all
- * available plugins where the user selects one. This means many plugin
- * annotations can be reduced to a plugin ID, a label and perhaps a description.
+ * See the ExampleHamSandwich plugin for details about the Sandwich attribute.
  *
  * @Sandwich(
  *   id = "meatball_sandwich",
@@ -32,6 +27,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   calories = "1200"
  * )
  */
+#[Sandwich(
+  id: "meatball_sandwich",
+  description: new TranslatableMarkup('Italian style meatballs drenched in irresistible marinara sauce, served on freshly baked bread.'),
+  calories: 1200
+)]
 class ExampleMeatballSandwich extends SandwichBase implements ContainerFactoryPluginInterface {
 
   // Use Drupal\Core\StringTranslation\StringTranslationTrait to define
