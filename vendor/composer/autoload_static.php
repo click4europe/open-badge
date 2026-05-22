@@ -91,6 +91,7 @@ class ComposerStaticInitdc1c6249c9d38bb6b52101d336075298
         'R' => 
         array (
             'Robo\\' => 5,
+            'ReCaptcha\\' => 10,
         ),
         'P' => 
         array (
@@ -358,6 +359,10 @@ class ComposerStaticInitdc1c6249c9d38bb6b52101d336075298
         'Robo\\' => 
         array (
             0 => __DIR__ . '/..' . '/consolidation/robo/src',
+        ),
+        'ReCaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
         ),
         'Psy\\' => 
         array (
