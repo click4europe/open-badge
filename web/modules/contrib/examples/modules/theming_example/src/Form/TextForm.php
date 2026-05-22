@@ -8,8 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * A simple form that displays a textfield and submit button.
  *
- * This form will be rendered by theme('form') (theme_form() by default)
- * because we do not provide a theme function for it here.
+ * This form will be rendered by the default theme function because we do not
+ * provide one.
  */
 class TextForm extends FormBase {
 

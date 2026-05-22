@@ -5,7 +5,8 @@ namespace Drupal\plugin_type_example;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
-use Drupal\plugin_type_example\Annotation\Sandwich;
+use Drupal\plugin_type_example\Annotation\Sandwich as SandwichAnnotation;
+use Drupal\plugin_type_example\Attribute\Sandwich as SandwichAttribute;
 
 /**
  * A plugin manager for sandwich plugins.
@@ -16,7 +17,8 @@ use Drupal\plugin_type_example\Annotation\Sandwich;
  * and more.
  *
  * Using the DefaultPluginManager as a starting point sets up our sandwich
- * plugin type to use annotated discovery.
+ * plugin type to use PHP attributes for discovery with a fallback to
+ * annotations for backwards compatibility.
  *
  * The plugin manager is also declared as a service in
  * plugin_type_example.services.yml so that it can be easily accessed and used
@@ -49,10 +51,19 @@ class SandwichPluginManager extends DefaultPluginManager {
     // interface, Drupal will throw an error.
     $plugin_interface = SandwichInterface::class;
 
-    // The name of the annotation class that contains the plugin definition.
-    $plugin_definition_annotation_name = Sandwich::class;
+    // The name of the attribute class that contains the plugin definition.
+    $plugin_definition_attribute_name = SandwichAttribute::class;
 
-    parent::__construct($subdir, $namespaces, $module_handler, $plugin_interface, $plugin_definition_annotation_name);
+    // The name of the annotation class that contains the plugin definition.
+    // This is provided for backwards compatibility. If you are defining a new
+    // plugin that will only ever need to work with Drupal 11+ than you do not
+    // need to provide an annotation class. If you're updating an existing
+    // plugin manager that already has an annotation class then you should
+    // provide an annotation class here. This will ensure that existing plugin
+    // instances that use annotations for discovery will still work.
+    $plugin_definition_annotation_name = SandwichAnnotation::class;
+
+    parent::__construct($subdir, $namespaces, $module_handler, $plugin_interface, $plugin_definition_attribute_name, $plugin_definition_annotation_name);
 
     // This allows the plugin definitions to be altered by an alter hook. The
     // parameter defines the name of the hook, thus: hook_sandwich_info_alter().

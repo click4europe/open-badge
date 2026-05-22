@@ -14,7 +14,7 @@ use Drupal\Component\Plugin\PluginBase;
  * implement a sandwich plugin.
  *
  * In this case both the description and calories properties can be read from
- * the @Sandwich annotation. In most cases it is probably fine to just use that
+ * the #[Sandwich] attribute. In most cases it is probably fine to just use that
  * value without any additional processing. However, if an individual plugin
  * needed to provide special handling around either of these things it could
  * just override the method in that class definition for that plugin.
@@ -24,7 +24,7 @@ use Drupal\Component\Plugin\PluginBase;
  * This way even if they are using our base class, developers will always be
  * required to define an order() method for their custom sandwich type.
  *
- * @see \Drupal\plugin_type_example\Annotation\Sandwich
+ * @see \Drupal\plugin_type_example\Attribute\Sandwich
  * @see \Drupal\plugin_type_example\SandwichInterface
  */
 abstract class SandwichBase extends PluginBase implements SandwichInterface {
@@ -33,7 +33,7 @@ abstract class SandwichBase extends PluginBase implements SandwichInterface {
    * {@inheritdoc}
    */
   public function description() {
-    // Retrieve the @description property from the annotation and return it.
+    // Retrieve the description property from the attribute and return it.
     return $this->pluginDefinition['description'];
   }
 
@@ -41,7 +41,7 @@ abstract class SandwichBase extends PluginBase implements SandwichInterface {
    * {@inheritdoc}
    */
   public function calories() {
-    // Retrieve the @calories property from the annotation and return it.
+    // Retrieve the calories property from the attribute and return it.
     return (float) $this->pluginDefinition['calories'];
   }
 

@@ -24,11 +24,7 @@ use Drupal\Core\Entity\EntityInterface;
  *
  * @ingroup testing_example
  */
-function testing_example_test_node_view(
-  array &$build,
-  EntityInterface $node,
-  EntityViewDisplayInterface $display,
-  $view_mode) {
+function testing_example_test_node_view(array &$build, EntityInterface $node, EntityViewDisplayInterface $display, $view_mode) {
   if ($node->getType() == 'testing_example') {
     $build['simpletest_example_test_section'] = [
       '#markup' => t('The test module did its thing.'),

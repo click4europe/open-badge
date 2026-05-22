@@ -5,4 +5,4 @@
 services:
   dbtng_example.repository:
     class: Drupal\dbtng_example\DbtngExampleRepository
-    arguments: ['@database', '@string_translation', '@messenger']
+    autowire: true

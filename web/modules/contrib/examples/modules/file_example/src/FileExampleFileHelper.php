@@ -28,7 +28,7 @@ class FileExampleFileHelper {
   public function __construct(
     protected StreamWrapperManagerInterface $streamWrapperManager,
     protected EntityTypeManagerInterface $entityTypeManager,
-    protected FileUrlGeneratorInterface $fileUrlGenerator
+    protected FileUrlGeneratorInterface $fileUrlGenerator,
   ) {
   }
 

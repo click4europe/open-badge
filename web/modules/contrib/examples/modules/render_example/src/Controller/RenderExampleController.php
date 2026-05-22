@@ -402,7 +402,7 @@ class RenderExampleController extends ControllerBase implements TrustedCallbackI
           'rendered' => $build[$key],
           'debug_value' => [
             '#type' => 'markup',
-            '#markup' => htmlentities(Variable::export($build[$key])),
+            '#markup' => htmlentities(json_encode($build[$key])),
           ],
         ];
       }
@@ -529,8 +529,6 @@ class RenderExampleController extends ControllerBase implements TrustedCallbackI
    * We need to wrap suffix in a Markup object.
    * Otherwise, style attribute will be removed by Xss
    *
-   * @see \Drupal\Component\Utility\Xss::filter()
-   *
    * This function is used as a post render callback in
    * \Drupal\render_example\Controller\RenderExampleController::arrays().
    *
@@ -540,6 +538,7 @@ class RenderExampleController extends ControllerBase implements TrustedCallbackI
    * @return array
    *   The altered element. In this case we add a #prefix to it.
    *
+   * @see \Drupal\Component\Utility\Xss::filter()
    * @see \Drupal\render_example\Controller\RenderExampleController::arrays()
    */
   public static function preRenderAddSuffix(array $element) {

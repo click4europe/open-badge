@@ -13,6 +13,13 @@ testing_example.simpletest_description:
   requirements:
     _permission: 'access content'
 
+testing_example.phpunit_description:
+  path: '/examples/testing-example/phpunit'
+  defaults:
+    _controller: '\Drupal\testing_example\Controller\TestingExampleController::phpUnitDescription'
+  requirements:
+    _permission: 'access content'
+
 # This route displays a sum of two numbers in terms of how many hands are
 # required to count it.
 testing_example.sum_in_hands:

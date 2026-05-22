@@ -2,25 +2,28 @@
 
 namespace Drupal\plugin_type_example\Plugin\Sandwich;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\plugin_type_example\Attribute\Sandwich;
 use Drupal\plugin_type_example\SandwichBase;
 
 /**
  * Provides a ham sandwich.
  *
- * Because the plugin manager class for our plugins uses annotated class
+ * Because the plugin manager class for our plugins uses attributes for class
  * discovery, our ham sandwich only needs to exist within the Plugin\Sandwich
- * namespace, and provide a Sandwich annotation to be declared as a plugin.
+ * namespace, and provide a Sandwich attribute to be declared as a plugin.
  * This is defined in
  * \Drupal\plugin_type_example\SandwichPluginManager::__construct().
  *
- * The following is the plugin annotation. This is parsed by Doctrine to make
- * the plugin definition. Any values defined here will be available in the
- * plugin definition.
+ * Following this comment is the plugin attribute. This is parsed using the
+ * PHP Reflection API and used to generate the plugin definition. Any values
+ * defined here will be available in the configuration passed to plugin
+ * instances when they are instantiated from the plugin manager.
  *
  * This should be used for metadata that is specifically required to instantiate
  * the plugin, or for example data that might be needed to display a list of all
  * available plugins where the user selects one. This means many plugin
- * annotations can be reduced to a plugin ID, a label and perhaps a description.
+ * attributes can be reduced to a plugin ID, a label and perhaps a description.
  *
  * @Sandwich(
  *   id = "ham_sandwich",
@@ -28,6 +31,11 @@ use Drupal\plugin_type_example\SandwichBase;
  *   calories = 426
  * )
  */
+#[Sandwich(
+  id: "ham_sandwich",
+  description: new TranslatableMarkup('Ham, mustard, rocket, sun-dried tomatoes.'),
+  calories: 426
+)]
 class ExampleHamSandwich extends SandwichBase {
 
   /**

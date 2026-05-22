@@ -166,7 +166,7 @@ class DbtngExampleRepository {
    * Here is select() with named placeholders:
    * @code
    *   // SELECT * FROM {dbtng_example} WHERE uid = 0 AND name = 'John'
-   *   $arguments = array(':name' => 'John', ':uid' => 0);
+   *   $arguments = [':name' => 'John', ':uid' => 0];
    *   \Drupal::database()->select('dbtng_example')
    *     ->fields('dbtng_example')
    *     ->where('uid = :uid AND name = :name', $arguments)

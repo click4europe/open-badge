@@ -7,6 +7,8 @@ use Drupal\Core\StreamWrapper\StreamWrapperInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Url;
 
+// phpcs:disable Drupal.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
+
 /**
  * Example stream wrapper class to handle session:// streams.
  *
@@ -155,7 +157,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
     // chance to perform the injection. PHP creates the stream wrapper objects
     // automatically when certain file functions are called. Therefore, we'll
     // use the \Drupal service locator.
-    // phpcs:ignore
+    // phpcs:disable
     $this->sessionHelper = \Drupal::service('stream_wrapper_example.session_helper');
     $this->sessionHelper->setPath('.is_a_dir.txt', TRUE);
     $this->streamMode = FALSE;
@@ -262,9 +264,8 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-open.php
    */
-// @codingStandardsIgnoreStart
+
   public function stream_open($uri, $mode, $options, &$opened_path) {
-// @codingStandardsIgnoreEnd
     $this->uri = $uri;
     $path = $this->getLocalPath($uri);
     // We will support two modes only, 'r' and 'w'.  If the key is 'r',
@@ -308,9 +309,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    * @see stream_select()
    * @see http://php.net/manual/streamwrapper.stream-cast.php
    */
-// @codingStandardsIgnoreStart
   public function stream_cast($cast_as) {
-// @codingStandardsIgnoreEnd
     return FALSE;
   }
 
@@ -344,9 +343,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://www.php.net/manual/streamwrapper.stream-metadata.php
    */
-// @codingStandardsIgnoreStart
   public function stream_metadata($path, $option, $value) {
-// @codingStandardsIgnoreEnd
     // We don't really do any of these, but we want to reassure the calling code
     // that there is no problem with chown or chgrp, even though we do not
     // actually support these.
@@ -384,9 +381,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *   TRUE on success, FALSE otherwise. If $option is not implemented, FALSE
    *   should be returned.
    */
-// @codingStandardsIgnoreStart
   public function stream_set_option($option, $arg1, $arg2) {
-// @codingStandardsIgnoreEnd
     return FALSE;
   }
 
@@ -401,13 +396,10 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    * @return bool
    *   TRUE on success, FALSE otherwise.
    *
-   * @todo
-   *   Allow truncating the stream.
-   *   https://www.drupal.org/project/examples/issues/2992398
+   * @todo Allow truncating the stream.
+   *   See https://www.drupal.org/project/examples/issues/2992398
    */
-// @codingStandardsIgnoreStart
   public function stream_truncate($new_size) {
-// @codingStandardsIgnoreEnd
     return FALSE;
   }
 
@@ -429,9 +421,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-lock.php
    */
-// @codingStandardsIgnoreStart
   public function stream_lock($operation) {
-// @codingStandardsIgnoreEnd
     return TRUE;
   }
 
@@ -446,9 +436,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-read.php
    */
-// @codingStandardsIgnoreStart
   public function stream_read($count) {
-// @codingStandardsIgnoreEnd
     if (is_string($this->sessionContent)) {
       $remaining_chars = strlen($this->sessionContent) - $this->streamPointer;
       $number_to_read = min($count, $remaining_chars);
@@ -472,9 +460,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-write.php
    */
-// @codingStandardsIgnoreStart
   public function stream_write($data) {
-// @codingStandardsIgnoreEnd
     // Sanitize the data in a simple way since we're putting it into the
     // session variable.
     $data = Html::escape($data);
@@ -491,9 +477,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-eof.php
    */
-// @codingStandardsIgnoreStart
   public function stream_eof() {
-// @codingStandardsIgnoreEnd
     return FALSE;
   }
 
@@ -510,9 +494,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-seek.php
    */
-// @codingStandardsIgnoreStart
   public function stream_seek($offset, $whence = SEEK_SET) {
-// @codingStandardsIgnoreEnd
     if (strlen($this->sessionContent) >= $offset) {
       $this->streamPointer = $offset;
       return TRUE;
@@ -530,9 +512,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-flush.php
    */
-// @codingStandardsIgnoreStart
   public function stream_flush() {
-// @codingStandardsIgnoreEnd
     if ($this->streamMode == 'w') {
       // Since we aren't writing directly to the session, we need to send
       // the bytes on to the store.
@@ -552,9 +532,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-tell.php
    */
-// @codingStandardsIgnoreStart
   public function stream_tell() {
-// @codingStandardsIgnoreEnd
     return $this->streamPointer;
   }
 
@@ -567,9 +545,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-stat.php
    */
-// @codingStandardsIgnoreStart
   public function stream_stat() {
-// @codingStandardsIgnoreEnd
     return [
       'size' => strlen($this->sessionContent),
     ];
@@ -583,9 +559,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.stream-close.php
    */
-// @codingStandardsIgnoreStart
   public function stream_close() {
-// @codingStandardsIgnoreEnd
     $this->streamPointer = 0;
     // Unassign the reference.
     unset($this->sessionContent);
@@ -623,8 +597,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    * @see http://php.net/manual/en/streamwrapper.rename.php
    */
   public function rename($from_uri, $to_uri) {
-    // We get the old key contents, write it
-    // to a new key, erase the old key.
+    // We get the old key contents; write it to a new key, erase the old key.
     $from_path = $this->getLocalPath($from_uri);
     $to_path = $this->getLocalPath($to_uri);
     if (!$this->sessionHelper->checkPath($from_path)) {
@@ -634,8 +607,8 @@ class SessionStreamWrapper implements StreamWrapperInterface {
     $path_info = $this->sessionHelper->getParentPath($to_path);
     $parent_path = $path_info['dirname'];
 
-    // We will only allow writing to a non-existent file
-    // in an existing directory.
+    // We will only allow writing to a non-existent file in an existing
+    // directory.
     if ($this->sessionHelper->checkPath($parent_path) && !$this->sessionHelper->checkPath($to_path)) {
       $this->sessionHelper->setPath($to_path, $from_key);
       $this->sessionHelper->clearPath($from_path);
@@ -651,7 +624,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *   A URI.
    *
    * @return string
-   *   A string containing the directory name.
+   *   The directory name.
    *
    * @see drupal_dirname()
    */
@@ -678,7 +651,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *   A bit mask of STREAM_REPORT_ERRORS and STREAM_MKDIR_RECURSIVE.
    *
    * @return bool
-   *   TRUE if directory was successfully created.
+   *   TRUE if the directory was successfully created.
    *
    * @see http://php.net/manual/en/streamwrapper.mkdir.php
    */
@@ -702,7 +675,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *   A bit mask of STREAM_REPORT_ERRORS.
    *
    * @return bool
-   *   TRUE if directory was successfully removed.
+   *   TRUE if the directory was successfully removed.
    *
    * @see http://php.net/manual/en/streamwrapper.rmdir.php
    */
@@ -730,14 +703,12 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *   A bit mask of STREAM_URL_STAT_LINK and STREAM_URL_STAT_QUIET.
    *
    * @return array|bool
-   *   An array with file status, or FALSE in case of an error - see fstat()
+   *   An array with file status, or FALSE in case of an error. See fstat()
    *   for a description of this array.
    *
    * @see http://php.net/manual/en/streamwrapper.url-stat.php
    */
-// @codingStandardsIgnoreStart
   public function url_stat($uri, $flags) {
-// @codingStandardsIgnoreEnd
     $path = $this->getLocalPath($uri);
     if (!$this->sessionHelper->checkPath($path)) {
       return FALSE;
@@ -799,9 +770,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.dir-opendir.php
    */
-// @codingStandardsIgnoreStart
   public function dir_opendir($uri, $options) {
-// @codingStandardsIgnoreEnd
     $path = $this->getLocalPath($uri);
     if (!$this->sessionHelper->checkPath($path)) {
       return FALSE;
@@ -828,9 +797,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.dir-readdir.php
    */
-// @codingStandardsIgnoreStart
   public function dir_readdir() {
-// @codingStandardsIgnoreEnd
     if ($this->directoryPointer < count($this->directoryKeys)) {
       $next = $this->directoryKeys[$this->directoryPointer];
       $this->directoryPointer++;
@@ -847,9 +814,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.dir-rewinddir.php
    */
-// @codingStandardsIgnoreStart
   public function dir_rewinddir() {
-// @codingStandardsIgnoreEnd
     $this->directoryPointer = 0;
     return TRUE;
   }
@@ -862,9 +827,7 @@ class SessionStreamWrapper implements StreamWrapperInterface {
    *
    * @see http://php.net/manual/en/streamwrapper.dir-closedir.php
    */
-// @codingStandardsIgnoreStart
   public function dir_closedir() {
-// @codingStandardsIgnoreEnd
     $this->directoryPointer = 0;
     unset($this->directoryKeys);
     return TRUE;

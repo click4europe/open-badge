@@ -1,0 +1,7 @@
+image_example.styles:
+  path: '/examples/image-example/styles'
+  defaults:
+    _form: '\Drupal\image_example\Form\StyleForm'
+    _title: 'Image Example'
+  requirements:
+    _permission: 'access content'

@@ -56,7 +56,7 @@ class ThemingPageController {
    * An example page where the output is supplied as an array which is themed
    * into a list and styled with css.
    *
-   * In this case we'll use the core-provided theme_item_list as a #theme_wrapper.
+   * In this case we'll use the core-provided theme_item_list as #theme_wrapper.
    * Any theme need only override theme_item_list to change the behavior.
    */
   public function list() {
@@ -72,18 +72,19 @@ class ThemingPageController {
     $build['render_version'] = [
       // We use #theme here instead of #theme_wrappers because theme_item_list()
       // is the classic type of theme function that does not just assume a
-      // render array, but instead has its own properties (#type, #title, #items).
+      // render array, but instead has its own properties
+      // (#type, #title, #items).
       '#theme' => 'item_list',
       // '#type' => 'ul',  // The default type is 'ul'
-      // We can easily make sure that a css or js file is present using #attached.
+      // We can easily make sure that a css or js file is present using
+      // #attached.
       '#attached' => ['library' => ['theming_example/list']],
       '#title' => $title,
       '#items' => $items,
       '#attributes' => ['class' => ['render-version-list']],
     ];
 
-    // Now we'll create a render array which uses our own list formatter,
-    // theme('theming_example_list').
+    // Now we'll create a render array which uses our own list formatter.
     $title = $this->t("The same list rendered by theme('theming_example_list')");
     $build['our_theme_function'] = [
       '#theme' => 'theming_example_list',

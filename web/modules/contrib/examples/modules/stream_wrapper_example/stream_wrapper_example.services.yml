@@ -28,12 +28,10 @@ services:
     class: Drupal\stream_wrapper_example\StreamWrapper\SessionStreamWrapper
     tags:
       - { name: stream_wrapper, scheme: session }
-    arguments: ['@stream_wrapper_example.session_helper']
-
+    autowire: true
   stream_wrapper_example.session_helper:
     class: Drupal\stream_wrapper_example\SessionHelper
-    arguments: ['@request_stack']
-
+    autowire: true
   path_processor.sessions:
     class: Drupal\stream_wrapper_example\PathProcessor\PathProcessorSessions
     tags:

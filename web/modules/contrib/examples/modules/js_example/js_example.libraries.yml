@@ -8,20 +8,12 @@ accordion:
   css:
     component:
       css/accordion.css: {}
-
 colors:
-  version: 4.0.0
-  css:
-    component:
-      css/weights.css: {}
+  version: 4.0.2
   js:
-    # We use weight as example attribute. Its usage is discouraged, though;
-    # dependencies should instead be used.
-    # For JavaScript files, its value can be only negative, contrarily to CSS
-    # files for which its value can be between -50 and +50.
-    js/colors.rgb.js: { weight: -2 }
-    js/colors.base.js: { weight: -8 }
-    js/colors.cmy.js: { weight: -4 }
+    js/colors.base.js: { attributes: { id : "script-colors-base" } }
+    js/colors.rgb.js: {}
+    js/colors.cmy.js: {}
   dependencies:
     - core/jquery
     - core/drupalSettings

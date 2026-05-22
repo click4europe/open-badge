@@ -33,7 +33,7 @@ class Simplest extends FormBase {
         // #ajax has two required keys: callback and wrapper.
         // callback is a callable that will be called when this element changes.
         'callback' => '::promptCallback',
-        // wrapper is the HTML ID of the page element that will be replaced.
+        // The wrapper is the HTML ID of the page element that will be replaced.
         'wrapper' => 'replace-textfield-container',
       ],
     ];

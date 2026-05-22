@@ -63,9 +63,9 @@ class SkeletonTest extends BrowserTestBase {
    * For tests that do not rely on any specific markup, or at least not Drupal
    * core markup, use 'stark'. For tests that rely on core markup use 'stable'.
    *
-   * @link https://www.drupal.org/node/3083055
-   *
    * @var string
+   *
+   * @link https://www.drupal.org/node/3083055
    */
   protected $defaultTheme = 'stark';
 

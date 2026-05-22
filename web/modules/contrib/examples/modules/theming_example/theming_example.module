@@ -2,8 +2,7 @@
 
 /**
  * @file
- * Explains how a module declares theme functions, preprocess functions, and
- * templates.
+ * Explains how a module declares theme and preprocess functions, or templates.
  *
  * The underlying approach is that a module should allow themes to do all
  * rendering, but provide default implementations where appropriate.
