@@ -73,6 +73,7 @@
         "drupal/webform": "^6.1",
         "drupal/weight": "^3.3",
         "drush/drush": "^12",
+        "google/recaptcha": "^1.5",
         "sendgrid/sendgrid": "^8.1"
     },
     "provide": {
