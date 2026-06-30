@@ -1865,6 +1865,9 @@
   :root .prose :where(code):not(pre > code):before, :root .prose :where(code):not(pre > code):after {
     display: none;
   }
+  .\!inline-block {
+    display: inline-block !important;
+  }
   .block {
     display: block;
   }
@@ -1882,6 +1885,9 @@
   }
   .inline-block {
     display: inline-block;
+  }
+  .inline-block\! {
+    display: inline-block !important;
   }
   .inline-flex {
     display: inline-flex;
