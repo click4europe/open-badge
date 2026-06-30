@@ -6,7 +6,7 @@ core_version_requirement: '^10.6 || ^11.0'
 dependencies:
   - examples:examples
 
-# Information added by Drupal.org packaging script on 2026-04-08
-version: '4.0.5'
+# Information added by Drupal.org packaging script on 2026-06-10
+version: '4.0.6'
 project: 'examples'
-datestamp: 1775665285
+datestamp: 1781108165
