@@ -180,6 +180,12 @@ class OptionsShsWidget extends OptionsSelectWidget implements ContainerFactoryPl
       $value = NestedArray::getValue($user_input, $field_parents);
       $default_value = $value ?: $default_value;
     }
+    elseif (isset($user_input[$field_name]) && strpos($user_input[$field_name], ',') !== FALSE) {
+      $default_value = explode(',', $user_input[$field_name]);
+    }
+    elseif (isset($user_input[$field_name]) && strpos(trim($user_input[$field_name]), ' ') !== FALSE) {
+      $default_value = explode(' ', $user_input[$field_name]);
+    }
     elseif (isset($user_input[$field_name])) {
       $default_value = $user_input[$field_name];
     }
@@ -308,6 +314,13 @@ class OptionsShsWidget extends OptionsSelectWidget implements ContainerFactoryPl
     foreach ($exploded_values as $value) {
       $values[]['target_id'] = $value;
     }
+
+    // Remove duplicate values.
+    $unique_values = array_map(function ($item) {
+      return $item['target_id'];
+    }, $values);
+    $unique_values = array_unique($unique_values);
+    $values = array_values(array_intersect_key($values, $unique_values));
 
     return $values;
   }

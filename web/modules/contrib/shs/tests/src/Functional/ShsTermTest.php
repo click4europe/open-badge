@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\shs\Functional;
 
+use Drupal\dynamic_page_cache\EventSubscriber\DynamicPageCacheSubscriber;
+
 /**
  * Test term functions in SHS.
  *
@@ -10,6 +12,15 @@ namespace Drupal\Tests\shs\Functional;
 class ShsTermTest extends ShsTestBase {
 
   use ShsTestTrait;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected static $modules = [
+    'node',
+    'shs',
+    'dynamic_page_cache',
+  ];
 
   /**
    * Tests getting the first level of terms.
@@ -59,6 +70,25 @@ class ShsTermTest extends ShsTestBase {
 
     $this->assertCount(4, $data, "JSON callback returned 4 result");
 
+  }
+
+  /**
+   * Tests term data caching when content translation is not installed.
+   */
+  public function testCacheWithoutTranslation(): void {
+    $this->assertFalse(\Drupal::moduleHandler()->moduleExists('language'));
+    $this->assertFalse(\Drupal::moduleHandler()->moduleExists('content_translation'));
+
+    $field_name = 'shs-' . strtr($this->fieldName, ['_' => '-']);
+    $request_url = "shs-term-data/{$field_name}/{$this->vocabulary->id()}/0";
+
+    $data = $this->drupalGetJson($request_url);
+    $this->assertSession()->responseHeaderEquals(DynamicPageCacheSubscriber::HEADER, 'MISS');
+    $this->assertContains('aaa 1', array_column($data, 'name'));
+
+    $cached_data = $this->drupalGetJson($request_url);
+    $this->assertSession()->responseHeaderEquals(DynamicPageCacheSubscriber::HEADER, 'HIT');
+    $this->assertSame($data, $cached_data);
   }
 
   /**
