@@ -100,6 +100,12 @@ body.toolbar-horizontal.toolbar-tray-open {
   }
 }
 
+.companies-pagination {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+
 .pricing-card {
   animation: float 6s ease-in-out infinite;
   transition:
