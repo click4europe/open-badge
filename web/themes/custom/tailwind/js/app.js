@@ -1,3 +1,5 @@
+import OrganizationsList from './OrganizationsList.js';
+
 (function(once, Drupal, drupalSettings) {
   "use strict";
 
@@ -552,87 +554,10 @@
           });
         });
 
-        // ========== COMPANIES PAGINATION ==========
-        const companiesPages = document.querySelectorAll('.companies-page');
-        const companyPageButtons = document.querySelectorAll('#companies-pagination .page-btn');
-        const companiesPrevBtn = document.getElementById('companies-prev');
-        const companiesNextBtn = document.getElementById('companies-next');
-
-        if (companiesPages.length > 0 && companyPageButtons.length > 0) {
-          let currentCompanyPage = 1;
-          const totalCompanyPages = companiesPages.length;
-
-          function showCompanyPage(pageNum) {
-            currentCompanyPage = pageNum;
-            
-            companiesPages.forEach(page => {
-              page.classList.add('hidden');
-              if (parseInt(page.dataset.page) === pageNum) {
-                page.classList.remove('hidden');
-              }
-            });
-
-            companyPageButtons.forEach(btn => {
-              btn.classList.remove('bg-[#0891b2]', 'text-white', 'shadow-md', 'scale-110');
-              btn.classList.add('bg-white', 'border-2', 'border-slate-200', 'text-slate-600');
-              
-              if (parseInt(btn.dataset.page) === pageNum) {
-                btn.classList.add('bg-[#0891b2]', 'text-white', 'shadow-md');
-                btn.classList.remove('bg-white', 'border-2', 'border-slate-200', 'text-slate-600');
-              }
-            });
-
-            const pageIndicator = document.getElementById('current-page-indicator');
-            if (pageIndicator) {
-              pageIndicator.textContent = pageNum;
-            }
-
-            if (companiesPrevBtn) {
-              if (pageNum === 1) {
-                companiesPrevBtn.disabled = true;
-                companiesPrevBtn.classList.add('opacity-50', 'cursor-not-allowed');
-              } else {
-                companiesPrevBtn.disabled = false;
-                companiesPrevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-              }
-            }
-            
-            if (companiesNextBtn) {
-              if (pageNum === totalCompanyPages) {
-                companiesNextBtn.disabled = true;
-                companiesNextBtn.classList.add('opacity-50', 'cursor-not-allowed');
-              } else {
-                companiesNextBtn.disabled = false;
-                companiesNextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-              }
-            }
-          }
-
-          companyPageButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-              showCompanyPage(parseInt(this.dataset.page));
-            });
-          });
-
-          if (companiesPrevBtn) {
-            companiesPrevBtn.addEventListener('click', function() {
-              if (currentCompanyPage > 1) {
-                showCompanyPage(currentCompanyPage - 1);
-              }
-            });
-          }
-
-          if (companiesNextBtn) {
-            companiesNextBtn.addEventListener('click', function() {
-              if (currentCompanyPage < totalCompanyPages) {
-                showCompanyPage(currentCompanyPage + 1);
-              }
-            });
-          }
-
-          // Initialize first page
-          showCompanyPage(1);
-        }
+        // ========== ORGANIZATIONS LIST ==========
+        new OrganizationsList('companies-pages', {
+          paginationId: 'companies-pagination',
+        });
 
         // ========== COSA SONO FAQ ITEMS ==========
         const faqItems = document.querySelectorAll('.faq-item');
