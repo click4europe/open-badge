@@ -284,17 +284,6 @@ class OptionsShsWidget extends OptionsSelectWidget implements ContainerFactoryPl
   /**
    * {@inheritDoc}
    */
-  protected function getSelectedOptions(FieldItemListInterface $items) {
-    $selected_options = [];
-    foreach ($items as $item) {
-      $selected_options[] = $item->target_id;
-    }
-    return $selected_options;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     if (!isset($values[0]['target_id']) || ($values[0]['target_id'] === '')) {
       return NULL;
