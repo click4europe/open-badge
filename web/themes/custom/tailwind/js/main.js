@@ -174,7 +174,7 @@ var OrganizationsList = /*#__PURE__*/function () {
     key: "setLoading",
     value: function setLoading(isLoading) {
       this.container.setAttribute('aria-busy', String(isLoading));
-      this.container.classList.toggle('opacity-50', isLoading);
+      this.container.classList.toggle('is-loading', isLoading);
       if (isLoading && !this.container.hasChildNodes()) {
         this.renderMessage(this.options.labels.loading);
       }
