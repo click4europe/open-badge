@@ -3,6 +3,7 @@
 namespace Drupal\Tests\shs\Functional;
 
 use Drupal\dynamic_page_cache\EventSubscriber\DynamicPageCacheSubscriber;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
  * Test term functions in SHS.
@@ -12,6 +13,7 @@ use Drupal\dynamic_page_cache\EventSubscriber\DynamicPageCacheSubscriber;
 class ShsTermTest extends ShsTestBase {
 
   use ShsTestTrait;
+  use NodeCreationTrait;
 
   /**
    * {@inheritdoc}
@@ -130,6 +132,39 @@ class ShsTermTest extends ShsTestBase {
       return $a['name'];
     }, $data);
     $this->assertNotContains('aaa 1', $names);
+  }
+
+  /**
+   * Tests editing a node after its referenced term has been deleted.
+   */
+  public function testEditNodeWithDeletedTerm(): void {
+    $term_delete = $this->createTerm($this->vocabulary, ['name' => 'term to delete']);
+
+    $node = $this->drupalCreateNode([
+      'type' => 'article',
+      $this->fieldName => ['target_id' => $term_delete->id()],
+    ]);
+
+    $term_delete->delete();
+
+    $this->assertFalse($node->{$this->fieldName}->isEmpty());
+
+    $editor = $this->drupalCreateUser(['edit any article content']);
+    $this->drupalLogin($editor);
+
+    $this->drupalGet($node->toUrl('edit-form'));
+    $this->assertSession()->statusCodeEquals(200);
+
+    $this->submitForm([], 'Save');
+
+    $this->assertSession()->statusCodeEquals(200);
+    $this->assertSession()->pageTextContains("{$node->getTitle()} has been updated.");
+    $this->assertSession()->elementNotExists('css', '[data-drupal-messages] .messages--error');
+
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $node_storage->resetCache([$node->id()]);
+    $node = $node_storage->load($node->id());
+    $this->assertTrue($node->{$this->fieldName}->isEmpty());
   }
 
 }
