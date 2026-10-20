@@ -89,7 +89,7 @@ class DomPdfGenerator {
     RequestStack $request_stack,
     ModuleHandlerInterface $module_handler,
     ModuleExtensionList $extension_list_module,
-    FileSystemInterface $file_system
+    FileSystemInterface $file_system,
   ) {
     $this->renderer = $renderer;
     $this->requestStack = $request_stack;
@@ -97,7 +97,6 @@ class DomPdfGenerator {
     $this->moduleExtensionList = $extension_list_module;
     $this->fileSystem = $file_system;
     $this->options = new Options();
-    $this->options->set('enable_css_float', TRUE);
     $this->options->set('enable_html5_parser', TRUE);
     $this->options->set('enable_remote', TRUE);
     $this->options->set('defaultFont', 'Times');
@@ -105,7 +104,7 @@ class DomPdfGenerator {
   }
 
   /**
-   * Render usin dompdf with given options.
+   * Render using dompdf with given options.
    *
    * @param string $title
    *   The title of the pdf.
@@ -117,6 +116,12 @@ class DomPdfGenerator {
    *   The options array to perform pdf.
    * @param string $pageSize
    *   The size of the page.
+   * @param int $showPagination
+   *   What type of pagination to use.
+   * @param float $paginationX
+   *   X coordinate for the pagination.
+   * @param float $paginationY
+   *   Y coordinate for the pagination.
    * @param string $disposition
    *   The disposition of the page, portrait or landscape.
    * @param string $cssText
@@ -137,7 +142,7 @@ class DomPdfGenerator {
     }
 
     // Correct temporary and folders to write fonts because the vendor folder
-    // that is the default normally can't be writtable.
+    // that is the default normally can't be writable.
     $fontDir = 'public://dompdf-fonts';
     $cacheDir = 'public://dompdf-fonts/cache';
     $this->fileSystem->prepareDirectory($fontDir, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);

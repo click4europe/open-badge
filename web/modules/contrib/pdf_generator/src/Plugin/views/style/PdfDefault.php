@@ -14,7 +14,7 @@ use Drupal\views\Plugin\views\style\DefaultStyle;
  *   title = @Translation("PDF Unformatted list"),
  *   help = @Translation("Generates a pdf."),
  *   theme = "views_view_unformatted",
- *   display_types = {"pdf_geneartor"}
+ *   display_types = {"pdf_generator"}
  * )
  */
 class PdfDefault extends DefaultStyle {

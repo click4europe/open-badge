@@ -3,12 +3,16 @@
 namespace Drupal\Tests\rebuild_cache_access\Functional;
 
 use Drupal\Tests\BrowserTestBase;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests rebuild_cache_access toolbar functionality.
  *
  * @group rebuild_cache_access
  */
+#[Group('rebuild_cache_access')]
+#[RunTestsInSeparateProcesses]
 class ToolbarTest extends BrowserTestBase {
 
   /**
@@ -45,9 +49,11 @@ class ToolbarTest extends BrowserTestBase {
     $this->drupalGet('');
     $this->assertSession()->pageTextContains('Rebuild Cache');
 
-    // Click the button.
+    // Click the button on another page and return to it.
+    $this->drupalGet('user/' . $developer->id());
     $this->clickLink('Rebuild Cache');
     $this->assertSession()->pageTextContains('All caches cleared.');
+    $this->assertSession()->addressEquals('user/' . $developer->id());
   }
 
 }

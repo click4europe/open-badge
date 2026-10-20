@@ -1,0 +1,41 @@
+site_name: Rebuild Cache Access
+site_url: https://project.pages.drupalcode.org/rebuild_cache_access
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - search.suggest
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.highlight
+  - pymdownx.blocks.caption
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          # Required by MkDocs Material for Mermaid; the tag has no value.
+          # eslint-disable-next-line yml/no-empty-mapping-value
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Configuration: configuration.md
+  - Usage:
+      - Clearing caches: usage/index.md
+      - Navigation sidebar: usage/navigation.md
+      - Classic toolbar: usage/toolbar.md
+  - Troubleshooting: troubleshooting.md
+  - Technical reference: reference.md

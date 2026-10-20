@@ -6,6 +6,7 @@ namespace Drupal\Tests\rebuild_cache_access\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 
 /**
  * Tests rebuild_cache_access navigation block functionality.
@@ -13,6 +14,7 @@ use PHPUnit\Framework\Attributes\Group;
  * @group rebuild_cache_access
  */
 #[Group('rebuild_cache_access')]
+#[RunTestsInSeparateProcesses]
 class NavigationBlockTest extends BrowserTestBase {
 
   /**
@@ -57,8 +59,17 @@ class NavigationBlockTest extends BrowserTestBase {
     ]);
     $this->drupalLogin($user);
     $this->drupalGet('');
+    $this->drupalGet('user/' . $user->id());
     $this->clickLink('Rebuild cache');
     $this->assertSession()->pageTextContains('All caches cleared.');
+    $this->assertSession()->addressEquals('user/' . $user->id());
+  }
+
+  /**
+   * Tests the module does not pull in Toolbar next to Navigation.
+   */
+  public function testToolbarNotInstalled(): void {
+    $this->assertFalse($this->container->get('module_handler')->moduleExists('toolbar'), 'Toolbar is not installed.');
   }
 
   /**

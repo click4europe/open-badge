@@ -1,2 +1,4 @@
 rebuild cache access:
   title: 'Rebuild Cache'
+  description: 'Flushes all caches site-wide. Repeated use degrades performance for all visitors.'
+  restrict access: true

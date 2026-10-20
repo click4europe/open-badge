@@ -4,7 +4,7 @@ This module intend to generate a simple way to generate PDF Files...
 
 For now the module include two features:
 
-- A service to generate pdf files that will be used in a controller easyly.
+- A service to generate pdf files that will be used in a controller easily.
 - A views display plugin to generate a pdf file from any view.
 
 To use the display you only need to generate a a display of type PDF on your
@@ -33,7 +33,7 @@ to the dependency injection in controllers, forms or any other plugin.
 
 `$response = $service->response($title, $content);`
 
-Where the title will be any text and the colugntent will be any render array.
+Where the title will be any text and the content will be any render array.
 Use it in any routing controller and use it as result of the page method.
 
 The response method has some options to configure the output of the PDF file.

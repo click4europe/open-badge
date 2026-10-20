@@ -2,9 +2,9 @@ type: module
 name: PDF Generator
 package: 'General'
 description: 'System to create pdf files'
-core_version_requirement: ^8.8.0 || ^9.0 || ^10
+core_version_requirement: ^8.8.0 || ^9.0 || ^10 || ^11
 
-# Information added by Drupal.org packaging script on 2023-10-13
-version: '2.0.6'
+# Information added by Drupal.org packaging script on 2026-09-26
+version: '2.1.0'
 project: 'pdf_generator'
-datestamp: 1697198678
+datestamp: 1790443074

@@ -5,12 +5,9 @@ namespace Drupal\pdf_generator\Plugin\views\display;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\ViewExecutable;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\pdf_generator\DomPdfGenerator;
 use Drupal\views\Plugin\views\display\PathPluginBase;
 use Drupal\Component\Utility\Xss;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\State\StateInterface;
-use Drupal\Core\Routing\RouteProviderInterface;
 use Drupal\views\Plugin\views\display\ResponseDisplayPluginInterface;
 use Drupal\views\Views;
 
@@ -31,6 +28,20 @@ use Drupal\views\Views;
  */
 class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, ContainerFactoryPluginInterface {
 
+  /**
+   * The site configuration.
+   *
+   * @var \Drupal\Core\Config\ImmutableConfig
+   */
+  protected $config;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
   // @todo This will be modified to get pdf generators from plugins.
   /**
    * The date formatter service.
@@ -40,38 +51,22 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
   protected $pdfGenerator;
 
   /**
-   * Constructs a new Date instance.
+   * The renderer.
    *
-   * @param array $configuration
-   *   A configuration array containing information about the plugin instance.
-   * @param string $plugin_id
-   *   The plugin_id for the plugin instance.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
-   *   The route provider.
-   * @param \Drupal\Core\State\StateInterface $state
-   *   The state key value store.
-   * @param \Drupal\pdf_generator\DomPdfGenerator $pdfGenerator
-   *   The pdf generator.
+   * @var \Drupal\Core\Render\RendererInterface
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, RouteProviderInterface $route_provider, StateInterface $state, DomPdfGenerator $pdfGenerator) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition, $route_provider, $state);
-    $this->pdfGenerator = $pdfGenerator;
-  }
+  protected $renderer;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('router.route_provider'),
-      $container->get('state'),
-      $container->get('pdf_generator.dompdf_generator')
-    );
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->config = $container->get('config.factory')->get('system.site');
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->pdfGenerator = $container->get('pdf_generator.dompdf_generator');
+    $instance->renderer = $container->get('renderer');
+    return $instance;
   }
 
   /**
@@ -92,7 +87,7 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
    * {@inheritdoc}
    */
   public function getType() {
-    return 'pdf_geneartor';
+    return 'pdf_generator';
   }
 
   /**
@@ -109,13 +104,11 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
       '#markup' => (string) $renderer->renderRoot($build),
     ];
     if ($view->display_handler->getOption('sitename_title') === 1) {
-      $config = \Drupal::config('system.site');
-      $titleValue = $config->get('name');
+      $titleValue = \Drupal::config('system.site')->get('name');
     }
     elseif ($view->display_handler->getOption('field_title') === 1) {
       $fieldName = $view->display_handler->getOption('select_field_title');
-      $entityTypeManager = \Drupal::entityTypeManager();
-      $node = $entityTypeManager->getStorage('node')->load(reset($args));
+      $node = \Drupal::entityTypeManager()->getStorage('node')->load(reset($args));
       $titleValue = $node->get($fieldName)->value;
     }
     else {
@@ -123,7 +116,7 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
     }
     $title = [
       '#markup' => $titleValue,
-      '#allowed_tags' => Xss::getHtmlTagList()
+      '#allowed_tags' => Xss::getHtmlTagList(),
     ];
     $pageSize = !empty($view->display_handler->getOption('paper_size')) ?
       $view->display_handler->getOption('paper_size') :
@@ -182,18 +175,15 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
   public function preview() {
     $view = $this->view;
     $build = $view->render($view->current_display);
-    $renderer = \Drupal::service('renderer');
     $output = [
-      '#markup' => (string) $renderer->renderRoot($build),
+      '#markup' => (string) $this->renderer->renderRoot($build),
     ];
     if ($view->display_handler->getOption('sitename_title') === 1) {
-      $config = \Drupal::config('system.site');
-      $titleValue = $config->get('name');
+      $titleValue = $this->config->get('name');
     }
     elseif ($view->display_handler->getOption('field_title') === 1) {
       $fieldName = $view->display_handler->getOption('select_field_title');
-      $entityTypeManager = \Drupal::entityTypeManager();
-      $node = $entityTypeManager->getStorage('node')->load(reset($view->args));
+      $node = $this->entityTypeManager->getStorage('node')->load(reset($view->args));
       $titleValue = $node->get($fieldName)->value;
     }
     else {
@@ -201,7 +191,7 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
     }
     $title = [
       '#markup' => $titleValue,
-      '#allowed_tags' => Xss::getHtmlTagList()
+      '#allowed_tags' => Xss::getHtmlTagList(),
     ];
     $pageSize = !empty($view->display_handler->getOption('paper_size')) ?
       $view->display_handler->getOption('paper_size') :
@@ -226,7 +216,7 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
       NULL;
     $forceDownload = FALSE;
 
-    $response = \Drupal::service('pdf_generator.dompdf_generator')->getResponse(
+    $response = $this->pdfGenerator->getResponse(
       $title,
       $output,
       TRUE,
@@ -345,7 +335,7 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
     $options['force_download'] = [
       'category' => 'page',
       'title' => $this->t('Force Download'),
-      'value' => !empty($this->getOption('force_download')) ?  $this->t('Yes') : $this->t('No'),
+      'value' => !empty($this->getOption('force_download')) ? $this->t('Yes') : $this->t('No'),
     ];
 
   }
@@ -506,7 +496,6 @@ class Pdf extends PathPluginBase implements ResponseDisplayPluginInterface, Cont
         ];
 
         break;
-
 
       case 'path':
         $form['path']['#description'] = $this->t('This view will be displayed by visiting this path on your site. It is recommended that the path be something like "path/%/%/feed" or "path/%/%/rss.xml", putting one % in the path for each contextual filter you have defined in the view.');
