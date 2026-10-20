@@ -14,7 +14,7 @@ use Drupal\views\Plugin\views\style\HtmlList;
  *   title = @Translation("PDF list style"),
  *   help = @Translation("Generates an PDF."),
  *   theme = "views_view_list",
- *   display_types = {"pdf_geneartor"}
+ *   display_types = {"pdf_generator"}
  * )
  */
 class PdfList extends HtmlList {

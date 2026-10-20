@@ -2,3 +2,6 @@ services:
   logger.channel.rebuild_cache_access:
     parent: logger.channel_base
     arguments: ['rebuild_cache_access']
+  rebuild_cache_access.link_lazy_builder:
+    class: Drupal\rebuild_cache_access\LinkLazyBuilder
+    arguments: ['@redirect.destination']

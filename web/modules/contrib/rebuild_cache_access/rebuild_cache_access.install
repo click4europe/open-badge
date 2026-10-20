@@ -2,13 +2,18 @@
 
 /**
  * @file
- * This module adds a 'Rebuild Cache' permission and button to the toolbar.
+ * This module adds a 'Rebuild Cache' permission and button to the admin UI.
  */
 
 /**
  * Implements hook_install().
  */
-function rebuild_cache_access_install(): void {
+function rebuild_cache_access_install(bool $is_syncing = FALSE): void {
+  // During config sync the imported Navigation layout is used as is.
+  if ($is_syncing) {
+    return;
+  }
+
   $module_handler = \Drupal::moduleHandler();
 
   // If the navigation module is already enabled, install the rebuild cache
@@ -17,6 +22,30 @@ function rebuild_cache_access_install(): void {
     $module_handler->loadInclude('rebuild_cache_access', 'module');
     _rebuild_cache_access_install_navigation_block();
   }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function rebuild_cache_access_uninstall(bool $is_syncing): void {
+  // During config sync the imported Navigation layout is used as is.
+  if ($is_syncing || !\Drupal::moduleHandler()->moduleExists('navigation')) {
+    return;
+  }
+
+  // Remove the rebuild cache blocks from the Navigation layout, so they are
+  // not left behind and not duplicated when the module is installed again.
+  $uuids = _rebuild_cache_access_navigation_block_uuids();
+  if (!$uuids) {
+    return;
+  }
+  $config = \Drupal::configFactory()->getEditable('navigation.block_layout');
+  foreach ($uuids as $delta => $section_uuids) {
+    foreach ($section_uuids as $uuid) {
+      $config->clear("sections.$delta.components.$uuid");
+    }
+  }
+  $config->save();
 }
 
 /**

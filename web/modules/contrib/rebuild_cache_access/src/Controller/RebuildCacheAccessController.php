@@ -55,7 +55,7 @@ class RebuildCacheAccessController extends ControllerBase {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
+    return new self(
       $container->get('request_stack'),
       $container->get('module_handler'),
       $container->get('logger.channel.rebuild_cache_access')

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * This module adds a 'Rebuild Cache' permission and button to the toolbar.
+ * This module adds a 'Rebuild Cache' permission and button to the admin UI.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -94,6 +94,32 @@ function _rebuild_cache_access_install_navigation_block(): void {
     return;
   }
 
+  // Do not add the block a second time, e.g. when the module is reinstalled.
+  if (_rebuild_cache_access_navigation_block_uuids()) {
+    return;
+  }
+
   // Use the action to add a new block to Navigation.
   $manager->applyAction('addNavigationBlock', 'navigation.block_layout', $data);
+}
+
+/**
+ * Returns the UUIDs of the rebuild cache blocks in the Navigation layout.
+ *
+ * @return string[][]
+ *   Lists of component UUIDs, keyed by section delta.
+ */
+function _rebuild_cache_access_navigation_block_uuids(): array {
+  $uuids = [];
+  // Read the stored layout without config overrides, as that is what gets
+  // changed.
+  $sections = \Drupal::config('navigation.block_layout')->getOriginal('sections', FALSE) ?? [];
+  foreach ($sections as $delta => $section) {
+    foreach ($section['components'] ?? [] as $uuid => $component) {
+      if (($component['configuration']['id'] ?? NULL) === 'rebuild_cache_access_navigation') {
+        $uuids[$delta][] = $uuid;
+      }
+    }
+  }
+  return $uuids;
 }

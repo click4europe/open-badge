@@ -351,7 +351,8 @@ class Theme {
     $hash = Crypt::generateBase64HashIdentifier($options, [$mask, $path]);
 
     if (!$cache->has($hash)) {
-      if ($fileSystem = \Drupal::service('file_system')) {
+      $files = [];
+      if ($fileSystem = Bootstrap::service('file_system')) {
         $files = $fileSystem->scanDirectory($path, $mask, $options);
       }
       $cache->set($hash, $files);
@@ -371,11 +372,25 @@ class Theme {
    *   by machine name.
    */
   public function getAncestry($reverse = FALSE) {
-    $ancestry = $this->themeHandler->getBaseThemes($this->themes, $this->getName());
-    foreach (array_keys($ancestry) as $name) {
-      $ancestry[$name] = Bootstrap::getTheme($name, $this->themeHandler);
+    $ancestry = [];
+    $themes = $this->themeHandler->listInfo();
+    $theme_name = $this->getName();
+
+    if (!isset($themes[$theme_name])) {
+      $ancestry[$theme_name] = $this;
+      return $reverse ? array_reverse($ancestry) : $ancestry;
     }
-    $ancestry[$this->getName()] = $this;
+
+    if (!empty($themes[$theme_name]->base_themes) && is_array($themes[$theme_name]->base_themes)) {
+      foreach (array_keys($themes[$theme_name]->base_themes) as $name) {
+        if (isset($themes[$name])) {
+          $ancestry[$name] = Bootstrap::getTheme($name, $this->themeHandler);
+        }
+      }
+    }
+
+    $ancestry[$theme_name] = $this;
+
     return $reverse ? array_reverse($ancestry) : $ancestry;
   }
 
@@ -664,7 +679,7 @@ class Theme {
     if (!isset($includes[$include])) {
       $includes[$include] = !!@include_once $include;
       if (!$includes[$include]) {
-        \Drupal::messenger()->addMessage(t('Could not include file: @include', ['@include' => $include]), 'error');
+        Bootstrap::service('messenger')->addMessage(t('Could not include file: @include', ['@include' => $include]), 'error');
       }
     }
     return $includes[$include];

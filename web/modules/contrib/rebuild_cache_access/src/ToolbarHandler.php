@@ -5,7 +5,6 @@ namespace Drupal\rebuild_cache_access;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -36,7 +35,7 @@ class ToolbarHandler implements ContainerInjectionInterface {
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static(
+    return new self(
       $container->get('current_user')
     );
   }
@@ -62,12 +61,9 @@ class ToolbarHandler implements ContainerInjectionInterface {
         '#type' => 'toolbar_item',
         '#weight' => 999,
         'tab' => [
-          '#type' => 'link',
-          '#title' => $this->t('Rebuild Cache'),
-          '#url' => Url::fromRoute('rebuild_cache_access.rebuild_cache'),
-          '#attributes' => [
-            'title' => $this->t('Rebuild Cache Access'),
-            'class' => ['toolbar-icon', 'toolbar-icon-rebuild-cache-access'],
+          'link' => [
+            '#lazy_builder' => ['rebuild_cache_access.link_lazy_builder:renderToolbarLink', []],
+            '#create_placeholder' => TRUE,
           ],
         ],
         '#attached' => [

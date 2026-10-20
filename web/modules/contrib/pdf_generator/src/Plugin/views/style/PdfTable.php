@@ -14,7 +14,7 @@ use Drupal\views\Plugin\views\style\Table;
  *   title = @Translation("PDF table style"),
  *   help = @Translation("Generates an PDF."),
  *   theme = "views_view_table",
- *   display_types = {"pdf_geneartor"}
+ *   display_types = {"pdf_generator"}
  * )
  */
 class PdfTable extends Table {

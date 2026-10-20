@@ -10,7 +10,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Security\Attribute\TrustedCallback;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -49,7 +48,7 @@ class RebuildCacheAccessNavigationBlock extends BlockBase implements ContainerFa
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
+    return new self(
       $configuration,
       $plugin_id,
       $plugin_definition,
@@ -65,7 +64,7 @@ class RebuildCacheAccessNavigationBlock extends BlockBase implements ContainerFa
       return [
         '#create_placeholder' => TRUE,
         '#lazy_builder' => [
-          static::class . '::buildRebuildCache',
+          'rebuild_cache_access.link_lazy_builder:renderNavigationLink',
           [$this->configuration['label']],
         ],
         '#cache' => [
@@ -85,31 +84,17 @@ class RebuildCacheAccessNavigationBlock extends BlockBase implements ContainerFa
 
   /**
    * Lazy builder callback.
+   *
+   * @deprecated in rebuild_cache_access:8.x-1.15 and is removed from
+   *   rebuild_cache_access:2.0.0. Use the
+   *   rebuild_cache_access.link_lazy_builder service instead.
+   *
+   * @see https://www.drupal.org/project/rebuild_cache_access/issues/3540172
    */
   #[TrustedCallback]
   public static function buildRebuildCache(string $label): array {
-    $build = [];
-    if (\Drupal::currentUser()->hasPermission('rebuild cache access')) {
-      $build['rebuild_cache_access'] = [
-        '#title' => '',
-        '#theme' => 'navigation_menu',
-        '#menu_name' => 'link',
-        '#items' => [
-          [
-            'title' => $label,
-            'url' => Url::fromRoute('rebuild_cache_access.rebuild_cache'),
-            'class' => 'system-admin-config',
-            'icon' => [
-              'icon_id' => 'system-admin-config',
-            ],
-          ],
-        ],
-      ];
-    }
-
-    $build['#title'] = $label;
-    $build['#cache']['contexts'][] = 'user.permissions';
-    return $build;
+    @trigger_error(__METHOD__ . '() is deprecated in rebuild_cache_access:8.x-1.15 and is removed from rebuild_cache_access:2.0.0. Use the rebuild_cache_access.link_lazy_builder service instead. See https://www.drupal.org/project/rebuild_cache_access/issues/3540172', E_USER_DEPRECATED);
+    return \Drupal::service('rebuild_cache_access.link_lazy_builder')->renderNavigationLink($label);
   }
 
 }
