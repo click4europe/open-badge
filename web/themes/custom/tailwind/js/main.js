@@ -311,7 +311,7 @@ var OrganizationsList = /*#__PURE__*/function () {
   }]);
 }();
 _defineProperty(OrganizationsList, "defaults", {
-  apiUrl: 'https://app.open-badge.eu/api/v1/public/organizations',
+  apiUrl: 'https://api.open-badge.eu/api/v1/public/organizations',
   // ID of the element that receives the pagination controls (optional).
   paginationId: null,
   // Open the organization public page when clicking a logo.
