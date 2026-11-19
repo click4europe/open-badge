@@ -133,6 +133,15 @@ function basic_page_theme() {
       'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
     ],
 
+    // Abbonamenti test page render (new design, admin only).
+    'abbonamenti_test_render' => [
+      'variables' => [
+        'data' => NULL,
+      ],
+      'template' => 'abbonamenti-test-render',
+      'path' => \Drupal::service('extension.list.module')->getPath('basic_page') . '/templates',
+    ],
+
     // Scuole e Centri di Formazione page render.
     'scuole_e_centri_di_formazione_render' => [
       'variables' => [

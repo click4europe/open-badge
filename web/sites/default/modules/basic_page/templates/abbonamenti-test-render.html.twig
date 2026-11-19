@@ -1,0 +1,69 @@
+{# abbonamenti-test-render.html.twig #}
+{# New design for the pricing/abbonamenti page - admin only test page. #}
+{# Navbar and footer are provided by the active theme. #}
+
+<div class="abbonamenti-test">
+  <main>
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">PREZZI E ABBONAMENTI</p>
+        <h1 id="hero-title">Certifica le competenze.<br><span>Cresci senza limiti.</span></h1>
+        <p class="hero-lead">Una piattaforma professionale, un abbonamento annuale semplice e la libertà di acquistare i badge solo quando ne hai bisogno.</p>
+        <a class="hero-link" href="#piani">Scopri i piani <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+        <div class="art-window"><div class="art-window-top"><i></i><i></i><i></i></div><div class="art-badge"><span>★</span></div><div class="art-lines"><i></i><i></i></div></div>
+        <div class="art-floating">✓ <span>Badge emesso</span></div>
+      </div>
+    </section>
+
+    <section class="pricing-section container" id="piani" aria-labelledby="plans-title">
+      <div class="pricing-grid">
+        <article class="plan-card">
+          <div class="plan-icon" aria-hidden="true">🚀</div>
+          <h3>Starter</h3><p class="plan-description">Per iniziare a conoscere Open Badge.</p>
+          <div class="price-block"><div class="price">Gratis</div><span class="price-note">per 30 giorni</span></div>
+          <div class="plan-divider"></div>
+          <ul class="features"><li>5 badge inclusi</li><li>Prova la creazione e l'emissione delle tue prime certificazioni digitali</li></ul>
+          <a class="button button-outline plan-button" href="https://app.open-badge.eu/issuer-registration">Inizia gratuitamente</a>
+        </article>
+        <article class="plan-card featured">
+          <div class="featured-label">PIANO PRINCIPALE</div>
+          <div class="plan-icon" aria-hidden="true">💼</div>
+          <h3>Professional</h3><p class="plan-description">La tua piattaforma di certificazione. Tutta la flessibilità che cerchi.</p>
+          <div class="price-block"><div class="price">400 € <span class="price-period">/ anno</span></div><span class="price-note">+ IVA 22% (488 € IVA inclusa)</span></div>
+          <div class="plan-divider"></div>
+          <ul class="features"><li>Accesso annuale alla piattaforma</li><li>Creazione e gestione delle certificazioni digitali</li><li>Pacchetti di badge acquistabili separatamente</li><li>Acquisti direttamente dal tuo account</li></ul>
+          <a class="button button-primary plan-button" href="https://app.open-badge.eu/issuer-registration">Attiva Professional <span aria-hidden="true">→</span></a>
+          <p class="plan-footnote">I pacchetti di badge non sono inclusi nel prezzo dell'abbonamento.</p>
+        </article>
+        <article class="plan-card">
+          <div class="plan-icon" aria-hidden="true">🏢</div>
+          <h3>Enterprise</h3><p class="plan-description">Per organizzazioni e progetti con esigenze specifiche.</p>
+          <div class="price-block"><div class="price price-custom">Soluzione personalizzata</div><span class="price-note">Proposta personalizzata</span></div>
+          <div class="plan-divider"></div>
+          <ul class="features"><li>Per progetti di certificazione su larga scala</li><li>Valutazione delle esigenze della tua organizzazione</li><li>Proposta commerciale dedicata</li></ul>
+          <a class="button button-outline plan-button" href="/contatti">Contattaci</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="steps-section container" id="come-funziona" aria-labelledby="steps-title">
+      <div class="steps-intro"><p class="eyebrow">BADGE ON DEMAND</p><h2 id="steps-title">Acquista i badge quando ne hai bisogno.</h2><p>Con Professional, i pacchetti di badge sono indipendenti dall'abbonamento annuale: scegli quanto acquistare direttamente dal tuo account.</p></div>
+      <div class="steps-list"><div class="step"><span class="step-number">01</span><div class="step-icon" aria-hidden="true"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div><h3>Accedi</h3><p>Entra nel tuo account.</p></div><div class="step-arrow" aria-hidden="true"><svg width="34" height="18" viewBox="0 0 34 18" fill="#0869ed"><path d="M0 7h20V2l14 7-14 7v-5H0z"/></svg></div><div class="step"><span class="step-number">02</span><div class="step-icon" aria-hidden="true">🛒</div><h3>Acquista</h3><p>Scegli il pacchetto di badge.</p></div><div class="step-arrow" aria-hidden="true"><svg width="34" height="18" viewBox="0 0 34 18" fill="#0869ed"><path d="M0 7h20V2l14 7-14 7v-5H0z"/></svg></div><div class="step"><span class="step-number">03</span><div class="step-icon" aria-hidden="true">🏅</div><h3>Certifica</h3><p>Emetti i tuoi Open Badge.</p></div></div>
+    </section>
+
+    <section class="value-section container" aria-labelledby="value-title"><div class="value-illustration" aria-hidden="true"><div class="bar-chart"><span></span><span></span><span></span><span></span></div><div class="growth-arrow">↗</div><div class="medal">★</div></div><div class="value-copy"><p class="eyebrow">FLESSIBILITÀ AL CENTRO</p><h2 id="value-title">Un unico abbonamento.<br>Più libertà di crescere.</h2><p>Con un costo annuale chiaro per la piattaforma, puoi acquistare i badge in base alle esigenze della tua organizzazione.</p><ul class="features"><li>Un prezzo annuale trasparente</li><li>Badge acquistabili in autonomia</li><li>Un modello che segue le tue necessità</li></ul></div></section>
+
+    <section class="faq-section container" id="faq" aria-labelledby="faq-title"><div class="faq-intro"><p class="eyebrow">DOMANDE FREQUENTI</p><h2 id="faq-title">Hai dubbi?<br>Trova la risposta.</h2><p>Le informazioni essenziali su abbonamenti e acquisto dei badge.</p></div><div class="faq-list">
+      <details><summary>Quanto costa Professional?</summary><p>Professional costa 400 € all'anno, IVA 22% esclusa (488 € IVA inclusa). I pacchetti di badge si acquistano separatamente.</p></details>
+      <details><summary>Quanti badge sono inclusi in Professional?</summary><p>Il prezzo dell'abbonamento Professional non include pacchetti di badge. Puoi acquistarli separatamente direttamente dal tuo account.</p></details>
+      <details><summary>Come posso acquistare nuovi badge?</summary><p>Dopo aver attivato Professional, accedi al tuo account e acquista il pacchetto di badge più adatto alle tue esigenze.</p></details>
+      <details><summary>Cosa include Starter?</summary><p>Starter permette di provare gratuitamente la piattaforma per 30 giorni con 5 badge inclusi.</p></details>
+      <details><summary>Come funziona Enterprise?</summary><p>Enterprise è una soluzione personalizzata: contatta il nostro team per valutare le esigenze della tua organizzazione e ricevere una proposta dedicata.</p></details>
+    </div></section>
+
+    <section class="bottom-cta"><div class="container bottom-cta-inner"><div><p class="eyebrow">PRONTO A VALORIZZARE LE COMPETENZE?</p><h2>Inizia oggi con Open Badge.</h2></div><a class="button button-light" href="https://app.open-badge.eu">Inizia gratuitamente <span aria-hidden="true">→</span></a></div></section>
+  </main>
+</div>
