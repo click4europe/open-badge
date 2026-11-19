@@ -1,0 +1,288 @@
+.abbonamenti-test {
+&{--ink:#102448;--muted:#5c6c88;--blue:#0869ed;--blue-dark:#0755c5;--line:#dbe5f4;--soft:#f1f6ff;--green:#23b467;--radius:22px}*{box-sizing:border-box}&{margin:0;color:var(--ink);background:#fff;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,a,summary{outline-offset:4px}.container{width:min(1160px,calc(100% - 48px));margin-inline:auto}.site-header{background:#fff;border-bottom:1px solid #edf1f8;position:relative;z-index:5}.nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:22px}.brand{font-weight:800;font-size:21px;letter-spacing:-.7px;display:flex;align-items:center;gap:12px}.brand-symbol{width:39px;height:39px;display:grid;place-items:center;background:linear-gradient(135deg,#0857d5,#38a3ff);color:white;clip-path:polygon(50% 0,93% 24%,93% 76%,50% 100%,7% 76%,7% 24%);font-size:24px}.nav-links{display:flex;gap:32px;font-size:13px;font-weight:600}.nav-links a{padding:29px 0 26px;border-bottom:3px solid transparent}.nav-links a:hover,.nav-links a.active{color:var(--blue);border-bottom-color:var(--blue)}.button{display:inline-flex;align-items:center;justify-content:center;gap:12px;border-radius:12px;padding:15px 20px;font-size:14px;font-weight:700;text-align:center;transition:transform .2s,box-shadow .2s,background .2s;white-space:nowrap}.button:hover{transform:translateY(-2px)}.button-primary{color:#fff;background:var(--blue);box-shadow:0 8px 18px #0969eb21}.button-primary:hover{background:var(--blue-dark);box-shadow:0 10px 24px #0969eb30}.button-small{padding:11px 21px;border-radius:30px}.button-outline{border:1.5px solid var(--blue);color:var(--blue);background:#fff}.button-outline:hover{background:#eff6ff}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.07em;color:var(--blue);margin:0 0 14px}.hero{display:grid;grid-template-columns:1.15fr .85fr;align-items:center;min-height:355px;gap:32px;padding-top:38px;padding-bottom:25px}.hero h1{font-size:clamp(36px,4.25vw,58px);letter-spacing:-.055em;line-height:1.13;margin:0 0 23px;font-weight:800}.hero h1 span{color:#173e82}.hero-lead{font-size:17px;line-height:1.7;color:var(--muted);max-width:620px;margin:0}.hero-link{display:inline-flex;gap:12px;color:var(--blue);font-size:14px;font-weight:700;margin-top:22px}.hero-art{height:310px;position:relative;isolation:isolate;display:grid;place-items:center}.hero-art:before{content:"";position:absolute;inset:8px -25px 10px 15px;background:linear-gradient(145deg,#eaf4ff,#d7eaff);border-radius:43% 57% 61% 39% / 55% 35% 65% 45%;transform:rotate(-12deg);z-index:-2}.art-orbit{position:absolute;border:1px solid #b7d7fb;border-radius:50%;transform:rotate(-24deg)}.orbit-one{width:90%;height:68%}.orbit-two{width:65%;height:90%}.art-window{width:260px;height:180px;background:#fff;border:10px solid #203c6d;border-radius:15px;box-shadow:0 22px 28px #173e8240;transform:rotate(5deg);overflow:hidden}.art-window-top{height:26px;background:#f0f5fb;display:flex;gap:5px;padding:10px}.art-window-top i{width:6px;height:6px;border-radius:50%;background:#b7cbe4}.art-badge{width:102px;height:102px;margin:3px auto;background:linear-gradient(145deg,#0a6ce9,#62b6ff);clip-path:polygon(50% 0,88% 20%,88% 70%,50% 100%,12% 70%,12% 20%);display:grid;place-items:center;color:white;font-size:50px}.art-lines{position:absolute;left:15px;top:52px;display:grid;gap:10px}.art-lines i{display:block;background:#e6effb;width:35px;height:7px;border-radius:10px}.art-floating{position:absolute;right:5px;bottom:36px;background:#fff;border:1px solid #dbeafa;box-shadow:0 10px 28px #2b6cba25;border-radius:12px;padding:12px 16px;color:#1eae6b;font-weight:800}.art-floating span{color:var(--ink);font-size:12px;margin-left:6px}.pricing-section{padding-top:40px;padding-bottom:75px}.section-heading{text-align:center;margin-bottom:37px}.section-heading h2{font-size:clamp(26px,3vw,36px);letter-spacing:-.04em;margin:0 0 10px}.section-heading>p:last-child{color:var(--muted);font-size:15px;margin:0}.pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}.plan-card{position:relative;border:1px solid var(--line);border-radius:var(--radius);padding:30px 26px 25px;display:flex;flex-direction:column;min-height:515px;box-shadow:0 6px 28px #163c7510;background:#fff}.plan-card.featured{border:2px solid var(--blue);background:linear-gradient(180deg,#f1f7ff 0%,#fff 65%);box-shadow:0 15px 38px #0869ed1a;transform:translateY(-8px);padding-top:36px}.featured-label{position:absolute;top:-17px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:11px;letter-spacing:.06em;font-weight:800;padding:10px 24px;border-radius:30px;white-space:nowrap}.plan-icon{width:53px;height:53px;display:grid;place-items:center;background:#eaf3ff;border-radius:17px;color:var(--blue);font-size:30px;margin-bottom:17px}.plan-card h3{font-size:23px;letter-spacing:-.04em;margin:0 0 9px}.plan-description{font-size:13px;line-height:1.6;color:var(--muted);min-height:43px;margin:0 0 25px}.price-block{min-height:93px}.price{font-size:39px;font-weight:800;letter-spacing:-.055em;white-space:nowrap}.price-period{font-size:16px;letter-spacing:0;font-weight:500;color:var(--muted)}.price-custom{font-size:27px;letter-spacing:-.035em;margin-top:8px}.price-note{display:block;font-size:12px;color:var(--muted);margin-top:5px}.plan-divider{height:1px;background:var(--line);margin:14px 0 22px}.features{padding:0;margin:0;list-style:none;display:grid;gap:17px}.features li{position:relative;padding-left:27px;font-size:13px;line-height:1.55}.features li:before{content:'✓';position:absolute;left:0;top:1px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:white;font-size:11px;font-weight:800}.plan-button{width:100%;margin-top:auto}.plan-card .features{margin-bottom:30px}.plan-footnote{text-align:center;font-size:11px;color:var(--muted);line-height:1.5;margin:13px 0 0}.steps-section{display:grid;grid-template-columns:.95fr 1.4fr;gap:30px;align-items:center;background:linear-gradient(120deg,#edf5ff,#f7faff);border-radius:28px;padding:45px 38px;margin-bottom:32px}.steps-intro h2,.value-copy h2,.faq-intro h2{font-size:clamp(26px,2.7vw,36px);letter-spacing:-.045em;line-height:1.2;margin:0 0 16px}.steps-intro>p:last-child,.value-copy>p:not(.eyebrow),.faq-intro>p:last-child{font-size:14px;line-height:1.75;color:var(--muted);margin:0}.steps-list{display:grid;grid-template-columns:repeat(3,1fr)}.step{text-align:center;padding:10px 14px;border-left:1px solid #d3e2f7}.step-number{display:inline-grid;place-items:center;background:var(--blue);color:#fff;width:29px;height:29px;border-radius:50%;font-size:12px;font-weight:800}.step-icon{font-size:37px;color:var(--blue);height:72px;display:grid;place-items:center}.step h3{font-size:17px;margin:0 0 8px}.step p{font-size:12px;line-height:1.5;color:var(--muted);margin:0}.value-section{background:#f5f8fe;border-radius:28px;display:grid;grid-template-columns:.85fr 1.15fr;gap:30px;align-items:center;padding:40px 60px;margin-bottom:80px}.value-illustration{height:235px;position:relative;display:grid;place-items:end center;padding-bottom:20px;border-right:1px solid #d3e2f7}.bar-chart{display:flex;gap:15px;align-items:end;height:155px}.bar-chart span{display:block;width:36px;border-radius:8px 8px 0 0;background:linear-gradient(180deg,#0b71ed,#8dc6ff)}.bar-chart span:nth-child(1){height:45px}.bar-chart span:nth-child(2){height:75px}.bar-chart span:nth-child(3){height:110px}.bar-chart span:nth-child(4){height:145px}.growth-arrow{position:absolute;top:-13px;left:46%;font-size:120px;color:#1678ee;line-height:1;transform:rotate(-8deg)}.medal{position:absolute;right:14%;bottom:0;background:linear-gradient(140deg,#0d65dd,#5db5ff);border:9px solid #cde6ff;color:#fff;border-radius:50%;width:75px;height:75px;display:grid;place-items:center;font-size:36px}.value-copy .features{margin-top:24px;gap:12px}.faq-section{display:grid;grid-template-columns:.8fr 1.2fr;gap:65px;padding-bottom:80px}.faq-list{display:grid;gap:10px;align-content:start}.faq-list details{border:1px solid var(--line);border-radius:12px;background:#fff;overflow:hidden}.faq-list summary{cursor:pointer;list-style:none;padding:17px 20px;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:12px}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:'+';font-size:22px;color:var(--blue);font-weight:400}.faq-list details[open] summary:after{content:'−'}.faq-list details p{margin:0;padding:0 20px 18px;font-size:13px;color:var(--muted);line-height:1.7}.bottom-cta{background:linear-gradient(100deg,#0e376b,#0875ed);color:white}.bottom-cta-inner{padding:32px 0;display:flex;align-items:center;justify-content:space-between;gap:24px}.bottom-cta .eyebrow{color:#b9d9ff;font-size:10px;margin-bottom:9px}.bottom-cta h2{font-size:25px;letter-spacing:-.03em;margin:0}.button-light{background:#fff;color:var(--blue);border-radius:30px;min-width:215px}.footer{padding-top:24px;padding-bottom:24px;display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.footer a:hover{color:var(--blue)}@media(max-width:900px){.hero{grid-template-columns:1fr .7fr}.hero-art{transform:scale(.82);transform-origin:center}.pricing-grid{gap:12px}.plan-card{padding:24px 18px}.plan-card.featured{padding:32px 18px 24px}.price{font-size:33px}.steps-section{grid-template-columns:1fr}.value-section{padding:30px}.faq-section{gap:30px}}@media(max-width:700px){.container{width:min(100% - 32px,480px)}.nav{height:68px}.brand{font-size:18px}.brand-symbol{width:32px;height:32px}.nav-links{display:none}.hero{display:flex;flex-direction:column;text-align:center;gap:0;padding-top:52px;padding-bottom:15px}.hero h1{font-size:38px}.hero-lead{font-size:15px}.hero-art{width:100%;height:220px;transform:scale(.75);margin:-10px 0}.pricing-section{padding-top:20px;padding-bottom:52px}.pricing-grid{grid-template-columns:1fr;gap:25px}.plan-card,.plan-card.featured{min-height:0;transform:none;padding:26px}.plan-card.featured{order:-1;padding-top:35px}.plan-description{min-height:0;margin-bottom:18px}.price-block{min-height:80px}.plan-card .features{margin-bottom:28px}.steps-section{padding:28px 22px;gap:25px}.steps-list{grid-template-columns:1fr;gap:15px}.step{display:grid;grid-template-columns:32px 45px 1fr;grid-template-rows:auto auto;column-gap:12px;text-align:left;border-left:0;border-top:1px solid #d3e2f7;padding:15px 0 0}.step-number{grid-row:1/3}.step-icon{grid-row:1/3;height:auto;font-size:28px}.step h3{grid-column:3;margin:0}.step p{grid-column:3}.value-section{grid-template-columns:1fr;padding:25px;margin-bottom:60px;gap:15px}.value-illustration{border-right:0;border-bottom:1px solid #d3e2f7;height:200px}.faq-section{grid-template-columns:1fr;gap:25px;padding-bottom:60px}.bottom-cta-inner{flex-direction:column;text-align:center}.bottom-cta h2{font-size:23px}.footer{gap:20px;flex-wrap:wrap}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button{transition:none}.button:hover{transform:none}}
+}
+
+/* Reset theme (daisyUI) .hero stacking so the two-column layout works. */
+.abbonamenti-test .hero > * {
+  grid-column-start: auto;
+  grid-row-start: auto;
+}
+
+/* Space below the site navbar so the hero isn't glued to it. */
+.abbonamenti-test .hero {
+  padding-top: 90px;
+}
+
+/* Monthly/yearly toggle (same behaviour as old page). */
+.abbonamenti-test .abbt-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin: 0 auto 28px;
+  width: fit-content;
+  background: #fff;
+  border: 1px solid #dbe5f4;
+  border-radius: 40px;
+  padding: 5px;
+}
+.abbonamenti-test .abbt-toggle-btn {
+  border: 0;
+  background: transparent;
+  padding: 9px 26px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #5c6c88;
+  cursor: pointer;
+}
+.abbonamenti-test .abbt-toggle-btn.active {
+  background: #0869ed;
+  color: #fff;
+}
+.abbonamenti-test .abbt-hidden { display: none; }
+.abbonamenti-test .abbt-empty { text-align: center; color: #5c6c88; }
+.abbonamenti-test .abbt-edit { grid-column: 1 / -1; text-align: right; }
+.abbonamenti-test .abbt-edit a { color: #0869ed; font-size: 13px; font-weight: 600; }
+.abbonamenti-test .features li.feature-disabled { color: #9aa8bf; }
+.abbonamenti-test .features li.feature-disabled:before { content: '✕'; background: #cbd5e1; }
+
+/* Steps section: vertical numbered list (per design sketch). */
+.abbonamenti-test .steps-list {
+  grid-template-columns: 1fr;
+  gap: 0;
+  align-content: center;
+}
+.abbonamenti-test .step {
+  display: grid;
+  grid-template-columns: 34px 44px 1fr;
+  align-items: center;
+  column-gap: 14px;
+  text-align: left;
+  border-left: 0;
+  border-top: 0;
+  padding: 16px 0;
+  position: relative;
+}
+.abbonamenti-test .step:not(:last-child) {
+  border-bottom: 1px dashed #d3e2f7;
+}
+.abbonamenti-test .step:not(:last-child):after {
+  content: '↓';
+  position: absolute;
+  left: 12px;
+  bottom: -10px;
+  color: var(--blue);
+  font-size: 14px;
+  z-index: 1;
+}
+.abbonamenti-test .step-number {
+  margin: 0;
+}
+.abbonamenti-test .step-icon {
+  height: auto;
+  font-size: 26px;
+}
+.abbonamenti-test .step h3 {
+  font-size: 15px;
+  margin: 0;
+}
+.abbonamenti-test .step p {
+  font-size: 12px;
+  margin: 2px 0 0;
+}
+
+/* Reset theme (daisyUI) .step component: keep steps horizontal. */
+.abbonamenti-test .step {
+  display: block;
+  min-width: 0;
+}
+.abbonamenti-test .step:before,
+.abbonamenti-test .step:after {
+  content: none;
+  display: none;
+}
+.abbonamenti-test .step + .step {
+  border-top: 0;
+}
+
+/* Force the 3 steps into a horizontal row (desktop). */
+.abbonamenti-test .steps-list {
+  display: flex;
+  gap: 0;
+}
+.abbonamenti-test .steps-list > .step {
+  flex: 1 1 0;
+}
+@media (max-width: 700px) {
+  .abbonamenti-test .steps-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+/* Steps: vertical stack (number, icon, title, text), centered, with arrows. */
+.abbonamenti-test .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+.abbonamenti-test .step:after {
+  content: '→';
+  display: block;
+  position: absolute;
+  top: 55px;
+  right: -22px;
+  font-size: 28px;
+  color: var(--blue);
+  font-weight: 400;
+  z-index: 1;
+}
+.abbonamenti-test .step:last-child:after {
+  content: none;
+  display: none;
+}
+.abbonamenti-test .step-number {
+  width: 34px;
+  height: 34px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.abbonamenti-test .step-icon {
+  font-size: 52px;
+  height: 90px;
+}
+.abbonamenti-test .step h3 {
+  font-size: 20px;
+}
+.abbonamenti-test .step p {
+  font-size: 14px;
+}
+@media (max-width: 700px) {
+  .abbonamenti-test .step:after {
+    content: none;
+    display: none;
+  }
+}
+
+.abbonamenti-test .steps-list {
+  gap: 40px;
+}
+
+/* Arrow centered vertically in the gap between steps. */
+.abbonamenti-test .step:after {
+  top: 50%;
+  transform: translateY(-50%);
+  right: -34px;
+}
+
+/* Thick block arrow between steps (replaces the thin →). */
+.abbonamenti-test .step:after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -36px;
+  width: 30px;
+  height: 16px;
+  transform: translateY(-50%);
+  background: var(--blue);
+  clip-path: polygon(0 32%, 62% 32%, 62% 0, 100% 50%, 62% 100%, 62% 68%, 0 68%);
+  font-size: 0;
+}
+.abbonamenti-test .step-number:before,
+.abbonamenti-test .step-number:after,
+.abbonamenti-test .step-icon:before,
+.abbonamenti-test .step-icon:after {
+  content: none;
+  display: none;
+}
+
+/* Keep the arrow centered in the gap and above neighboring steps. */
+.abbonamenti-test .step {
+  overflow: visible;
+}
+.abbonamenti-test .step:after {
+  right: -35px;
+  z-index: 10;
+}
+
+/* Anchor arrows to the right edge of each step, inside the gap. */
+.abbonamenti-test .step {
+  position: relative;
+}
+.abbonamenti-test .step:after {
+  left: calc(100% + 5px);
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Space steps via margin (flex gap unreliable vs theme), arrow inside it. */
+.abbonamenti-test .steps-list {
+  gap: 0;
+}
+.abbonamenti-test .steps-list > .step + .step {
+  margin-left: 56px;
+}
+.abbonamenti-test .step:after {
+  left: calc(100% + 14px);
+  width: 28px;
+}
+
+/* Kill the pseudo arrows; real .step-arrow elements between steps instead. */
+.abbonamenti-test .step:after {
+  content: none;
+  display: none;
+}
+.abbonamenti-test .steps-list {
+  align-items: center;
+}
+.abbonamenti-test .step-arrow {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+}
+@media (max-width: 700px) {
+  .abbonamenti-test .step-arrow {
+    display: none;
+  }
+}
+
+/* Plan cards: centered, aligned content. */
+.abbonamenti-test .plan-card {
+  align-items: center;
+  text-align: center;
+}
+.abbonamenti-test .plan-icon {
+  margin-left: auto;
+  margin-right: auto;
+}
+.abbonamenti-test .price-block {
+  width: 100%;
+}
+.abbonamenti-test .features {
+  text-align: left;
+  width: 100%;
+}
+.abbonamenti-test .plan-card h3 {
+  margin-left: auto;
+  margin-right: auto;
+}
+.abbonamenti-test .plan-description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.abbonamenti-test .price-custom {
+  font-size: 22px;
+  white-space: normal;
+}
+
+/* Remove the divider line under each step. */
+.abbonamenti-test .step {
+  border: 0;
+  border-left: 0;
+  box-shadow: none;
+}

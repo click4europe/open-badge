@@ -53,6 +53,14 @@ basic_page.company_logos_get:
   requirements:
     _permission: 'administer content'
 
+basic_page.abbonamenti_test:
+  path: '/abbonamenti-test'
+  defaults:
+    _controller: '\Drupal\basic_page\Controller\AbbonamentiTestController::page'
+    _title: 'Prezzi e abbonamenti (nuovo design)'
+  requirements:
+    _role: 'administrator'
+
 basic_page.company_logos_save:
   path: '/admin/content/company-logos/save'
   defaults:

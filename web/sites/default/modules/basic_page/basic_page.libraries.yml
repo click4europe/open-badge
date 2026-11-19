@@ -7,6 +7,12 @@ basic_page.accordion:
     - core/drupal
     - core/drupalSettings
     - jquery_ui_accordion/accordion
+basic_page.abbonamenti_test:
+  version: 1.0
+  css:
+    theme:
+      'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap': { type: external, minified: true }
+      css/abbonamenti-test.css: {}
 basic_page.table:
   version: 1.0
   css:
